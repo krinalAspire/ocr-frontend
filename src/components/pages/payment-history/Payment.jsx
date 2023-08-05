@@ -25,6 +25,7 @@ import { theme } from "../../../theme";
 import { PaymentData } from "./rowData";
 import AddPayment from "./AddPayment";
 import CircularProgress from "@mui/material/CircularProgress";
+import { getrowData } from "../../services/api";
 
 function Payment() {
   const [open, setOpen] = React.useState(false);
@@ -34,8 +35,8 @@ function Payment() {
   const handleOpen = () => {
     setOpen(true);
   };
-  // const [rowData, setrowData] = useState([]);
-  const [rowData, setrowData] = useState(PaymentData);
+  const [rowData, setrowData] = useState([]);
+  // const [rowData, setrowData] = useState(PaymentData);
 
   const [organization, setOrganization] = useState([]);
 
@@ -57,6 +58,23 @@ function Payment() {
     //     )
     // );
   };
+
+  
+  useEffect(()=>{
+    // const resp= getrowData();
+    // console.log(resp?.data);
+    (async () => {
+      try {
+        const resp = await getrowData();
+        console.log(resp?.data);
+        setrowData(resp?.data);
+      } catch (err) {
+        console.log(err.message);
+      }
+    })();
+    // setrowData(resp.data);
+  },[]);
+
 
   // useEffect(() => {
   //   axios
