@@ -145,7 +145,7 @@ function AddPayment({ handleClose }) {
                   }
                 }
                 className={classes.TextField}
-                renderInput={(params) => <TextField {...params} />}
+                // renderInput={(params) => <TextField {...params} />}
                 classes={{ calendarRoot: classes.customCalendarRoot }}
                 // format="dd/MM/yyyy"
                 // openTo="month"

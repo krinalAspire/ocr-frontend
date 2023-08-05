@@ -240,6 +240,20 @@ export const theme = createTheme({
         },
       },
     },
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: {
+          // height: '20px',
+          borderRadius: '7px',
+          backgroundColor:"#D9D9D9"
+          // marginBottom: '10px',
+        },
+        bar: {
+          backgroundColor: '#9F77EB', // Your desired color
+          borderRadius: '7px',
+        },
+      },
+    },
     // MuiBox: {
     //   styleOverrides: {
     //     root: {

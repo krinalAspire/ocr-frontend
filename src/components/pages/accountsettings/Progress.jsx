@@ -4,6 +4,7 @@ import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { up } from "../../../theme";
+import { classes } from "./utils";
 
 function Progress() {
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -43,7 +44,12 @@ function Progress() {
     },
   }));
 
-  return <BorderLinearProgress variant="determinate" value={85} />;
+  return (
+    <>
+    {/* <BorderLinearProgress variant="determinate" value={85} /> */}
+     <LinearProgress variant="determinate" value={85} className={classes.Progressbar} />
+    </>
+  )
 }
 
 export default Progress;

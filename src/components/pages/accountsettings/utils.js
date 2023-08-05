@@ -24,7 +24,8 @@ export const classes = {
   CloseAction: "CloseAction",
   EmailTextfieldText: "EmailTextfieldText",
   TextField:"TextField",
-  Input:"Input"
+  Input:"Input",
+  Progressbar:"Progressbar"
   // content: "content",
 };
 
@@ -572,9 +573,33 @@ export const Root = styled("div")(({ theme }) => ({
     //   },
     // }
   },
-  // [`& .${classes.Input}`]: {
-  //   padding: '70px',
-  // },
+  [`& .${classes.Progressbar}`]: {
+    [up("xs")]: {
+      width: "45vw",
+      height: "1vh",
+    },
+    [up("sm")]: {
+      width: "23vw",
+      height: "0.8vh",
+    },
+    [up("md")]: {
+      width: "17vw",
+      height: "1.3vh",
+    },
+    [up("lg")]: {
+      width: "17vw",
+      height: "1.7vh",
+    },
+    [up("xl")]: {
+      width: "17vw",
+      height: "1.29vh",
+    },
+    [up("xxl")]: {
+      // width:'16.92vw',
+      width: "15vw",
+      height: "1.29vh",
+    },
+  },
   // [`& .${classes.content}`]: {
   //   color: theme.palette.common.white,
   //   fontSize: 16,
