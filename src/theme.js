@@ -27,7 +27,7 @@ const lightPalette = {
     dark: "",
     medium: "",
     superlight: "",
-    light:"rgba(0, 0, 0, 0.2)"
+    light: "rgba(0, 0, 0, 0.2)",
   },
   secondaryWhite: {
     main: "rgba(255, 255, 255, 1)",
@@ -72,13 +72,13 @@ const lightPalette = {
   color247: {
     main: "rgba(247, 247, 247, 1)",
   },
-}
+};
 
 export const { up } = createTheme({ breakpoints }).breakpoints;
 
 export const theme = createTheme({
   breakpoints,
-  palette:lightPalette,
+  palette: lightPalette,
   typography: {
     body1: {
       fontFamily: "Heebo",
@@ -221,6 +221,25 @@ export const theme = createTheme({
   },
 
   components: {
+    MuiPickersPopper: {
+      styleOverrides: {
+        paper: {
+          height: "250px", // Set your desired height here
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "0.4em",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#D9D9D9",
+            borderRadius: "5px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#868686",
+            borderRadius: "5px",
+          },
+        },
+      },
+    },
     // MuiBox: {
     //   styleOverrides: {
     //     root: {
@@ -294,21 +313,21 @@ export const theme = createTheme({
     },
     MuiMenu: {
       styleOverrides: {
-          paper: {
-            boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)",
-            "&::-webkit-scrollbar": {
-              width: "0.4em",
-            },
-            "&::-webkit-scrollbar-track": {
-              background: "#D9D9D9",
-              borderRadius: "5px",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              background: "#868686",
-              borderRadius: "5px",
-            },
+        paper: {
+          boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)",
+          "&::-webkit-scrollbar": {
+            width: "0.4em",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#D9D9D9",
+            borderRadius: "5px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#868686",
+            borderRadius: "5px",
           },
         },
+      },
     },
     MuiMenuItem: {
       styleOverrides: {

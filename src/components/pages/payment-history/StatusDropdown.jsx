@@ -5,12 +5,12 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Typography, Grid, Box } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import disc from "../images/disc.svg";
-import AlertCircle from "../images/alert-circle.svg";
-import CheckCircle from "../images/checkCircle.svg";
+import disc from "../../../assets/paymenthistory-assets/disc.svg";
+import AlertCircle from "../../../assets/paymenthistory-assets/alert-circle.svg";
+import CheckCircle from "../../../assets/paymenthistory-assets/checkCircle.svg";
 import { classes } from "./utils";
 import { InputBase } from "@mui/material";
-import { theme } from "../Theme";
+import { theme } from "../../../theme";
 
 function StatusDropdown() {
   const [status, setStatus] = useState("");

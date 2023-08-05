@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { up } from "../Theme";
+import { up } from "../../../theme";
 
 export const classes = {
   root: "root",

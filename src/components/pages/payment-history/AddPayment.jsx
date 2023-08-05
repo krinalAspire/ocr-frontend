@@ -5,8 +5,8 @@ import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import closeIcon from "../images/x-circle.svg";
-import calendar from "../images/calendar.svg";
+import closeIcon from "../../../assets/paymenthistory-assets/x-circle.svg";
+import calendar from "../../../assets/paymenthistory-assets/calendar.svg";
 // import calendar from "../images/calendar.png";
 // import Calendar from "../images/Calendar.svg";
 // import SvgIcon from '@mui/material/SvgIcon';
@@ -27,7 +27,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import StatusDropdown from "./StatusDropdown";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import IconButton from "@mui/material/IconButton";
-import { theme } from "../Theme";
+import { theme } from "../../../theme";
 import { AssessmentOutlined } from "@mui/icons-material";
 
 function AddPayment({ handleClose }) {
