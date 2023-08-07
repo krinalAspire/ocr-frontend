@@ -29,11 +29,12 @@ function StatusDropdown() {
             src={Icon}
             alt={Icon}
             // className={classes.MenuItemIcon}
-            sx={{width:{xxl:24, xl:22, lg:20, md:18, sm:16, xs:14},
-              height:{xxl:24, xl:22, lg:20, md:18, sm:16, xs:14},
-              display: 'flex',
-              alignItems: 'center',
-              }}
+            sx={{
+              width: { xxl: 24, xl: 22, lg: 20, md: 18, sm: 16, xs: 14 },
+              height: { xxl: 24, xl: 22, lg: 20, md: 18, sm: 16, xs: 14 },
+              display: "flex",
+              alignItems: "center",
+            }}
           />
         </Grid>
         <Grid item xs={8} sm={10} alignItems="center">
@@ -46,7 +47,7 @@ function StatusDropdown() {
   return (
     <FormControl fullWidth>
       <Select
-        // className={classes.SelectComponent}  
+        // className={classes.SelectComponent}
         // variant="outlined"
         input={<InputBase classes={{ input: classes.StatusDropDown }} />}
         IconComponent={KeyboardArrowDownIcon}
@@ -56,7 +57,11 @@ function StatusDropdown() {
         inputProps={{ "aria-label": "Without label" }}
         renderValue={(selected) => {
           if (!selected) {
-            return <Typography variant="body1" color={theme.palette.color134.dark}>Select Status</Typography>;
+            return (
+              <Typography variant="body1" color={theme.palette.color134.dark}>
+                Select Status
+              </Typography>
+            );
           }
           return selected;
         }}

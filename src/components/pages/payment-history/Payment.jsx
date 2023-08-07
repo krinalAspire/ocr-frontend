@@ -24,6 +24,7 @@ import { PAYMENT } from "../../services/constantServices";
 import { theme } from "../../../theme";
 import { PaymentData } from "./rowData";
 import AddPayment from "./AddPayment";
+import { lightPalette } from "../../../theme";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getrowData } from "../../services/api";
 
@@ -35,8 +36,8 @@ function Payment() {
   const handleOpen = () => {
     setOpen(true);
   };
-  const [rowData, setrowData] = useState([]);
-  // const [rowData, setrowData] = useState(PaymentData);
+  // const [rowData, setrowData] = useState([]);
+  const [rowData, setrowData] = useState(PaymentData);
 
   const [organization, setOrganization] = useState([]);
 
@@ -60,20 +61,20 @@ function Payment() {
   };
 
   
-  useEffect(()=>{
-    // const resp= getrowData();
-    // console.log(resp?.data);
-    (async () => {
-      try {
-        const resp = await getrowData();
-        console.log(resp?.data);
-        setrowData(resp?.data);
-      } catch (err) {
-        console.log(err.message);
-      }
-    })();
-    // setrowData(resp.data);
-  },[]);
+  // useEffect(()=>{
+  //   // const resp= getrowData();
+  //   // console.log(resp?.data);
+  //   (async () => {
+  //     try {
+  //       const resp = await getrowData();
+  //       console.log(resp?.data);
+  //       setrowData(resp?.data);
+  //     } catch (err) {
+  //       console.log(err.message);
+  //     }
+  //   })();
+  //   // setrowData(resp.data);
+  // },[]);
 
 
   // useEffect(() => {
@@ -127,7 +128,7 @@ function Payment() {
     const showArrow = params.displayName === "Status";
     return (
       <>
-        <Typography variant="body1" color={theme.palette.color30.main}>
+        <Typography variant="body1" color={lightPalette.color30.main}>
           {value}
         </Typography>
         {showArrow ? null : (
@@ -144,7 +145,7 @@ function Payment() {
     return (
       <Typography
         variant="body1"
-        color={theme.palette.secondaryBlack.superdark}
+        color={lightPalette.secondaryBlack.semidark}
       >
         {value}
       </Typography>
@@ -174,7 +175,7 @@ function Payment() {
               variant="body1"
               sx={{
                 // color: "#9F77EB",
-                color: theme.palette.primary.main,
+                color: lightPalette.primary.main,
                 cursor: "pointer",
                 // fontFamily: "Heebo",
                 // fontWeight: "500",
@@ -199,7 +200,7 @@ function Payment() {
           alt="Filter Icon"
           className={classes.filterIcon}
         />
-        <Typography color={theme.palette.color134.main} variant="body1">
+        <Typography color={lightPalette.color134.main} variant="body1">
           {PAYMENT.SELECT_TEXT}
           {/* Filter by organiztion */}
         </Typography>
@@ -278,7 +279,7 @@ function Payment() {
               <Grid item xs={6}>
                 <Typography
                   variant="body1"
-                  color={theme.palette.color43.superdark}
+                  color={lightPalette.color43.darker}
                   // SX={{ color: "rgba(43, 43, 43, 0.80)" }}
                 >
                   {PAYMENT.SUBTITLE}
@@ -340,8 +341,9 @@ function Payment() {
                             height: "55vh",
                             "& .MuiMenuItem-root": {
                               "&:hover": {
-                                background: "rgba(30, 30, 30, 0.10)",
-                                color: theme.palette.color30.main,
+                                // background: "rgba(30, 30, 30, 0.10)",
+                                background:lightPalette.color30.lightest,
+                                color: lightPalette.color30.main,
                               },
                               "&.Mui-selected": {
                                 background: "rgba(159, 119, 235, 0.28)",

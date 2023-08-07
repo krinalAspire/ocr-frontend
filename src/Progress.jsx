@@ -3,8 +3,8 @@ import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
-import { up } from "../../../theme";
-import { classes } from "./utils";
+import { up } from "./theme";
+import { classes } from "./components/pages/accountsettings/utils";
 
 function Progress() {
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({

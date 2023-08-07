@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import { Avatar, Button, Typography } from "@mui/material";
+import { Avatar, Button, Typography, LinearProgress } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import user from "../../../assets/accountsetting-assets/user.svg";
 import mail from "../../../assets/accountsetting-assets/mail.svg";
-import SelectButton from "./Select";
 import layers from "../../../assets/accountsetting-assets/layers.svg";
-import Progress from "./Progress";
 import Nav from "./Nav";
 import AddIcon from "@mui/icons-material/Add";
 import TextField from "@mui/material/TextField";
-// import Chip from '@mui/material/Chip';
 import { Root } from "./utils";
 import { classes } from "./utils";
 import { PROFILE } from "../../services/constantServices";
-import {theme} from "../../../theme";
-import CircularProgress from '@mui/material/CircularProgress';
-import Backdrop from '@mui/material/Backdrop';
+import Backdrop from "@mui/material/Backdrop";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from '@mui/material/FormControlLabel';
 import AddMember from "./AddMember";
+import { lightPalette } from "../../../theme";
 
 function Profile() {
-  const [open, setOpen] = React.useState(false);
+  const [active, setActive]=useState("Active");
+  const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
   };
@@ -47,14 +46,12 @@ function Profile() {
         }}
       >
         {PROFILE.HEADING}
-        {/* Account Settings */}
       </Typography>
 
       <Root className={classes.root}>
         <Box className={classes.box}>
           <Typography variant="subtitle1" className={classes.title}>
             {PROFILE.CHANGE_PASSWORD}
-            {/* Change Password */}
           </Typography>
 
           <Grid
@@ -73,20 +70,13 @@ function Profile() {
                   <Typography
                     variant="body1"
                     className={classes.fontweight}
-                    color={theme.palette.color30.main}
-                    // sx={{
-                    //   // color: "#1E1E1E",
-                    //   color:"color30"
-                    // }}
+                    color={lightPalette.color30.main}
                   >
                     Pratik Patel
                   </Typography>
                   <Typography
                     variant="subtitle1"
-                    color={theme.palette.color43.superdark}
-                    // sx={{
-                    //   color: "rgba(43, 43, 43, 0.80)",
-                    // }}
+                    color={lightPalette.color43.darker}
                   >
                     pratik.patel@aspiresoftserv.com
                   </Typography>
@@ -100,14 +90,12 @@ function Profile() {
 
           <Typography variant="subtitle1" className={classes.title}>
             {PROFILE.MEMBER}
-            {/* Members */}
           </Typography>
 
           <Grid
             container
             sx={{
-              // background: "rgba(159, 119, 235, 0.10)",
-              background: theme.palette.primary.dark,
+              background: lightPalette.primary.lightest,
               borderRadius: "5px",
             }}
             mb={{ xl: 1.3, lg: 1, md: 0.9, sm: 0.7, xs: 0.5 }}
@@ -127,19 +115,13 @@ function Profile() {
                   <Typography
                     variant="subtitle1"
                     className={classes.fontweight}
-                    color={theme.palette.color30.main}
-                    // sx={{
-                    //   color: "#1E1E1E",
-                    // }}
+                    color={lightPalette.color30.main}
                   >
                     Pratik Patel
                   </Typography>
                   <Typography
                     variant="subtitle1"
-                    color={theme.palette.color43.superdark}
-                    // sx={{
-                    //   color: "rgba(43, 43, 43, 0.80)",
-                    // }}
+                    color={lightPalette.color43.darker}
                   >
                     pratik.patel@aspiresoftserv.com
                   </Typography>
@@ -154,15 +136,13 @@ function Profile() {
                 variant="outlined"
                 disabled
               />
-              {/* <SelectButton label="Admin" /> */}
             </Grid>
           </Grid>
 
           <Grid
             container
             sx={{
-              background: theme.palette.color134.light,
-              // background: "rgba(134, 134, 134, 0.10)",
+              background: lightPalette.color134.lightest,
               borderRadius: "5px",
             }}
             columns={{ xs: 4, sm: 12 }}
@@ -178,22 +158,25 @@ function Profile() {
                   <Typography
                     variant="subtitle1"
                     className={classes.fontweight}
-                    color={theme.palette.color30.main}
-                    // sx={{
-                    //   color: "#1E1E1E",
-                    // }}
+                    color={lightPalette.color30.main}
                   >
                     poonampavakar5632@gmail.com
                   </Typography>
                   <Typography
                     variant="subtitle1"
-                    color={theme.palette.color43.superdark}
-                    // sx={{
-                    //   color: "rgba(43, 43, 43, 0.80)",
-                    // }}
+                    color={lightPalette.color43.darker}
                   >
                     Invited by Poonam Pavaskar. Expires 1 week from now
                   </Typography>
+                    <FormControlLabel
+                      label={<Typography variant="subtitle1" color={lightPalette.color43.darker}>Active</Typography>}
+                      control={
+                        <Checkbox
+                          checked={active==="Active" ? true : false}
+                          // onChange={handleChange2}
+                        />
+                      }
+                    />
                 </Grid>
               </Grid>
             </Grid>
@@ -205,13 +188,6 @@ function Profile() {
                 variant="outlined"
                 disabled
               />
-              {/* <Chip
-                label="Chip Outlined"
-                // value="Member"
-                variant="outlined"
-                className={classes.TextFieldContainer}
-              /> */}
-              {/* <SelectButton label="Members" /> */}
             </Grid>
           </Grid>
 
@@ -222,11 +198,10 @@ function Profile() {
             <Box>
               <Typography
                 variant="body2"
-                sx={{ color: theme.palette.primary.main, cursor: "pointer" }}
+                sx={{ color: lightPalette.primary.main, cursor: "pointer" }}
                 onClick={handleOpen}
               >
                 {PROFILE.ADD_MORE_USERS}
-                {/* Add More Users */}
               </Typography>
               <Backdrop
                 sx={{
@@ -234,17 +209,14 @@ function Profile() {
                   zIndex: (theme) => theme.zIndex.drawer + 1,
                 }}
                 open={open}
-                // onClick={handleClose}
               >
-                <AddMember handleClose={handleClose}/>
-                {/* <CircularProgress color="inherit" /> */}
+                <AddMember handleClose={handleClose} />
               </Backdrop>
             </Box>
           </Box>
 
           <Typography variant="subtitle1" className={classes.title}>
             {PROFILE.PLAN}
-            {/* My Plan */}
           </Typography>
 
           <Grid
@@ -262,23 +234,15 @@ function Profile() {
                 <Grid item xs={11} align="left">
                   <Typography
                     variant="h5"
-                    color={theme.palette.color30.main}
-                    // sx={{
-                    //   color: "#1E1E1E",
-                    // }}
+                    color={lightPalette.color30.main}
                   >
                     {PROFILE.MY_CURRENT_PLAN}
-                    {/* My Current Plan */}
                   </Typography>
                   <Typography
                     variant="body2"
-                    color={theme.palette.color43.superdark}
-                    // sx={{
-                    //   color: "rgba(43, 43, 43, 0.80)",
-                    // }}
+                    color={lightPalette.color43.darker}
                   >
                     {PROFILE.PLAN_EXPIRY}
-                    {/* please check your plan which dated expires. */}
                   </Typography>
                 </Grid>
               </Grid>
@@ -290,12 +254,15 @@ function Profile() {
                   mb: { xs: 1.3 },
                 }}
               >
-                <Progress />
+                <LinearProgress
+                  variant="determinate"
+                  value={85}
+                  className={classes.Progressbar}
+                />
                 <Typography
                   variant="h5"
                   sx={{
-                    color: theme.palette.color43.superdark,
-                    // color: "rgba(43, 43, 43, 0.80)",
+                    color: lightPalette.color43.darker,
                     marginTop: {
                       xxl: 2,
                       xl: 1.9,
@@ -311,8 +278,7 @@ function Profile() {
                 <Typography
                   variant="body1"
                   sx={{
-                    // color: "rgba(43, 43, 43, 0.60)",
-                    color: theme.palette.color43.dark,
+                    color: lightPalette.color43.semidark,
                     fontWeight: 400,
                   }}
                 >
@@ -324,7 +290,6 @@ function Profile() {
 
           <Typography variant="subtitle1" className={classes.title}>
             {PROFILE.SUMMERY}
-            {/* Summary */}
           </Typography>
 
           <Box

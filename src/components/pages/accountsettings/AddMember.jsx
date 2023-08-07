@@ -1,24 +1,14 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Button, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import closeIcon from "../../../assets/accountsetting-assets/x-circle.svg";
 import { classes } from "./utils";
-import {theme} from "../../../theme";
-import { Box, Button, Grid } from "@mui/material";
+import { ADDUSER } from "../../services/constantServices";
 
 function AddMember({ handleClose }) {
 
@@ -26,21 +16,11 @@ function AddMember({ handleClose }) {
     <Card className={classes.CardComponent}>
       <CardHeader
         className={classes.Cardheader}
-        // action={
-        //   <Box className={classes.actionsContainer}>
-        //     <Avatar
-        //       onClick={handleClose}
-        //       src={closeIcon}
-        //       className={classes.CloseAction}
-        //       // sx={{ cursor: "pointer" }}
-        //     />
-        //   </Box>
-        // }
         title={
           <Grid container alignItems="center">
             <Grid item xs={10}>
               <Typography variant="h6">
-                Add a Member to Aspire software
+                {ADDUSER.CARD_TITLE}
               </Typography>
             </Grid>
             <Grid item xs={2} align="right">
@@ -56,11 +36,11 @@ function AddMember({ handleClose }) {
 
       <CardContent className={classes.CardContent}>
         <Typography variant="subtitle1" className={classes.SubTitle}>
-          Organizations allow you to invite team members and assign them.
+          {ADDUSER.SUB_TITLE}
         </Typography>
 
         <Typography variant="subtitle1" className={classes.EmailTextfieldText}>
-          Email
+          {ADDUSER.EMAIL}
         </Typography>
         <TextField
           fullWidth
@@ -68,11 +48,10 @@ function AddMember({ handleClose }) {
           id="outlined-basic"
           variant="outlined"
           className={classes.TextField}
-          // InputProps={{ className: classes.input }}
         />
 
         <Button variant="contained" className={classes.AdduserBtn}>
-          Add User
+          {ADDUSER.INVITE_BUTTON}
         </Button>
       </CardContent>
     </Card>

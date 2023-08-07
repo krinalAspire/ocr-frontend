@@ -25,13 +25,11 @@ export const classes = {
   EmailTextfieldText: "EmailTextfieldText",
   TextField:"TextField",
   Input:"Input",
-  Progressbar:"Progressbar"
-  // content: "content",
+  Progressbar:"Progressbar",
 };
 
 export const Root = styled("div")(({ theme }) => ({
   [`&.${classes.root}`]: {
-    // background:"yellow",
     [up("xs")]: {
       marginLeft: "20px",
       marginRight: "20px",
@@ -63,10 +61,8 @@ export const Root = styled("div")(({ theme }) => ({
       height: "81.5vh",
     },
     borderRadius: "5px",
-    // border: "1px solid rgba(0, 0, 0, 0.20)",
-    border: `1px solid ${theme.palette.secondaryBlack.light}`,
+    border: `1px solid ${theme.palette.secondaryBlack.lighter}`,
     overflow: "auto",
-    // height: "70vh",
     scrollbarWidth: "thin",
     "&::-webkit-scrollbar": {
       width: "0.4em",
@@ -80,12 +76,7 @@ export const Root = styled("div")(({ theme }) => ({
       borderRadius: "5px",
     },
   },
-  // [`& .${classes.MainTitle}`]: {
-  //   fontFamily: "Poppins",
-  //   fontWeight: 600,
-  // },
   [`& .${classes.box}`]: {
-    // background:"yellow"
     [up("xs")]: {
       margin: "15px 17px 15px 17px",
     },
@@ -106,8 +97,7 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.title}`]: {
-    // color: "rgba(30, 30, 30, 0.60)",
-    color: theme.palette.color30.dark,
+    color: theme.palette.color30.semidark,
     [up("xs")]: {
       marginBottom: "7px",
     },
@@ -129,8 +119,7 @@ export const Root = styled("div")(({ theme }) => ({
   },
   [`& .${classes.titlegrid}`]: {
     borderRadius: "5px",
-    // background: "rgba(134, 134, 134, 0.10)",
-    background: theme.palette.color134.light,
+    background: theme.palette.color134.lightest,
     [up("xs")]: {
       marginBottom: "20px",
     },
@@ -204,46 +193,13 @@ export const Root = styled("div")(({ theme }) => ({
     paddingRight: "16px",
   },
   [`& .${classes.btn}`]: {
-    // background: "rgba(134, 134, 134, 0.40)",
     boxShadow: 'none',
-    background: theme.palette.color134.medium,
-    // color: "#1E1E1E",
+    background: theme.palette.color134.semilight,
     color: theme.palette.color30.main,
     ":hover": {
-      // background: "rgba(134, 134, 134, 0.40)",
-      background: theme.palette.color134.medium,
+      background: theme.palette.color134.semilight,
       color: "1E1E1E",
     },
-    // [up("xs")]: {
-    //   width: "29vw",
-    //   height: "4.5vh",
-    //   marginBottom: "10px",
-    // },
-    // [up("sm")]: {
-    //   width: "15vw",
-    //   height: "3.5vh",
-    //   margin: "20px 0px",
-    // },
-    // [up("md")]: {
-    //   width: "14vw",
-    //   height: "5vh",
-    //   margin: "20px 0px",
-    // },
-    // [up("lg")]: {
-    //   width: "13vw",
-    //   height: "6vh",
-    //   margin: "22px 0px",
-    // },
-    // [up("xl")]: {
-    //   width: "12.5vw",
-    //   height: "5.78vh",
-    //   margin: "23px 0px",
-    // },
-    // [up("xxl")]: {
-    //   width: "9.47vw",
-    //   height: "5vh",
-    //   margin: "24px 0px",
-    // },
     [up("xs")]: {
       width: "144px",
       height: "30px",
@@ -362,7 +318,6 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.TextFieldContainer}`]: {
-    // background:"yellow"
     [up("xs")]: {
       margin: "10px 0px",
     },
@@ -410,11 +365,10 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.Cardheader}`]: {
-    background: "rgba(134, 134, 134, 0.20)",
-    borderBottom: "1px solid rgba(134, 134, 134, 0.10)",
+    background:theme.palette.color134.lighter,
+    borderBottom:`1px solid ${theme.palette.color134.lightest}`
   },
   [`& .${classes.AdduserBtn}`]: {
-    // marginTop: theme.spacing(6),
     ":hover": {
       background: theme.palette.primary.main,
       color: "white",
@@ -436,20 +390,15 @@ export const Root = styled("div")(({ theme }) => ({
     },
     [up("lg")]: {
       width: "105px",
-      // height: "33px",
       height:"35px",
       marginTop: "35px",
     },
     [up("xl")]: {
-      // width: "110px",
-      // height: "35px",
       width: "115px",
       height: "40px",
       marginTop: "40px",
     },
     [up("xxl")]: {
-      // width: "125px",
-      // height: "41px",
       width:"133px",
       height:"52px",
       marginTop: "45px",
@@ -476,7 +425,7 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.SubTitle}`]: {
-    color: theme.palette.color43.superdark,
+    color: theme.palette.color43.dark,
     [up("xs")]: {
       marginBottom: theme.spacing(1),
     },
@@ -498,7 +447,6 @@ export const Root = styled("div")(({ theme }) => ({
   },
   [`& .${classes.CloseAction}`]: {
     cursor: "pointer",
-    // background:"yellow"
     [up("xs")]: {
       width: "16px",
       height: "16px",
@@ -547,31 +495,8 @@ export const Root = styled("div")(({ theme }) => ({
       },
       [up('xxl')]:{
         height:"34px" 
-        // height:"54px"
       },
     },
-    // padding:"15px"
-    // lineHeight: '5',
-    // "&.MuiInputLabel":{
-    //   [up('xs')]:{
-    //     height:"15px"
-    //   },
-    //   [up('sm')]:{
-    //     height:"15px"
-    //   },
-    //   [up('md')]:{
-    //     height:"15px"
-    //   },
-    //   [up('lg')]:{
-    //     height:"15px"
-    //   },
-    //   [up('xl')]:{
-    //     height:"15px"
-    //   },
-    //   [up('xxl')]:{
-    //     height:"70px"
-    //   },
-    // }
   },
   [`& .${classes.Progressbar}`]: {
     [up("xs")]: {
@@ -595,14 +520,8 @@ export const Root = styled("div")(({ theme }) => ({
       height: "1.29vh",
     },
     [up("xxl")]: {
-      // width:'16.92vw',
       width: "15vw",
       height: "1.29vh",
     },
-  },
-  // [`& .${classes.content}`]: {
-  //   color: theme.palette.common.white,
-  //   fontSize: 16,
-  //   lineHeight: 1.7,
-  // },
+  }
 }));

@@ -183,7 +183,7 @@ export const Root = styled("div")(({ theme }) => ({
   },
   [`& .${classes.InvoiceRecordTitle}`]: {
     // color: "rgba(30, 30, 30, 0.60)",
-    color:theme.palette.color30.dark,
+    color:theme.palette.color30.semidark,
     [up("xs")]: {
       paddingLeft: "10px",
     },
@@ -242,7 +242,7 @@ export const Root = styled("div")(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: theme.palette.color134.superlight,
+    background: theme.palette.color134.lighter,
     borderRadius: "5px",
     [up("xs")]: {
       width: "35px",

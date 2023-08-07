@@ -19,7 +19,7 @@ export const Root = styled("div")(({ theme }) => ({
     justifyContent: "center",
     borderRadius: "5px",
     // border: "1px dashed red",
-    border: `1px dashed ${theme.palette.secondaryBlack.light}`,
+    border: `1px dashed ${theme.palette.secondaryBlack.lighter}`,
     [up("xs")]: {
       marginTop: "17px",
       height: "74vh",

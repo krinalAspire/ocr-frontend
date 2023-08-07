@@ -7,7 +7,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { Root } from "./utils";
 import { classes } from "./utils";
-import {theme} from "../../../theme";
+import {lightPalette, theme} from "../../../theme";
 
 const InvoiceRecord = (props) => {
   const [field, setfield] = useState(props.fieldName);
@@ -51,7 +51,7 @@ const InvoiceRecord = (props) => {
           container
           className={classes.GridContainer}
           sx={{
-            background: editMode ? theme.palette.primary.light : null,
+            background: editMode ? lightPalette.primary.lighter : null,
           }}
         >
           <Grid
@@ -67,21 +67,21 @@ const InvoiceRecord = (props) => {
               <CheckIcon
                 className={classes.CheckedFieldIcon}
                 sx={{
-                  color: theme.palette.primary.main,
+                  color: lightPalette.primary.main,
                 }}
               />
             ) : isEdited ? (
               <CheckIcon
                 className={classes.CheckedFieldIcon}
                 sx={{
-                  color: theme.palette.primary.main,
+                  color: lightPalette.primary.main,
                 }}
               />
             ) : (
               <FiberManualRecordIcon
                 className={classes.FiberManualRecordIcon}
                 sx={{
-                  color: theme.palette.color134.main,
+                  color:lightPalette.color134.main,
                 }}
               />
             )}
@@ -119,7 +119,7 @@ const InvoiceRecord = (props) => {
                 onChange={handleChange}
                 className={classes.contentEditableField}
                 sx={{
-                  color: theme.palette.primary.main,
+                  color: lightPalette.primary.main,
                   fontWeight: 400,
                 }}
               >
@@ -132,7 +132,7 @@ const InvoiceRecord = (props) => {
                 className={classes.TypographyField}
                 sx={{
                   // cursor: "pointer",
-                  color: isEdited ? theme.palette.primary.main : theme.palette.color134.main,
+                  color: isEdited ? lightPalette.primary.main : lightPalette.color134.main,
                   // fontFamily: "Heebo",
                   fontWeight: 400,
                 }}

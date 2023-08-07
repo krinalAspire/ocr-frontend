@@ -29,6 +29,7 @@ import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import IconButton from "@mui/material/IconButton";
 import { theme } from "../../../theme";
 import { AssessmentOutlined } from "@mui/icons-material";
+import { ADDPAYMENT } from "../../services/constantServices";
 
 function AddPayment({ handleClose }) {
   const fileInputRef = useRef(null);
@@ -70,7 +71,7 @@ function AddPayment({ handleClose }) {
         title={
           <Grid container alignItems="center">
             <Grid item xs={10}>
-              <Typography variant="h6">Add Payment Details</Typography>
+              <Typography variant="h6">{ADDPAYMENT.CARD_TITLE}</Typography>
             </Grid>
             <Grid item xs={2} align="right">
               <Avatar
@@ -86,7 +87,8 @@ function AddPayment({ handleClose }) {
       {/* <CustomOpenPickerIcon /> */}
       <CardContent className={classes.CardContent}>
         <Typography variant="subtitle1" className={classes.TypographyText}>
-          Organization Name
+          {ADDPAYMENT.ORGANIZATION_NAME}
+          {/* Organization Name */}
         </Typography>
         <TextField
           fullWidth
@@ -105,14 +107,16 @@ function AddPayment({ handleClose }) {
         >
           <Grid item xs={4}>
             <Typography variant="subtitle1" className={classes.TypographyText}>
-              Amount
+              {ADDPAYMENT.AMOUNT}
+              {/* Amount */}
             </Typography>
             <TextField fullWidth size="small" className={classes.TextField} />
           </Grid>
           {/* <img src={Calendar} alt="bj"/> */}
           <Grid item xs={4}>
             <Typography variant="subtitle1" className={classes.TypographyText}>
-              Date
+              {ADDPAYMENT.DATE}
+              {/* Date */}
             </Typography>
             {/* <TextField
       label="Select a date"
@@ -227,7 +231,8 @@ function AddPayment({ handleClose }) {
           </Grid>
           <Grid item xs={4}>
             <Typography variant="subtitle1" className={classes.TypographyText}>
-              Status
+              {ADDPAYMENT.STATUS}
+              {/* Status */}
             </Typography>
             <StatusDropdown />
             {/* <Dropdown /> */}
@@ -236,7 +241,8 @@ function AddPayment({ handleClose }) {
 
         <Box className={classes.AddPaymentGridContainer}>
           <Typography variant="subtitle1" className={classes.TypographyText}>
-            Upload Payment Invoice
+            {ADDPAYMENT.UPLOAD_INVOICE}
+            {/* Upload Payment Invoice */}
           </Typography>
           <Box className={classes.BrowseFileBox}>
             <input
@@ -251,7 +257,8 @@ function AddPayment({ handleClose }) {
                 onClick={() => fileInputRef.current.click()}
                 className={classes.BrowseFileButton}
               >
-                Browse File
+                {ADDPAYMENT. BROWSEFILE_BUTTON}
+                {/* Browse File */}
               </Button>
 
               <Typography
@@ -260,16 +267,16 @@ function AddPayment({ handleClose }) {
                 color={
                   selectedFile
                     ? theme.palette.color30.main
-                    : theme.palette.color30.superlight
+                    : theme.palette.color30.semilight
                 }
               >
-                {selectedFile ? selectedFile.name : "No File Selected"}
+                {selectedFile ? selectedFile.name : ADDPAYMENT.FILE_SELECTED}
               </Typography>
             </Box>
           </Box>
         </Box>
 
-        <Button className={classes.AddPaymentbtn}>Add Payment</Button>
+        <Button className={classes.AddPaymentbtn}>{ADDPAYMENT.ADD_PAYMENT}</Button>
       </CardContent>
     </Card>
   );

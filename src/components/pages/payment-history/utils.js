@@ -22,15 +22,15 @@ export const classes = {
   BrowseFileButtonBox: "BrowseFileButtonBox",
   BrowseFileButton: "BrowseFileButton",
   SelectFileTypography: "SelectFileTypography",
-  AddPaymentbtn:"AddPaymentbtn",
-  BrowseFileBox:"BrowseFileBox"
+  AddPaymentbtn: "AddPaymentbtn",
+  BrowseFileBox: "BrowseFileBox",
   // MenuItemIcon:"MenuItemIcon"
   // SelectComponent:"SelectComponent"
 };
 
 export const Root = styled("div")(({ theme }) => ({
   [`&.${classes.root}`]: {
-    border: `1px solid ${theme.palette.secondaryBlack.light}`,
+    border: `1px solid ${theme.palette.secondaryBlack.lighter}`,
     borderRadius: "5px",
     [up("xs")]: {
       margin: "20px 23px",
@@ -192,18 +192,22 @@ export const Root = styled("div")(({ theme }) => ({
     // },
     "& .MuiSelect-selectMenu": {
       height: "55vh",
-      boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)",
+      // boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)",
+      boxShadow: `0px 2px 8px ${theme.palette.secondaryBlack.lighter}`,
       "&:hover": {
-        background: "rgba(30, 30, 30, 0.10)",
-        color: "#1e1e1e",
+        // background: "rgba(30, 30, 30, 0.10)",
+        background: theme.palette.color30.lightest,
+        color: theme.palette.color30.main,
       },
       "&.Mui-focused": {
         background: "rgba(159, 119, 235, 0.28)",
-        color: "#1e1e1e",
+        // color: "#1e1e1e",
+        color: theme.palette.color30.main,
       },
       "&.Mui-selected": {
         background: "rgba(159, 119, 235, 0.28)",
-        color: "#1e1e1e",
+        // color: "#1e1e1e",
+        color: theme.palette.color30.main,
       },
     },
     // height:"30vh",
@@ -268,8 +272,10 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.Cardheader}`]: {
-    background: "rgba(134, 134, 134, 0.20)",
-    borderBottom: "1px solid rgba(134, 134, 134, 0.10)",
+    // background: "rgba(134, 134, 134, 0.20)",
+    // borderBottom: "1px solid rgba(134, 134, 134, 0.10)",
+    background: theme.palette.color134.lighter,
+    borderBottom: `1px solid ${theme.palette.color134.lightest}`,
   },
   [`& .${classes.AdduserBtn}`]: {
     // marginTop: theme.spacing(6),
@@ -334,7 +340,7 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.SubTitle}`]: {
-    color: theme.palette.color43.superdark,
+    color: theme.palette.color43.darker,
     [up("xs")]: {
       marginBottom: theme.spacing(1),
     },
@@ -387,9 +393,9 @@ export const Root = styled("div")(({ theme }) => ({
     paddingBottom: theme.spacing(1.5),
   },
   [`& .${classes.TextField}`]: {
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border:"1px solid rgba(0, 0, 0, 0.01)"
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "1px solid rgba(0, 0, 0, 0.01)",
       },
     },
     "& .MuiInputBase-input": {
@@ -482,12 +488,12 @@ export const Root = styled("div")(({ theme }) => ({
     alignItems: "center",
   },
   [`& .${classes.BrowseFileButton}`]: {
-    background: "rgba(134, 134, 134, 0.40)",
-    color: "#1E1E1E",
+    background: theme.palette.color134.semilight,
+    color: theme.palette.color30.main,
     margin: "5px",
     ":hover": {
-      background: "rgba(134, 134, 134, 0.40)",
-      color: "#1E1E1E",
+      background: theme.palette.color134.semilight,
+      color: theme.palette.color30.main,
     },
     [up("xs")]: {
       width: "80px",
@@ -518,50 +524,51 @@ export const Root = styled("div")(({ theme }) => ({
     // color:theme.palette.color30.superlight,
     marginLeft: "2vw",
   },
-  [`& .${classes.AddPaymentbtn}`]:{
-    background: "#9F77EB",
+  [`& .${classes.AddPaymentbtn}`]: {
+    background: theme.palette.primary.main,
     color: "white",
     ":hover": {
-      background: "#9F77EB",
+      background:theme.palette.primary.main,
       color: "white",
     },
     [up("xs")]: {
       width: "75px",
       height: "30px",
-      marginTop:"25px"
+      marginTop: "25px",
     },
     [up("sm")]: {
       width: "145px",
       height: "35px",
-      marginTop:"30px"
+      marginTop: "30px",
     },
     [up("md")]: {
       width: "150px",
       height: "40px",
-      marginTop:"35px"
+      marginTop: "35px",
     },
     [up("lg")]: {
       width: "155px",
       height: "45px",
-      marginTop:"40px"
+      marginTop: "40px",
     },
     [up("xl")]: {
       width: "160px",
       height: "50px",
-      marginTop:"45px"
+      marginTop: "45px",
     },
     [up("xxl")]: {
       width: "169px",
       height: "54px",
-      marginTop:"50px"
+      marginTop: "50px",
     },
   },
-  [`& .${classes.BrowseFileBox}`]:{
-    border:"1px solid rgba(0, 0, 0, 0.20)",
-     borderRadius:"5px"
-  }
+  [`& .${classes.BrowseFileBox}`]: {
+    // border: "1px solid rgba(0, 0, 0, 0.20)",
+    border:`1px solid ${theme.palette.secondaryBlack.lighter}`,
+    borderRadius: "5px",
+  },
   // [`& .${classes.MenuItemIcon}`]:{
-    // background:"yellow !important",
+  // background:"yellow !important",
   //   [up("xs")]: {
   //     width: "14px !important",
   //     height: "14px !important",

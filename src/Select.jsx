@@ -4,7 +4,7 @@ import Select from "@mui/material/Select";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState } from "react";
 import { Box } from "@mui/material";
-import {theme} from "../../../theme";
+import {theme} from "./theme";
 // import Typography from "@mui/material/Typography";
 
 function SelectButton(props) {
@@ -42,7 +42,6 @@ function SelectButton(props) {
             onChange={handleChange}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
-            // color={theme.palette.color43.main}
             sx={{
               color: theme.palette.color43.superdark,
             }}

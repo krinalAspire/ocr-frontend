@@ -94,7 +94,7 @@ function Invoice() {
             <Box
               // className={`${classes.InvoicePdfMainBox} scrollableBox`}
               className={classes.InvoiceGridMainBox}
-              sx={{
+              // sx={{
                 // border: "1px solid black",
                 // overflow: "auto",
                 // height: {
@@ -105,7 +105,7 @@ function Invoice() {
                 //   xl: "70vh",
                 //   xxl: "70vh",
                 // },
-              }}
+              // }}
             >
               <Box
                 className={classes.InvoicePdfBox}
