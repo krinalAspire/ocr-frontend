@@ -13,13 +13,19 @@ import { classes } from "./utils";
 import { PROFILE } from "../../services/constantServices";
 import Backdrop from "@mui/material/Backdrop";
 import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControlLabel from "@mui/material/FormControlLabel";
 import AddMember from "./AddMember";
 import { lightPalette } from "../../../theme";
 
 function Profile() {
-  const [active, setActive]=useState("Active");
+  const [active, setActive] =useState("Active")
+  const [isChecked, setIsChecked] = useState(active === "Active");
+
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+  };
   const [open, setOpen] = useState(false);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -168,15 +174,23 @@ function Profile() {
                   >
                     Invited by Poonam Pavaskar. Expires 1 week from now
                   </Typography>
-                    <FormControlLabel
-                      label={<Typography variant="subtitle1" color={lightPalette.color43.darker}>Active</Typography>}
-                      control={
-                        <Checkbox
-                          checked={active==="Active" ? true : false}
-                          // onChange={handleChange2}
-                        />
-                      }
-                    />
+                  <FormControlLabel
+                    label={
+                      <Typography
+                        variant="subtitle1"
+                        color={lightPalette.color43.darker}
+                      >
+                        {active}
+                      </Typography>
+                    }
+                    control={
+                      <Checkbox
+                        className={classes.checkBox}
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                      />
+                    }
+                  />
                 </Grid>
               </Grid>
             </Grid>
@@ -232,10 +246,7 @@ function Profile() {
                   </Box>
                 </Grid>
                 <Grid item xs={11} align="left">
-                  <Typography
-                    variant="h5"
-                    color={lightPalette.color30.main}
-                  >
+                  <Typography variant="h5" color={lightPalette.color30.main}>
                     {PROFILE.MY_CURRENT_PLAN}
                   </Typography>
                   <Typography

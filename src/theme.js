@@ -378,8 +378,9 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           "&.Mui-checked": {
-            color: theme.palette.primary.main,
+            color: "#9F77EB",
           },
+          // padding:"1px 8px"
         },
       },
     },
@@ -387,7 +388,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "5px",
-          border:`1px solid ${theme.palette.secondaryBlack.lighter}`
+          border: "1px solid rgba(0, 0, 0, 0.20)",
         },
       },
     },
@@ -415,15 +416,15 @@ export const theme = createTheme({
           fontFamily: "Heebo",
           fontWeight: 500,
           "&:hover": {
-            backgroundColor:theme.palette.color30.light,
+            backgroundColor: "rgba(30, 30, 30, 0.3)",
             color: "#FFFFFF",
           },
           "&.Mui-selected": {
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: "#9F77EB",
             color: "#FFFFFF",
           },
           "&.Mui-selected:hover": {
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: "#9F77EB",
             color: "#FFFFFF",
           },
         },

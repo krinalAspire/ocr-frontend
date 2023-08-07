@@ -26,6 +26,7 @@ export const classes = {
   TextField:"TextField",
   Input:"Input",
   Progressbar:"Progressbar",
+  checkBox:"checkBox"
 };
 
 export const Root = styled("div")(({ theme }) => ({
@@ -523,5 +524,8 @@ export const Root = styled("div")(({ theme }) => ({
       width: "15vw",
       height: "1.29vh",
     },
+  },
+  [`& .${classes.checkBox}`]:{
+    padding:"1px 8px"
   }
 }));
