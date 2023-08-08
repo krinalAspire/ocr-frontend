@@ -11,12 +11,9 @@ import AddIcon from "@mui/icons-material/Add";
 import filter from "../../../assets/paymenthistory-assets/filter.svg";
 import Checkbox from "@mui/material/Checkbox";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import download from "../../../assets/paymenthistory-assets/download.svg";
 import "./Payment.css";
-// import { PaymentData } from "../rowData";
 import NavPayment from "./NavPayment";
 import Backdrop from "@mui/material/Backdrop";
-import ArrowUp from "../../../assets/paymenthistory-assets/arrow-up.svg";
 import axios from "axios";
 import { Root } from "./utils";
 import { classes } from "./utils";
@@ -25,8 +22,8 @@ import { theme } from "../../../theme";
 import { PaymentData } from "./rowData";
 import AddPayment from "./AddPayment";
 import { lightPalette } from "../../../theme";
-import CircularProgress from "@mui/material/CircularProgress";
 import { getrowData } from "../../services/api";
+import { columnData } from "./columndef";
 
 function Payment() {
   const [open, setOpen] = React.useState(false);
@@ -123,74 +120,6 @@ function Payment() {
   //   sortDescending: '<i class="fa fa-arrow-down"/><i class="fa fa-arrow-up "/>',
   // };
 
-  function responsiveHeader(params) {
-    const value = params.displayName;
-    const showArrow = params.displayName === "Status";
-    return (
-      <>
-        <Typography variant="body1" color={lightPalette.color30.main}>
-          {value}
-        </Typography>
-        {showArrow ? null : (
-          <Box sx={{ pl: 1.5 }}>
-            <img src={ArrowUp} alt="arrow-up" />
-          </Box>
-        )}
-      </>
-    );
-  }
-
-  const ResponsiveFontsize = (params) => {
-    const value = params.value;
-    return (
-      <Typography
-        variant="body1"
-        color={lightPalette.secondaryBlack.semidark}
-      >
-        {value}
-      </Typography>
-    );
-  };
-
-  const handleInvoice = () => {
-    const handleClicked = () => {
-      alert(`It's Working!!`);
-    };
-
-    return (
-      <Grid>
-        <Grid container alignItems="center" justifyContent="flex-start">
-          <Grid item xs={3}>
-            {" "}
-            <Box>
-              <img
-                src={download}
-                alt="download"
-                style={{ marginRight: "8px", marginTop: "9px" }}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={3}>
-            <Typography
-              variant="body1"
-              sx={{
-                // color: "#9F77EB",
-                color: lightPalette.primary.main,
-                cursor: "pointer",
-                // fontFamily: "Heebo",
-                // fontWeight: "500",
-                // fontSize: "16px !important",
-              }}
-              onClick={() => handleClicked()}
-            >
-              Download Invoice
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  };
-
   const FilterLabel = () => {
     return (
       <Box sx={{ display: "flex" }}>
@@ -202,52 +131,12 @@ function Payment() {
         />
         <Typography color={lightPalette.color134.main} variant="body1">
           {PAYMENT.SELECT_TEXT}
-          {/* Filter by organiztion */}
         </Typography>
       </Box>
     );
   };
 
-  const [columnDefs] = useState([
-    {
-      field: "Payment Invoice",
-      checkboxSelection: true,
-      headerCheckboxSelection: true,
-      minWidth: 395,
-      headerComponent: responsiveHeader,
-      cellRenderer: ResponsiveFontsize,
-    },
-    {
-      field: "Organization",
-      minWidth: 315,
-      headerComponent: responsiveHeader,
-      cellRenderer: ResponsiveFontsize,
-    },
-    {
-      field: "Amount",
-      minWidth: 65,
-      headerComponent: responsiveHeader,
-      cellRenderer: ResponsiveFontsize,
-    },
-    {
-      field: "Date",
-      minWidth: 90,
-      headerComponent: responsiveHeader,
-      cellRenderer: ResponsiveFontsize,
-    },
-    {
-      field: "Status",
-      minWidth: 70,
-      headerComponent: responsiveHeader,
-      cellRenderer: ResponsiveFontsize,
-    },
-    {
-      field: " ",
-      minWidth: 165,
-      // sortable: false,
-      cellRenderer: handleInvoice,
-    },
-  ]);
+  const [columnDefs, setColumnDefs]=useState(columnData);
 
   const defaultColDef = {
     // sortable: true,
@@ -262,7 +151,6 @@ function Payment() {
 
   return (
     <>
-      {/* <ThemeProvider theme={theme}> */}
       <NavPayment />
       <Root className={classes.root}>
         <Box m={{ xxl: 4, xl: 3.5, lg: 3, md: 2.5, sm: 2, xs: 2 }}>
@@ -280,10 +168,8 @@ function Payment() {
                 <Typography
                   variant="body1"
                   color={lightPalette.color43.darker}
-                  // SX={{ color: "rgba(43, 43, 43, 0.80)" }}
                 >
                   {PAYMENT.SUBTITLE}
-                  {/* See history of your payment plan invoice */}
                 </Typography>
               </Grid>
 
@@ -302,7 +188,6 @@ function Payment() {
                   <Button className={classes.btn} onClick={handleOpen}>
                     <AddIcon className={classes.addIcon} />
                     {PAYMENT.BUTTON_TEXT}
-                    {/* Add Payment Detail */}
                   </Button>
                   <Backdrop
                     sx={{
@@ -310,22 +195,12 @@ function Payment() {
                       zIndex: (theme) => theme.zIndex.drawer + 1,
                     }}
                     open={open}
-                    // onClick={handleClose}
                   >
                     <AddPayment handleClose={handleClose}/>
                   </Backdrop>
 
                   <Box
-                    sx={{
-                      width: {
-                        xxl: "14.11vw",
-                        xl: "16vw",
-                        lg: "17vw",
-                        md: "18vw",
-                        sm: "24vw",
-                        xs: "42vw",
-                      },
-                    }}
+                  className={classes.GridBoxAddbtnSelect}
                   >
                     <FormControl fullWidth size="small">
                       <Select
@@ -341,7 +216,6 @@ function Payment() {
                             height: "55vh",
                             "& .MuiMenuItem-root": {
                               "&:hover": {
-                                // background: "rgba(30, 30, 30, 0.10)",
                                 background:lightPalette.color30.lightest,
                                 color: lightPalette.color30.main,
                               },
@@ -356,15 +230,12 @@ function Payment() {
                             },
                           },
                         }}
-                        // renderValue={(selected) => selected.join(", ")}
                         renderValue={(selected) => {
                           if (selected.length === 0) {
                             return <FilterLabel />;
                           }
                           return selected.join(", ");
-                          // return selected;
                         }}
-                        // renderValue={(selected) => selected}
                       >
                         {options.map((option) => (
                           <MenuItem key={option.value} value={option.value}>
@@ -397,10 +268,6 @@ function Payment() {
               },
             }}
           >
-            <div className="custom-scrollbar">
-              {/* Your custom scrollbar content */}
-              {/* For example, you can add scroll buttons or other elements here */}
-            </div>
             <AgGridReact
               // rowData={rowData}
               // rowData={rowData && rowData.filter((item)=>item.Organization.includes(organization))}
@@ -414,7 +281,6 @@ function Payment() {
           </Box>
         </Box>
       </Root>
-      {/* </ThemeProvider> */}
     </>
   );
 }

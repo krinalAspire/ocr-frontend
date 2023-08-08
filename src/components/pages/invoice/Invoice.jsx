@@ -12,13 +12,6 @@ import { classes } from "./utils";
 import { INVOICE } from "../../services/constantServices";
 
 function Invoice() {
-  // const [fieldCount, setFieldCount] = useState(2); // Initial field count is 2 (for the first two InvoiceRecord components)
-
-  // const handleAddField = () => {
-  //   // Increment the field count when the user clicks "Add More Fields"
-  //   setFieldCount((prevCount) => prevCount + 1);
-  //   console.log(fieldCount);
-  // };
 
   const AddField = () => {
     const [fieldCount, setFieldCount] = useState(2); // Initial field count is 2 (for the first two InvoiceRecord components)
@@ -92,36 +85,12 @@ function Invoice() {
         <Grid container columns={{ xs: 4, sm: 7, md: 12 }}>
           <Grid item xs={9}>
             <Box
-              // className={`${classes.InvoicePdfMainBox} scrollableBox`}
               className={classes.InvoiceGridMainBox}
-              // sx={{
-                // border: "1px solid black",
-                // overflow: "auto",
-                // height: {
-                //   xs: "70vh",
-                //   sm: "70vh",
-                //   md: "70vh",
-                //   lg: "70vh",
-                //   xl: "70vh",
-                //   xxl: "70vh",
-                // },
-              // }}
             >
               <Box
                 className={classes.InvoicePdfBox}
-                // sx={{
-                //   overflow: "auto",
-                  // border: "1px solid red",
-                  // mx: { xxl: 3, xl: 3, lg: 2.5, md: 2, sm: 1.5, xs: 1 },
-                  // my: { xxl: 3, xl: 3, lg: 2.5, md: 2, sm: 1.5, xs: 1 },
-                  // height: "100vh",
-                // }}
               >
                 <Box sx={{
-                  // overflow: "auto",
-                  // border: "1px solid red",
-                  // mx: { xxl: 3, xl: 3, lg: 2.5, md: 2, sm: 1.5, xs: 1 },
-                  // my: { xxl: 3, xl: 3, lg: 2.5, md: 2, sm: 1.5, xs: 1 },
                   height: "100vh",
                 }}>
                 <div>Hello</div>
@@ -134,7 +103,6 @@ function Invoice() {
             <Box className={classes.InvoiceGridMainBox}>
               <Box
                 className={classes.InvoiceGridBox}
-                // sx={{height:"50vh", overflow: 'auto'}}
               >
                 <Box className={classes.InvoiceRecordBox}>
                   <Typography
@@ -174,7 +142,6 @@ function Invoice() {
                     fieldData="2118 Thornridge Cir. Syracuse, Connecticut 35624"
                   />
 
-                  {/* <AddField /> */}
                 </Box>
 
                 <Box className={classes.InvoiceRecordBox}>
@@ -192,8 +159,6 @@ function Invoice() {
                     fieldName="Customer Address"
                     fieldData="3891 Ranchview Dr. Richardson, California 62639"
                   />
-
-                  {/* <AddField /> */}
                 </Box>
 
                 <Box
@@ -212,8 +177,6 @@ function Invoice() {
                     fieldName="Payment Total Value"
                     fieldData="2.00"
                   />
-
-                  {/* <AddField /> */}
                 </Box>
 
                 <Box>
@@ -226,16 +189,8 @@ function Invoice() {
                             src={checkCircle}
                             alt="check-circle"
                             className={classes.CheckCircleIcon}
-                            // sx={{ marginRight: "14px" }}
                           />
-                          {/* <img
-                          src={checkCircle}
-                          alt="check-circle"
-                          style={{ marginRight: "14px" }}
-                        /> */}
-
                           {INVOICE.BUTTON_TEXT}
-                          {/* Validate Document */}
                         </Button>
                       </Box>
                     </Grid>

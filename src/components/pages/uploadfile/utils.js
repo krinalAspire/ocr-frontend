@@ -21,28 +21,28 @@ export const Root = styled("div")(({ theme }) => ({
     // border: "1px dashed red",
     border: `1px dashed ${theme.palette.secondaryBlack.lighter}`,
     [up("xs")]: {
-      marginTop: "17px",
+      margin: "17px",
       height: "74vh",
     },
     [up("sm")]: {
-      marginTop: "20px",
+      margin: "20px",
       height: "75vh",
     },
     [up("md")]: {
-      marginTop: "20px",
+      margin: "20px",
       height: "68vh",
     },
     [up("lg")]: {
-      marginTop: "22px",
+      margin: "22px",
       height: "64vh",
     },
     [up("xl")]: {
-      marginTop: "27px",
+      margin: "27px",
       height:"65vh"
     //   height: "68vh",
     },
     [up("xxl")]: {
-      marginTop: "33px",
+      margin: "33px",
       height: "65vh",
     },
   },

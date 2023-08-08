@@ -38,7 +38,6 @@ const InvoiceRecord = (props) => {
   const handleChange = (e) => {
     const content = e.target.textContent;
     if (e.target === document.activeElement) {
-      // This is to handle contentEditable focus behavior
       if (field !== editedfield) setEditedfield(content);
       if (data !== editedData) setEditedData(content);
     }
@@ -109,7 +108,6 @@ const InvoiceRecord = (props) => {
             )}
           </Grid>
           <Grid item xs={5.5} className={classes.GridAlign}>
-            {/* Render additional data for the second column */}
             {editMode ? (
               <Typography
                 variant="body1"
@@ -131,9 +129,7 @@ const InvoiceRecord = (props) => {
                 onClick={handleEditClick}
                 className={classes.TypographyField}
                 sx={{
-                  // cursor: "pointer",
                   color: isEdited ? lightPalette.primary.main : lightPalette.color134.main,
-                  // fontFamily: "Heebo",
                   fontWeight: 400,
                 }}
               >
@@ -142,7 +138,6 @@ const InvoiceRecord = (props) => {
             )}
           </Grid>
           <Grid item xs={0.5}>
-            {/* Render Icons only in editMode */}
             {editMode && (
               <Box className={classes.GridAlign}>
                 <Box>

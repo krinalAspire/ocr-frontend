@@ -8,7 +8,7 @@ import { Button, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import closeIcon from "../../../assets/accountsetting-assets/x-circle.svg";
 import { classes } from "./utils";
-import { ADDUSER } from "../../services/constantServices";
+import { ADDMEMBER } from "../../services/constantServices";
 
 function AddMember({ handleClose }) {
 
@@ -20,7 +20,7 @@ function AddMember({ handleClose }) {
           <Grid container alignItems="center">
             <Grid item xs={10}>
               <Typography variant="h6">
-                {ADDUSER.CARD_TITLE}
+                {ADDMEMBER.CARD_TITLE}
               </Typography>
             </Grid>
             <Grid item xs={2} align="right">
@@ -36,11 +36,11 @@ function AddMember({ handleClose }) {
 
       <CardContent className={classes.CardContent}>
         <Typography variant="subtitle1" className={classes.SubTitle}>
-          {ADDUSER.SUB_TITLE}
+          {ADDMEMBER.SUB_TITLE}
         </Typography>
 
         <Typography variant="subtitle1" className={classes.EmailTextfieldText}>
-          {ADDUSER.EMAIL}
+          {ADDMEMBER.EMAIL}
         </Typography>
         <TextField
           fullWidth
@@ -51,7 +51,7 @@ function AddMember({ handleClose }) {
         />
 
         <Button variant="contained" className={classes.AdduserBtn}>
-          {ADDUSER.INVITE_BUTTON}
+          {ADDMEMBER.INVITE_BUTTON}
         </Button>
       </CardContent>
     </Card>

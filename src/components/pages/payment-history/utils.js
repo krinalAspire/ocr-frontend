@@ -24,8 +24,8 @@ export const classes = {
   SelectFileTypography: "SelectFileTypography",
   AddPaymentbtn: "AddPaymentbtn",
   BrowseFileBox: "BrowseFileBox",
-  // MenuItemIcon:"MenuItemIcon"
-  // SelectComponent:"SelectComponent"
+  GridBoxAddbtnSelect:"GridBoxAddbtnSelect",
+  AggridtableBox:"AggridtableBox"
 };
 
 export const Root = styled("div")(({ theme }) => ({
@@ -192,21 +192,17 @@ export const Root = styled("div")(({ theme }) => ({
     // },
     "& .MuiSelect-selectMenu": {
       height: "55vh",
-      // boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)",
       boxShadow: `0px 2px 8px ${theme.palette.secondaryBlack.lighter}`,
       "&:hover": {
-        // background: "rgba(30, 30, 30, 0.10)",
         background: theme.palette.color30.lightest,
         color: theme.palette.color30.main,
       },
       "&.Mui-focused": {
         background: "rgba(159, 119, 235, 0.28)",
-        // color: "#1e1e1e",
         color: theme.palette.color30.main,
       },
       "&.Mui-selected": {
         background: "rgba(159, 119, 235, 0.28)",
-        // color: "#1e1e1e",
         color: theme.palette.color30.main,
       },
     },
@@ -594,4 +590,44 @@ export const Root = styled("div")(({ theme }) => ({
   //     height: "24px !important",
   //   },
   // }
+  [`& .${classes.GridBoxAddbtnSelect}`]:{
+    [up('xs')]:{
+      width:"42vw"
+    },
+    [up('sm')]:{
+      width:"24vw"
+    },
+    [up('md')]:{
+      width:"18vw"
+    },
+    [up('lg')]:{
+      width:"17vw"
+    },
+    [up('xl')]:{
+      width:"16vw"
+    },
+    [up('xxl')]:{
+      width:"14.11vw"
+    },
+  },
+  [`& .${classes.AggridtableBox}`]:{
+    [up('xs')]:{
+      width:"58vw"
+    },
+    [up('sm')]:{
+      width:"53vw"
+    },
+    [up('md')]:{
+      width:"47vw"
+    },
+    [up('lg')]:{
+      width:"41.5vw"
+    },
+    [up('xl')]:{
+      width:"53vw"
+    },
+    [up('xxl')]:{
+      width:"55vw"
+    },
+  }
 }));

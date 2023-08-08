@@ -21,11 +21,11 @@ export const INVOICE = {
   BUTTON_TEXT: "Validate Document",
 };
 
-export const ADDUSER={
+export const ADDMEMBER={
   CARD_TITLE:"Add a Member to Aspire software",
   SUB_TITLE:"Organizations allow you to invite team members and assign them.",
   EMAIL:"Email",
-  INVITE_BUTTON:"Invite User"
+  INVITE_BUTTON:"Invite Member"
 }
 
 export const ADDPAYMENT={

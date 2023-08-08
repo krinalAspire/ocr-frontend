@@ -24,23 +24,8 @@ export const classes = {
 
 export const Root = styled("div")(({ theme }) => ({
   [`&.${classes.root}`]: {
-    // background:'yellow'
   },
   [`& .${classes.InvoicePdfMainBox}`]: {
-    // background:'yellow'
-    // overflow: "auto",
-    // scrollbarWidth: "thin",
-    // "&::-webkit-scrollbar": {
-    //   width: "0.4em",
-    // },
-    // "&::-webkit-scrollbar-track": {
-    //   background: "#D9D9D9",
-    //   borderRadius: "5px",
-    // },
-    // "&::-webkit-scrollbar-thumb": {
-    //   backgroundColor: "#868686",
-    //   borderRadius: "5px",
-    // },
     [up("xs")]: {
       height: "20vh",
     },
@@ -101,7 +86,6 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.InvoiceGridMainBox}`]: {
-    // background:"yellow",
     overflow: "auto",
     scrollbarWidth: "thin",
     "&::-webkit-scrollbar": {
@@ -136,10 +120,7 @@ export const Root = styled("div")(({ theme }) => ({
   },
   [`& .${classes.InvoiceGrid}`]: {
     borderLeft: "1px solid rgba(0, 0, 0, 0.06)",
-    // border: "1px solid blue",
-    // background: "#F7F7F7",
     background:theme.palette.color247.main
-    // background:'yellow'
   },
   [`& .${classes.InvoiceGridBox}`]: {
     [up("xs")]: {
@@ -182,7 +163,6 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.InvoiceRecordTitle}`]: {
-    // color: "rgba(30, 30, 30, 0.60)",
     color:theme.palette.color30.semidark,
     [up("xs")]: {
       paddingLeft: "10px",
@@ -270,34 +250,7 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.CheckCircleIcon}`]: {
-    // display: "flex",
-    // alignItems: "center",
-    // justifyContent: "center",
     marginRight: "14px",
-    // [up('xs')]:{
-    //   width:"20px",
-    //   height:"20px"
-    // },
-    // [up('sm')]:{
-    //   width:"20px",
-    //   height:"20px"
-    // },
-    // [up('md')]:{
-    //   width:"20px",
-    //   height:"20px"
-    // },
-    // [up('lg')]:{
-    //   width:"20px",
-    //   height:"20px"
-    // },
-    // [up('xl')]:{
-    //   width:"20px",
-    //   height:"20px"
-    // },
-    // [up('xxl')]:{
-    //   width:"20px",
-    //   height:"20px"
-    // },
   },
   [`& .${classes.GridContainer}`]: {
     borderRadius: "5px",
