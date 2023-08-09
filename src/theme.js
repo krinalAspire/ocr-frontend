@@ -436,8 +436,6 @@ export const theme = createTheme({
           fontFamily: "Heebo",
           fontWeight: 400,
           letterSpacing: 0,
-          display: "flex",
-          textAlign: "center",
           [up("xs")]: {
             fontSize: "10px",
           },

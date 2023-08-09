@@ -35,26 +35,15 @@ function Profile() {
   return (
     <>
       <Nav />
+      <Root className={classes.root}>
       <Typography
         variant="h5"
-        // className={classes.MainTitle}
-        sx={{
-          fontSize: "Poppins",
-          fontWeight: 600,
-          margin: {
-            xxl: "32px 43px 16px",
-            xl: "27px 23px 14px",
-            lg: "23px 23px 12px",
-            md: "19px 23px 11px",
-            sm: "18px 22px 8px",
-            xs: "16px 21px 6px",
-          },
-        }}
+        className={classes.MainTitle}
       >
         {PROFILE.HEADING}
       </Typography>
 
-      <Root className={classes.root}>
+      <Box className={classes.MainBox}>
         <Box className={classes.box}>
           <Typography variant="subtitle1" className={classes.title}>
             {PROFILE.CHANGE_PASSWORD}
@@ -318,6 +307,7 @@ function Profile() {
             mb={{ xl: 5.7, lg: 4.7, md: 3.7, sm: 2.7, xs: 1.7 }}
           ></Box>
         </Box>
+      </Box>
       </Root>
     </>
   );

@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import NavUpload from "./NavUpload";
 import { classes, Root } from "./utils";
-import uploadFile from "../../../assets/uploadfile-assets/uploadFile.png";
+import uploadFile from "../../../../assets/uploadfile-assets/uploadFile.png";
 import { useRef } from "react";
 
 function UploadFile() {

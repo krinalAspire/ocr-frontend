@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { up } from "../../../theme";
+import { up } from "../../../../theme";
 
 export const classes = {
   root: "root",
@@ -18,31 +18,31 @@ export const Root = styled("div")(({ theme }) => ({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "5px",
-    // border: "1px dashed red",
+    // border: "1px solid red",
     border: `1px dashed ${theme.palette.secondaryBlack.lighter}`,
     [up("xs")]: {
-      margin: "17px",
+      margin: "14px",
       height: "74vh",
     },
     [up("sm")]: {
-      margin: "20px",
+      margin: "16px",
       height: "75vh",
     },
     [up("md")]: {
-      margin: "20px",
+      margin: "18px",
       height: "68vh",
     },
     [up("lg")]: {
-      margin: "22px",
+      margin: "20px",
       height: "64vh",
     },
     [up("xl")]: {
-      margin: "27px",
+      margin: "23px",
       height:"65vh"
     //   height: "68vh",
     },
     [up("xxl")]: {
-      margin: "33px",
+      margin: "25px",
       height: "65vh",
     },
   },

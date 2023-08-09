@@ -4,13 +4,15 @@ import Profile from "../pages/accountsettings/Profile";
 import Payment from "../pages/payment-history/Payment";
 import Pages from "../../Pages";
 import Invoice from "../pages/invoice/Invoice";
-import UploadFile from "../pages/uploadfile/UploadFile";
-import NavUpload from "../pages/uploadfile/NavUpload";
+import UploadFile from "../pages/invoice-management/upload-documents/UploadFile";
+import NavUpload from "../pages/invoice-management/upload-documents/NavUpload";
+import Main from "../pages/invoice-management/invoice-tabs/TabSection";
 
 function RoutesPath() {
   return (
     <Routes>
       <Route path="/" element={<Pages />} />
+      <Route path="/main" element={<Main />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/payment" element={<Payment />}/>
       <Route path="/invoice" element={<Invoice />}/>

@@ -3,6 +3,7 @@ import { up } from "../../../theme";
 
 export const classes = {
   root: "root",
+  MainBox:"MainBox",
   MainTitle: "MainTitle",
   box: "box",
   title: "title",
@@ -30,7 +31,33 @@ export const classes = {
 };
 
 export const Root = styled("div")(({ theme }) => ({
-  [`&.${classes.root}`]: {
+  [`&.${classes.root}`]:{
+    //  background:"yellow"
+  },
+  [`& .${classes.MainTitle}`]:{
+    fontSize: "Poppins",
+    fontWeight: 600,
+    [up('xs')]:{
+      margin:"16px 21px 6px"
+    },
+    [up('sm')]:{
+      margin:"18px 22px 8px"
+    },
+    [up('md')]:{
+      margin:"19px 23px 11px"
+    },
+    [up('lg')]:{
+      margin:"23px 23px 12px"
+    },
+    [up('xl')]:{
+      margin:"27px 23px 14px"
+    },
+    [up('xxl')]:{
+      margin:"32px 43px 16px"
+    },
+  },
+  [`& .${classes.MainBox}`]: {
+    // background:"yellow",
     [up("xs")]: {
       marginLeft: "20px",
       marginRight: "20px",
