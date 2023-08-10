@@ -8,7 +8,6 @@ import {
   IconButton,
   Button,
 } from "@mui/material";
-import UploadIcon from "@mui/icons-material/Upload";
 import SearchIcon from "@mui/icons-material/Search";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import TagsButton from "./TagsButton";
@@ -48,7 +47,7 @@ function TabSection() {
             />
             <Button
               variant="contained"
-              startIcon={<FileUploadOutlinedIcon />}
+              startIcon={<FileUploadOutlinedIcon className={classes.UploadIcon}/>}
               className={classes.UploadButton}
             >
               Upload

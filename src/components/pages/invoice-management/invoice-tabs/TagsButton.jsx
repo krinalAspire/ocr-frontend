@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
+import { classes } from "./utils";
 
 const TagsButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -17,7 +18,7 @@ const TagsButton = () => {
 
   const handleCreateClick = () => {
     if (inputValue.trim() !== "") {
-    //   dispatch(addTag({ title: inputValue, checked: false }));
+      //   dispatch(addTag({ title: inputValue, checked: false }));
       setInputValue("");
     }
   };
@@ -34,26 +35,13 @@ const TagsButton = () => {
 
   return (
     <>
+    {/* <Root> */}
       <Button
         variant="text"
         onClick={handleClick}
-        sx={{
-          height: "5vh",
-          backgroundColor: "rgba(30, 30, 30, 0.1)",
-          color: "rgba(43, 43, 43, 1)",
-          width: "23%",
-          marginRight: "3.4%",
-        }}
+        className={classes.TagButton}
       >
-        <Typography
-          variant="body1"
-          sx={{
-            color: "rgba(0, 0, 0, 0.60)",
-            textTransform: "none",
-          }}
-        >
-          Tags
-        </Typography>
+        Tags
         <KeyboardArrowDownIcon />
       </Button>
       <Popover
@@ -70,6 +58,7 @@ const TagsButton = () => {
         }}
       >
         <Box
+          // className={classes.PopOverBox}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -112,10 +101,15 @@ const TagsButton = () => {
               onClick={handleCreateClick}
               variant="contained"
               startIcon={<AddIcon />}
+              // className={classes.CreatePopOverButton}
               sx={{
                 backgroundColor: "rgba(30, 30, 30, 0.1)",
                 color: "rgba(43, 43, 43, 0.8)",
-                textTransform: "none",
+                ":hover": {
+                  backgroundColor: "rgba(30, 30, 30, 0.1)",
+                  color: "rgba(43, 43, 43, 0.8)",
+                },
+                padding: "1vh 0vw",
               }}
             >
               {`Create ${inputValue}`}
@@ -123,9 +117,9 @@ const TagsButton = () => {
           ) : (
             <Typography
               variant="body1"
+              align="center"
               sx={{
                 color: "rgba(0, 0, 0, 0.60)",
-                textAlign: "center",
                 padding: "1vh 0vw",
               }}
             >
@@ -134,6 +128,7 @@ const TagsButton = () => {
           )}
         </Box>
       </Popover>
+      {/* </Root> */}
     </>
   );
 };

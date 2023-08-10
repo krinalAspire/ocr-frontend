@@ -1,0 +1,40 @@
+.ag-theme-alpine {
+  --ag-foreground-color: rgba(0, 0, 0, 0.6);
+  --ag-header-foreground-color: #1e1e1e;
+  --ag-header-background-color: rgba(134, 134, 134, 0.1);
+  --ag-odd-row-background-color: #ffffff;
+  --ag-cell-widget-spacing: calc(var(--ag-grid-size) * 3);
+  --ag-body-vertical-scroll-container: var(--ag-body-vertical-scroll-container);
+  --ag-alpine-active-color: #9f77eb;
+  --ag-selected-row-background-color: rgba(159, 119, 235, 0.1);
+  --ag-row-hover-color: rgba(159, 119, 235, 0.1);
+  --ag-input-focus-border-color: none;
+  --ag-border-color: rgba(134, 134, 134, 0.2);
+  --ag-checkbox-indeterminate-color: #9f77eb;
+}
+
+.edit-icon {
+  padding-left: 2vw;
+}
+
+/* .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
+  border: 0px;
+} */
+
+.ag-theme-alpine {
+  border-radius: 5px;
+  border-color: rgb(232, 232, 232);
+}
+/* 
+.icons-row {
+  display: flex;
+  justify-content: space-between;
+} */
+
+/* .custom-textfield-tagButton:focus {
+  outline: 2px solid rgb(180, 180, 180);
+} */
+
+/* .tag-match {
+  background-color: yellow; /* Or any other style you want to apply to matching cells */
+/* }  */

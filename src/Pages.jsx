@@ -8,6 +8,7 @@ function Pages() {
       <Link to={"/payment"}>Payment</Link>
       <Link to={"/invoice"}>Invoice</Link>
       <Link to={"/upload"}>upload</Link>
+      <Link to={"/allinvoice"}>allinvoice</Link>
     </>
   );
 }

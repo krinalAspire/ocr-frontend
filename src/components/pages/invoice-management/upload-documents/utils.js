@@ -77,6 +77,8 @@ export const Root = styled("div")(({ theme }) => ({
     },
   },
   [`& .${classes.ChooseFilebtn}`]: {
+    background: theme.palette.primary.main,
+    color:"white",
     ":hover": {
       background: theme.palette.primary.main,
       color: "white",

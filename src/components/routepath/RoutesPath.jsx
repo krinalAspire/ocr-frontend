@@ -7,6 +7,8 @@ import Invoice from "../pages/invoice/Invoice";
 import UploadFile from "../pages/invoice-management/upload-documents/UploadFile";
 import NavUpload from "../pages/invoice-management/upload-documents/NavUpload";
 import Main from "../pages/invoice-management/invoice-tabs/TabSection";
+import Allinvoice from "../pages/invoice-management/allinvoice/Allinvoice";
+import Navinvoice from "../pages/invoice-management/allinvoice/NavInvoice";
 
 function RoutesPath() {
   return (
@@ -17,6 +19,8 @@ function RoutesPath() {
       <Route path="/payment" element={<Payment />}/>
       <Route path="/invoice" element={<Invoice />}/>
       {/* <Route path="/upload" element={<UploadFile />}/> */}
+      {/* <Route path="/allinvoice" element={<Allinvoice />} /> */}
+      <Route path="/allinvoice" element={<Navinvoice />}/>
       <Route path="/upload" element={<NavUpload />}/>
     </Routes>
   );
