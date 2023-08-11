@@ -140,5 +140,31 @@
       "date": "Sep 12, 2023",
       "status": "Success"
     }
+  ],
+  "Tag": [
+    {
+      "id": "6ryyhb11v",
+      "tag": "alert"
+    },
+    {
+      "id": "x2zvfew3g",
+      "tag": "pending"
+    },
+    {
+      "id": "go4lcxut4",
+      "tag": "success"
+    },
+    {
+      "id": "3lzdwijwg",
+      "tag": "failed"
+    },
+    {
+      "id": "iyqop0yux",
+      "tag": "zxfxcvxc"
+    },
+    {
+      "id": "nb2ehg2r9",
+      "tag": "ssdfd"
+    }
   ]
 }

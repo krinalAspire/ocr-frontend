@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Popover from "@mui/material/Popover";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -7,14 +7,54 @@ import { Box } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
 import { classes } from "./utils";
+import axios from "axios";
 
 const TagsButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputValue, setInputValue] = useState("");
+  const [tag, setTagdata] = useState([]);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
+
+  const getTag = (event) => {
+    // setInputValue(event.target.value);
+    // // console.log(inputValue);
+    // setTagdata(inputValue)
+    const data = { id: Math.random().toString(36).substr(2, 9), tag:inputValue };
+    console.log(data);
+    axios
+      .post("http://localhost:5000/Tag", data, 
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+      )
+      .then((response) => {
+        // setTagdata([...tag, response.data]);
+        console.log(response?.data);
+        // setTagdata(response?.data);
+        setInputValue("");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/Tag")
+      .then((res) => {
+        setTagdata(res.data);
+        //  console.log(res.data)
+      })
+      .catch((err) => {
+        // toast.error("Failed: " + err.message);
+        console.log(err);
+      });
+  }, []);
 
   const handleCreateClick = () => {
     if (inputValue.trim() !== "") {
@@ -35,7 +75,7 @@ const TagsButton = () => {
 
   return (
     <>
-    {/* <Root> */}
+      {/* <Root> */}
       <Button
         variant="text"
         onClick={handleClick}
@@ -70,12 +110,13 @@ const TagsButton = () => {
             placeholder="Search tags"
             variant="outlined"
             margin="normal"
+            name="tag"
             value={inputValue}
             onChange={handleInputChange}
           />
-          {/* {tags.map((tag, index) => (
-            <div
-              key={index}
+          {tag.map((tag) => (
+            <Box
+              key={tag.id}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -91,14 +132,14 @@ const TagsButton = () => {
                   backgroundColor: "rgba(30, 30, 30, 0.1)",
                 }}
               >
-                {tag.title}
+                {tag.tag}
               </Typography>
-            </div>
-          ))} */}
-          {inputValue ? (
+            </Box>
+          ))}
+          {tag.length > 0 || inputValue ? (
             <Button
               disabled={!inputValue}
-              onClick={handleCreateClick}
+              onClick={getTag}
               variant="contained"
               startIcon={<AddIcon />}
               // className={classes.CreatePopOverButton}

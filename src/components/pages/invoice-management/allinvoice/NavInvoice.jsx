@@ -196,6 +196,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Allinvoice from "./Allinvoice";
+import TabSection from "../invoice-tabs/TabSection";
 // import UploadFile from "./UploadFile";
 // import Main from '../invoice-tabs/TabSection';
 // import TabSection from '../invoice-tabs/TabSection';
@@ -271,10 +272,11 @@ export default function Navinvoice() {
               lg: "13vh",
               xl: "16vh",
             },
-             backgroundColor:"yellow",
+            //  backgroundColor:"yellow",
             // marginTop:"35px"
           }}
         >
+          <TabSection />
           {/* <Main /> */}
         </Box>
         <Allinvoice />

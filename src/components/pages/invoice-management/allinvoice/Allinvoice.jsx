@@ -6,6 +6,7 @@ import { columnData } from "./Columndef";
 import { rowdata } from "./rowdata";
 import "./Allinvoice.css";
 import { Box } from "@mui/material";
+import { classes, Root } from "./utils";
 // import Navinvoice from "./NavInvoice";
 
 function Allinvoice() {
@@ -84,7 +85,7 @@ function Allinvoice() {
   return (
     <>
       {/* <Navinvoice /> */}
-      <Box sx={{mt:3}}>
+      <Root  className={classes.root}>
       <Box
         id="ag-grid-container"
         className="ag-theme-alpine"
@@ -120,7 +121,7 @@ function Allinvoice() {
           // onGridReady={onGridReady}
         />
       </Box>
-      </Box>
+      </Root>
     </>
   );
 }

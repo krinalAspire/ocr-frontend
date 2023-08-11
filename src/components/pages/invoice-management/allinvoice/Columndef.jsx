@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import EditIcon from "../../../../assets/allinvoice-assets/edit.png";
+import EditIcon from "../../../../assets/allinvoice-assets/edit.svg";
 import ArrowUp from "../../../../assets/allinvoice-assets/arrow-up.svg";
-import AlertCircle from "../../../../assets/allinvoice-assets/alert-circle.png";
-import Disc from "../../../../assets/allinvoice-assets/disc.png";
-import CheckCircle from "../../../../assets/allinvoice-assets/check-circle.png";
-import { Box, Typography } from "@mui/material";
+import AlertCircle from "../../../../assets/allinvoice-assets/alert-circle.svg";
+import Disc from "../../../../assets/allinvoice-assets/disc.svg";
+import CheckCircle from "../../../../assets/allinvoice-assets/checkCircle.svg";
+import { Box, Grid, Typography } from "@mui/material";
+
+const iconSize={
+  xxl:24,
+  xl:22,
+  lg:20,
+  md:18,
+  sm:16,
+  xs:14
+}
 
 function responsiveHeader(params) {
   const value = params.displayName;
@@ -42,13 +51,13 @@ const ResponsiveFontsize = (params) => {
       variant="body1"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-    //   sx={{
-    //     color: "rgba(0, 0, 0, 0.60)",
-    //     height: "100%",
-    //     width: "100%",
-    //     display: "flex",
-    //     alignItems: "center",
-    //   }}
+      //   sx={{
+      //     color: "rgba(0, 0, 0, 0.60)",
+      //     height: "100%",
+      //     width: "100%",
+      //     display: "flex",
+      //     alignItems: "center",
+      //   }}
     >
       {value}
     </Typography>
@@ -70,14 +79,14 @@ const DocumentNameRow = (params) => {
 
   return (
     <Box
-    sx={{display:"flex", alignItems: "center"}}
-    //   className="document-name-cell"
-    //   style={{
-    //     display: "flex",
-    //     height: "100%",
-    //     width: "100%",
-    //     alignItems: "center",
-    //   }}
+      sx={{ display: "flex", alignItems: "center" }}
+      //   className="document-name-cell"
+      //   style={{
+      //     display: "flex",
+      //     height: "100%",
+      //     width: "100%",
+      //     alignItems: "center",
+      //   }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -90,14 +99,25 @@ const DocumentNameRow = (params) => {
         {params.value}
       </Typography>
       {hoveredRowIndex === params.rowIndex && showIcons && (
-        <img
-          className="edit-icon"
+        <Box
+          component="img"
           src={EditIcon}
           alt="Edit"
-          onClick={() => {
-            // Handle edit functionality here
+          // className="edit-icon"
+          sx={{
+            marginLeft:"2vw",
+            width: { xxl: 22, xl: 20, lg: 18, md: 16, sm: 14, xs: 12 },
+            height: { xxl: 22, xl: 20, lg: 18, md: 16, sm: 14, xs: 12 },
           }}
         />
+        // <img
+        //   className="edit-icon"
+        //   src={EditIcon}
+        //   alt="Edit"
+        //   onClick={() => {
+        //     // Handle edit functionality here
+        //   }}
+        // />
       )}
     </Box>
   );
@@ -108,16 +128,29 @@ const StatusRow = (params) => {
   switch (params.value) {
     case "failed":
       statusIcon = (
-        <Box
+        <Grid
           sx={{
             // height: "100%",
+            // width:"100%",
+            // background:"yellow",
             display: "flex",
             alignItems: "center",
-            justifyContent:"center"
+            // justifyContent:"center"
           }}
         >
-          <img src={AlertCircle} alt="Failed" style={{}} />
-        </Box>
+          <Box
+          component="img"
+          src={AlertCircle}
+          alt="Failed"
+          // className="edit-icon"
+          sx={{
+            // marginLeft:"2vw",
+            width: iconSize,
+            height: iconSize
+          }}
+        />
+          {/* <img src={AlertCircle} alt="Failed" style={{}} /> */}
+        </Grid>
       );
       break;
     case "pending":
@@ -125,12 +158,24 @@ const StatusRow = (params) => {
         <Box
           sx={{
             // height: "100%",
+            // width:"100%",
             display: "flex",
             alignItems: "center",
-            justifyContent:"center"
+            // justifyContent:"center"
           }}
         >
-          <img src={Disc} alt="Pending" />
+          <Box
+          component="img"
+          src={Disc}
+          alt="Pending"
+          // className="edit-icon"
+          sx={{
+            // marginLeft:"2vw",
+            width: iconSize,
+            height: iconSize
+          }}
+        />
+          {/* <img src={Disc} alt="Pending" /> */}
         </Box>
       );
       break;
@@ -139,12 +184,24 @@ const StatusRow = (params) => {
         <Box
           sx={{
             // height: "100%",
+            // width:"100%",
             display: "flex",
             alignItems: "center",
-            justifyContent:"center"
+            // justifyContent:"center"
           }}
         >
-          <img src={CheckCircle} alt="Success" />
+            <Box
+          component="img"
+          src={CheckCircle}
+          alt="Success"
+          // className="edit-icon"
+          sx={{
+            // marginLeft:"2vw",
+            width: iconSize,
+            height: iconSize
+          }}
+        />
+          {/* <img src={CheckCircle} alt="Success" /> */}
         </Box>
       );
       break;
@@ -215,11 +272,11 @@ const Icons = (params) => {
 };
 
 export const columnData = [
-//   {
-//     headerCheckboxSelection: true,
-//     checkboxSelection: true,
-//     width: 10,
-//   },
+  //   {
+  //     headerCheckboxSelection: true,
+  //     checkboxSelection: true,
+  //     width: 10,
+  //   },
   {
     headerName: "Document name",
     field: "documentName",
@@ -399,8 +456,8 @@ export const columnData = [
   {
     headerName: "",
     field: "",
-        // sortable: true,
-        // filter: true,
+    // sortable: true,
+    // filter: true,
     // cellRenderer: ResponsiveFontsize,
     cellRenderer: Icons,
     // cellRenderer: (params) => {

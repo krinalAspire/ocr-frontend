@@ -13,9 +13,9 @@
   --ag-checkbox-indeterminate-color: #9f77eb;
 }
 
-.edit-icon {
-  padding-left: 2vw;
-}
+/* .edit-icon {
+  padding-left: 1vw;
+} */
 
 /* .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
   border: 0px;
