@@ -8,6 +8,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
 import { classes } from "./utils";
 import axios from "axios";
+import TagSelection from "../allinvoice/TagSelection";
 
 const TagsButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -84,7 +85,7 @@ const TagsButton = () => {
         Tags
         <KeyboardArrowDownIcon />
       </Button>
-      <Popover
+      {/* <Popover
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
@@ -96,8 +97,9 @@ const TagsButton = () => {
           vertical: "top",
           horizontal: "left",
         }}
-      >
-        <Box
+      > */}
+        <TagSelection />
+        {/* <Box
           // className={classes.PopOverBox}
           sx={{
             display: "flex",
@@ -167,8 +169,8 @@ const TagsButton = () => {
               Type to create tag..{" "}
             </Typography>
           )}
-        </Box>
-      </Popover>
+        </Box> */}
+      {/* </Popover> */}
       {/* </Root> */}
     </>
   );
