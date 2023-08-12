@@ -12,88 +12,90 @@ import ButtonBase from "@mui/material/ButtonBase";
 import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
 import { Checkbox, TextField,Button } from "@mui/material";
+import Popover from '@mui/material/Popover';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { classes } from "../invoice-tabs/utils";
 
-const StyledAutocompletePopper = styled("div")(({ theme }) => ({
-  [`& .${autocompleteClasses.paper}`]: {
-    boxShadow: "none",
-    margin: 0,
-    color: "inherit",
-    fontSize: 13,
-  },
-  [`& .${autocompleteClasses.listbox}`]: {
-    backgroundColor: theme.palette.mode === "light" ? "#fff" : "#1c2128",
-    padding: 0,
-    [`& .${autocompleteClasses.option}`]: {
-      minHeight: "auto",
-      alignItems: "flex-start",
-      padding: 8,
-      borderBottom: `1px solid  ${
-        theme.palette.mode === "light" ? " #eaecef" : "#30363d"
-      }`,
-      '&[aria-selected="true"]': {
-        backgroundColor: "transparent",
-      },
-      [`&.${autocompleteClasses.focused}, &.${autocompleteClasses.focused}[aria-selected="true"]`]:
-        {
-          backgroundColor: theme.palette.action.hover,
-        },
-    },
-  },
-  [`&.${autocompleteClasses.popperDisablePortal}`]: {
-    position: "relative",
-  },
-}));
+// const StyledAutocompletePopper = styled("div")(({ theme }) => ({
+//   [`& .${autocompleteClasses.paper}`]: {
+//     boxShadow: "none",
+//     margin: 0,
+//     color: "inherit",
+//     fontSize: 13,
+//   },
+//   [`& .${autocompleteClasses.listbox}`]: {
+//     backgroundColor: theme.palette.mode === "light" ? "#fff" : "#1c2128",
+//     padding: 0,
+//     [`& .${autocompleteClasses.option}`]: {
+//       minHeight: "auto",
+//       alignItems: "flex-start",
+//       padding: 8,
+//       borderBottom: `1px solid  ${
+//         theme.palette.mode === "light" ? " #eaecef" : "#30363d"
+//       }`,
+//       '&[aria-selected="true"]': {
+//         backgroundColor: "transparent",
+//       },
+//       [`&.${autocompleteClasses.focused}, &.${autocompleteClasses.focused}[aria-selected="true"]`]:
+//         {
+//           backgroundColor: theme.palette.action.hover,
+//         },
+//     },
+//   },
+//   [`&.${autocompleteClasses.popperDisablePortal}`]: {
+//     position: "relative",
+//   },
+// }));
 
-function PopperComponent(props) {
-  const { disablePortal, anchorEl, open, ...other } = props;
-  return <StyledAutocompletePopper {...other} />;
-}
+// function PopperComponent(props) {
+//   const { disablePortal, anchorEl, open, ...other } = props;
+//   return <StyledAutocompletePopper {...other} />;
+// }
 
-PopperComponent.propTypes = {
-  anchorEl: PropTypes.any,
-  disablePortal: PropTypes.bool,
-  open: PropTypes.bool.isRequired,
-};
+// PopperComponent.propTypes = {
+//   anchorEl: PropTypes.any,
+//   disablePortal: PropTypes.bool,
+//   open: PropTypes.bool.isRequired,
+// };
 
-const StyledPopper = styled(Popper)(({ theme }) => ({
-  border: `1px solid ${theme.palette.mode === "light" ? "#e1e4e8" : "#30363d"}`,
-  boxShadow: `0 8px 24px ${
-    theme.palette.mode === "light" ? "rgba(149, 157, 165, 0.2)" : "rgb(1, 4, 9)"
-  }`,
-  borderRadius: 6,
-  width: 300,
-  zIndex: theme.zIndex.modal,
-  fontSize: 13,
-  color: theme.palette.mode === "light" ? "#24292e" : "#c9d1d9",
-  backgroundColor: theme.palette.mode === "light" ? "#fff" : "#1c2128",
-}));
+// const StyledPopper = styled(Popper)(({ theme }) => ({
+//   border: `1px solid ${theme.palette.mode === "light" ? "#e1e4e8" : "#30363d"}`,
+//   boxShadow: `0 8px 24px ${
+//     theme.palette.mode === "light" ? "rgba(149, 157, 165, 0.2)" : "rgb(1, 4, 9)"
+//   }`,
+//   borderRadius: 6,
+//   width: 300,
+//   zIndex: theme.zIndex.modal,
+//   fontSize: 13,
+//   color: theme.palette.mode === "light" ? "#24292e" : "#c9d1d9",
+//   backgroundColor: theme.palette.mode === "light" ? "#fff" : "#1c2128",
+// }));
 
-const StyledInput = styled(InputBase)(({ theme }) => ({
-  padding: 10,
-  width: "100%",
-  borderBottom: `1px solid ${
-    theme.palette.mode === "light" ? "#eaecef" : "#30363d"
-  }`,
-  "& input": {
-    borderRadius: 4,
-    backgroundColor: theme.palette.mode === "light" ? "#fff" : "#0d1117",
-    padding: 8,
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-    border: `1px solid ${
-      theme.palette.mode === "light" ? "#eaecef" : "#30363d"
-    }`,
-    fontSize: 14,
-    "&:focus": {
-      boxShadow: `0px 0px 0px 3px ${
-        theme.palette.mode === "light"
-          ? "rgba(3, 102, 214, 0.3)"
-          : "rgb(12, 45, 107)"
-      }`,
-      borderColor: theme.palette.mode === "light" ? "#0366d6" : "#388bfd",
-    },
-  },
-}));
+// const StyledInput = styled(InputBase)(({ theme }) => ({
+//   padding: 10,
+//   width: "100%",
+//   borderBottom: `1px solid ${
+//     theme.palette.mode === "light" ? "#eaecef" : "#30363d"
+//   }`,
+//   "& input": {
+//     borderRadius: 4,
+//     backgroundColor: theme.palette.mode === "light" ? "#fff" : "#0d1117",
+//     padding: 8,
+//     transition: theme.transitions.create(["border-color", "box-shadow"]),
+//     border: `1px solid ${
+//       theme.palette.mode === "light" ? "#eaecef" : "#30363d"
+//     }`,
+//     fontSize: 14,
+//     "&:focus": {
+//       boxShadow: `0px 0px 0px 3px ${
+//         theme.palette.mode === "light"
+//           ? "rgba(3, 102, 214, 0.3)"
+//           : "rgb(12, 45, 107)"
+//       }`,
+//       borderColor: theme.palette.mode === "light" ? "#0366d6" : "#388bfd",
+//     },
+//   },
+// }));
 
 // const Button = styled(Button)(({ theme }) => ({
 //   fontSize: 13,
@@ -115,34 +117,88 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
 // }));
 
 function TagSelection() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState([labels[1], labels[11]]);
-  const [pendingValue, setPendingValue] = React.useState([]);
-  const theme = useTheme();
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
-    setPendingValue(value);
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    setValue(pendingValue);
-    if (anchorEl) {
-      anchorEl.focus();
-    }
     setAnchorEl(null);
   };
-
   const open = Boolean(anchorEl);
-  const id = open ? "github-label" : undefined;
+
+  // const open = Boolean(anchorEl);
+  // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [value, setValue] = React.useState([labels[1], labels[11]]);
+  // const [pendingValue, setPendingValue] = React.useState([]);
+  // const theme = useTheme();
+
+  // const handleClick = (event) => {
+  //   setPendingValue(value);
+  //   setAnchorEl(event.currentTarget);
+  // };
+
+  // const handleClose = () => {
+  //   setValue(pendingValue);
+  //   if (anchorEl) {
+  //     anchorEl.focus();
+  //   }
+  //   setAnchorEl(null);
+  // };
+
+  // const open = Boolean(anchorEl);
+  // const id = open ? "github-label" : undefined;
 
   return (
     <>
-      <Box sx={{  fontSize: 13 }}>
+    <div>
+      <Button onClick={handleClick}  className={classes.TagButton}>
+        Tag
+        <KeyboardArrowDownIcon/>
+      </Button>
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        <div style={{ padding: '16px' }}>
+          <Autocomplete
+          sx={{ width:"21vw"}}
+            multiple
+            id="checkboxes-tags-demo"
+            options={top100Films}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.title}
+            renderOption={(props, option, { selected }) => (
+              <li {...props}>
+                <Checkbox
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                />
+                {option.title}
+              </li>
+            )}
+            renderInput={(params) => (
+              <TextField {...params} label="Checkboxes"/>
+            )}
+          />
+        </div>
+      </Popover>
+    </div>
+      {/* <Box sx={{  fontSize: 13 }}>
         <Button variant="contained" disableRipple aria-describedby={id} onClick={handleClick}>
           Tag
           <KeyboardArrowDownIcon />
-        </Button>
+        </Button> */}
         {/* {value.map((label) => (
           <Box
             key={label.name}
@@ -162,7 +218,7 @@ function TagSelection() {
             {label.name}
           </Box>
         ))} */}
-      </Box>
+      {/* </Box>
       <StyledPopper
         id={id}
         open={open}
@@ -170,7 +226,7 @@ function TagSelection() {
         placement="bottom-start"
       >
         <ClickAwayListener onClickAway={handleClose}>
-          <div>
+          <div> */}
             {/* <Box
               sx={{
                 borderBottom: `1px solid ${
@@ -182,7 +238,7 @@ function TagSelection() {
             >
               Apply labels to this pull request
             </Box> */}
-            <Autocomplete
+            {/* <Autocomplete
               open
               multiple
               onClose={(event, reason) => {
@@ -190,7 +246,7 @@ function TagSelection() {
                   handleClose();
                 }
               }}
-              value={pendingValue}
+              // value={pendingValue}
               onChange={(event, newValue, reason) => {
                 if (
                   event.type === "keydown" &&
@@ -199,9 +255,10 @@ function TagSelection() {
                 ) {
                   return;
                 }
-                setPendingValue(newValue);
-              }}
+                setPendingValue(newValue); */}
+              {/* }}
               disableCloseOnSelect
+              getOptionLabel={(option) => option.title}
               PopperComponent={PopperComponent}
               renderTags={() => null}
               noOptionsText="No labels"
@@ -216,8 +273,8 @@ function TagSelection() {
                   {option.title}
                 </li>
               )}
-              //   renderOption={(props, option, { selected }) => (
-              //     <li {...props}>
+              //   renderOption={(props, option, { selected }) => ( */}
+              {/* //     <li {...props}>
               //       <Box
               //         component={DoneIcon}
               //         sx={{ width: 17, height: 17, mr: "5px", ml: "-2px" }}
@@ -270,13 +327,17 @@ function TagSelection() {
               //     bi = bi === -1 ? value.length + labels.indexOf(b) : bi;
               //     return ai - bi;
               //   })}
-              getOptionLabel={(option) => option.name}
+              // getOptionLabel={(option) => option.name}
               //   renderInput={(params) => (
               //     <TextField {...params} label="Checkboxes" placeholder="Favorites" />
               //   )}
+              // renderInput={(params) => (
+              //   <TextField {...params} label="Checkboxes" placeholder="Favorites" />
+              // )}
               renderInput={(params) => (
                 <StyledInput
                   {...params}
+                  label="Checkboxes"
                   ref={params.InputProps.ref}
                   inputProps={params.inputProps}
                   //   autoFocus
@@ -286,7 +347,7 @@ function TagSelection() {
             />
           </div>
         </ClickAwayListener>
-      </StyledPopper>
+      </StyledPopper> */}
     </>
   );
 }

@@ -5,34 +5,47 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Checkbox, Autocomplete } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { classes } from "./utils";
 import axios from "axios";
 import TagSelection from "../allinvoice/TagSelection";
+import { top100Films } from "./options";
 
 const TagsButton = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  // const [anchorEl, setAnchorEl] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [tag, setTagdata] = useState([]);
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  // const handleInputChange = (event) => {
+  //   setInputValue(event.target.value);
+  // };
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
 
   const getTag = (event) => {
     // setInputValue(event.target.value);
     // // console.log(inputValue);
     // setTagdata(inputValue)
-    const data = { id: Math.random().toString(36).substr(2, 9), tag:inputValue };
+    const data = {
+      id: Math.random().toString(36).substr(2, 9),
+      tag: inputValue,
+    };
     console.log(data);
     axios
-      .post("http://localhost:5000/Tag", data, 
-      {
+      .post("http://localhost:5000/Tag", data, {
         headers: {
           "Content-Type": "application/json",
         },
-      }
-      )
+      })
       .then((response) => {
         // setTagdata([...tag, response.data]);
         console.log(response?.data);
@@ -57,34 +70,83 @@ const TagsButton = () => {
       });
   }, []);
 
-  const handleCreateClick = () => {
-    if (inputValue.trim() !== "") {
-      //   dispatch(addTag({ title: inputValue, checked: false }));
-      setInputValue("");
-    }
-  };
+  // const handleCreateClick = () => {
+  //   if (inputValue.trim() !== "") {
+  //     //   dispatch(addTag({ title: inputValue, checked: false }));
+  //     setInputValue("");
+  //   }
+  // };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
-  const open = Boolean(anchorEl);
+  // const open = Boolean(anchorEl);
 
   return (
     <>
+      <div>
+        <Button onClick={handleClick} className={classes.TagButton}>
+          Tag
+          <KeyboardArrowDownIcon />
+        </Button>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+        >
+          <div
+            style={{
+              padding: "16px",
+              // height: "52vh",
+            }}
+          >
+            <Autocomplete
+              //  freeSolo
+              sx={{ width: "21vw" }}
+              multiple
+              id="checkboxes-tags-demo"
+              // options={top100Films}
+              options={tag}
+              disableCloseOnSelect
+              // getOptionLabel={(option) => option.title}
+              getOptionLabel={(option) => option.tag}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                  {/* {option.title}
+                   */}
+                  {option.tag}
+                </li>
+              )}
+              renderInput={(params) => (
+                <TextField {...params} placeholder="Search Tags" />
+              )}
+            />
+          </div>
+        </Popover>
+      </div>
       {/* <Root> */}
-      <Button
+      {/* <Button
         variant="text"
         onClick={handleClick}
         className={classes.TagButton}
       >
         Tags
         <KeyboardArrowDownIcon />
-      </Button>
+      </Button> */}
       {/* <Popover
         open={open}
         anchorEl={anchorEl}
@@ -98,8 +160,8 @@ const TagsButton = () => {
           horizontal: "left",
         }}
       > */}
-        <TagSelection />
-        {/* <Box
+      {/* <TagSelection /> */}
+      {/* <Box
           // className={classes.PopOverBox}
           sx={{
             display: "flex",

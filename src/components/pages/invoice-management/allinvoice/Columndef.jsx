@@ -266,7 +266,7 @@ const Icons = (params) => {
         alignItems: "center",
       }}
     >
-      {/* {hoveredRowIndex === params.rowIndex && showIcons && <FourIcons />} */}
+      {hoveredRowIndex === params.rowIndex && showIcons && <AlertCircle />}
     </div>
   );
 };
@@ -456,6 +456,7 @@ export const columnData = [
   {
     headerName: "",
     field: "",
+    minWidth:300,
     // sortable: true,
     // filter: true,
     // cellRenderer: ResponsiveFontsize,
