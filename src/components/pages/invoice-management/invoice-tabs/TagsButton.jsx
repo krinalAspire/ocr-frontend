@@ -3,7 +3,7 @@ import Popover from "@mui/material/Popover";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
+import { Box, createFilterOptions } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Checkbox, Autocomplete } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -13,14 +13,14 @@ import TagSelection from "../allinvoice/TagSelection";
 import { top100Films } from "./options";
 
 const TagsButton = () => {
-  // const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [tag, setTagdata] = useState([]);
+  const [createTagValue, setCreateTagValue] = useState("");
 
   // const handleInputChange = (event) => {
   //   setInputValue(event.target.value);
   // };
-  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,8 +28,16 @@ const TagsButton = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    setInputValue(" ");
+    setCreateTagValue("");
   };
   const open = Boolean(anchorEl);
+
+  const handleInputChange = (event, newInputValue) => {
+    setInputValue(newInputValue);
+  };
+
+  // const filter = createFilterOptions();
 
   const getTag = (event) => {
     // setInputValue(event.target.value);
@@ -106,6 +114,7 @@ const TagsButton = () => {
             vertical: "top",
             horizontal: "left",
           }}
+          sx={{ height: "41vh" }}
         >
           <div
             style={{
@@ -120,21 +129,136 @@ const TagsButton = () => {
               id="checkboxes-tags-demo"
               // options={top100Films}
               options={tag}
+              inputValue={inputValue}
+              onInputChange={handleInputChange}
               disableCloseOnSelect
+              freeSolo
               // getOptionLabel={(option) => option.title}
               getOptionLabel={(option) => option.tag}
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
                   <Checkbox style={{ marginRight: 8 }} checked={selected} />
-                  {/* {option.title}
-                   */}
                   {option.tag}
                 </li>
               )}
               renderInput={(params) => (
-                <TextField {...params} placeholder="Search Tags" />
+                <Box>
+                  <TextField {...params} placeholder="Search Tags" />
+                  {inputValue &&
+                    !tag.some(
+                      (option) =>
+                        option.tag.toLowerCase() === inputValue.toLowerCase()
+                    ) && (
+                      <Button
+                        onClick={getTag}
+                        variant="contained"
+                        sx={{
+                          width: "21vw",
+                          height: "7vh",
+                          marginTop: "10px",
+                          backgroundColor: "rgba(30, 30, 30, 0.1)",
+                          color: "rgba(43, 43, 43, 0.8)",
+                          ":hover": {
+                            backgroundColor: "rgba(30, 30, 30, 0.1)",
+                            color: "rgba(43, 43, 43, 0.8)",
+                          },
+                        }}
+                      >
+                        <AddIcon sx={{marginRight:"1vw"}}/>
+                        Create "{inputValue}"
+                      </Button>
+                    )}
+                </Box>
               )}
+              // renderTags={(value, getTagProps) => (
+              //   <div>
+              //     {value.map((option, index) => (
+              //       <div key={option.tag} {...getTagProps({ index })}>
+              //         {option.tag}
+              //       </div>
+              //     ))}
+              //     {inputValue && !tag.some((option) => option.tag.toLowerCase() === inputValue.toLowerCase()) && (
+              //       <Button onClick={getTag} variant="contained" >
+              //         Create Tag "{inputValue}"
+              //       </Button>
+              //     )}
+              //   </div>
+              // )}
+              // renderInput={(params) => (
+              //   <TextField
+              //     {...params}
+              //     // label="Search Tags"
+              //     placeholder="Search Tags"
+              //     variant="outlined"
+              //     autoFocus
+              //     InputProps={{
+              //       ...params.InputProps,
+              //       endAdornment: (
+              //         <>
+              //           {inputValue && !tag.some((option) => option.tag.toLowerCase() === inputValue.toLowerCase()) && (
+              //             <Button onClick={getTag} color="primary">
+              //               Create Tag "{inputValue}"
+              //             </Button>
+              //           )}
+              //           {params.InputProps.endAdornment}
+              //         </>
+              //       ),
+              //     }}
+              //   />
+              // )}
             />
+            {/* {inputValue &&
+              !tag.some(
+                (option) =>
+                  option.tag.toLowerCase() === inputValue.toLowerCase()
+              ) && (
+                <Button onClick={getTag} color="primary">
+                  Create Tag "{inputValue}"
+                </Button>
+              )} */}
+            {/* <Button
+              variant="contained"
+              onClick={getTag}
+              sx={{
+                width: "21vw",
+                height: "15vh",
+                marginTop: "5vh",
+                backgroundColor: "rgba(30, 30, 30, 0.1)",
+                color: "rgba(43, 43, 43, 0.8)",
+                ":hover": {
+                  backgroundColor: "rgba(30, 30, 30, 0.1)",
+                  color: "rgba(43, 43, 43, 0.8)",
+                },
+              }}
+            >
+              {`Create ${inputValue}`}
+            </Button> */}
+            {/* {inputValue &&
+              !tag.some(
+                (option) =>
+                  option.tag.toLowerCase() === inputValue.toLowerCase()
+              ) && (
+                <Button
+                  onClick={() => {
+                    setCreateTagValue(inputValue);
+                    getTag();
+                  }}
+                  variant="contained"
+                  sx={{
+                    width: "21vw",
+                    height: "15vh",
+                    marginTop: "5vh",
+                    backgroundColor: "rgba(30, 30, 30, 0.1)",
+                    color: "rgba(43, 43, 43, 0.8)",
+                    ":hover": {
+                      backgroundColor: "rgba(30, 30, 30, 0.1)",
+                      color: "rgba(43, 43, 43, 0.8)",
+                    },
+                  }}
+                >
+                  {`Create ${inputValue}`}
+                </Button>
+              )} */}
           </div>
         </Popover>
       </div>
