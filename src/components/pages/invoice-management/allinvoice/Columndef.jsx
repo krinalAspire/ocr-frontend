@@ -5,21 +5,57 @@ import AlertCircle from "../../../../assets/allinvoice-assets/alert-circle.svg";
 import Disc from "../../../../assets/allinvoice-assets/disc.svg";
 import CheckCircle from "../../../../assets/allinvoice-assets/checkCircle.svg";
 import { Box, Grid, Typography } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import FourIcons from "./FourIcons";
+import { lightPalette } from "../../../../theme";
 
-const iconSize={
-  xxl:24,
-  xl:22,
-  lg:20,
-  md:18,
-  sm:16,
-  xs:14
-}
+const iconSize = {
+  xxl: 24,
+  xl: 22,
+  lg: 20,
+  md: 18,
+  sm: 16,
+  xs: 14,
+};
+
+export const IconRenderer = (props) => (
+  <Box className="my-icon">
+    {/* <i className="fa fa-trash"></i> */}
+    <FourIcons />
+  </Box>
+);
 
 function responsiveHeader(params) {
   const value = params.displayName;
-  const showArrow = params.displayName === "Status";
+  const showArrow =
+    params.displayName === "Status" || params.displayName === " ";
+  const Action = params.displayName === " ";
   return (
     <>
+      {/* { Action ? <EditIcon /> :  <Typography variant="body1" sx={{ color: "#1E1E1E" }}>
+        {value}
+      </Typography>
+      {showArrow ? null : (
+        <Box sx={{ pl: 1.5 }}>
+          <img src={ArrowUp} alt="arrow-up" />
+        </Box>
+      )}} */}
+      {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      {Action ? (
+        <Box>
+          <img src={ArrowUp} alt="arrow-up" />
+        </Box>
+      ) : (
+        <Typography variant="body1" sx={{ color: '#1E1E1E' }}>
+          {value}
+        </Typography>
+      )}
+      {showArrow ? null : (
+        <Box sx={{ pl: 1.5 }}>
+          <img src={ArrowUp} alt="arrow-up" />
+        </Box>
+      )}
+    </div> */}
       <Typography variant="body1" sx={{ color: "#1E1E1E" }}>
         {value}
       </Typography>
@@ -28,29 +64,40 @@ function responsiveHeader(params) {
           <img src={ArrowUp} alt="arrow-up" />
         </Box>
       )}
+      {Action ? (
+        <Grid>
+          <MoreVertIcon
+            sx={{
+              color: lightPalette.color134.main,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          />
+        </Grid>
+      ) : null}
     </>
   );
 }
 
 const ResponsiveFontsize = (params) => {
-  const [hoveredRowIndex, setHoveredRowIndex] = useState(-1);
-  const [showIcons, setShowIcons] = useState(false);
+  // const [hoveredRowIndex, setHoveredRowIndex] = useState(-1);
+  // const [showIcons, setShowIcons] = useState(false);
   const value = params.value;
-  const handleMouseEnter = () => {
-    setHoveredRowIndex(params.rowIndex);
-    setShowIcons(true);
-  };
+  // const handleMouseEnter = () => {
+  //   setHoveredRowIndex(params.rowIndex);
+  //   setShowIcons(true);
+  // };
 
-  const handleMouseLeave = () => {
-    setShowIcons(false);
-    setHoveredRowIndex(-1);
-  };
+  // const handleMouseLeave = () => {
+  //   setShowIcons(false);
+  //   setHoveredRowIndex(-1);
+  // };
 
   return (
     <Typography
       variant="body1"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      // onMouseEnter={handleMouseEnter}
+      // onMouseLeave={handleMouseLeave}
       //   sx={{
       //     color: "rgba(0, 0, 0, 0.60)",
       //     height: "100%",
@@ -65,30 +112,23 @@ const ResponsiveFontsize = (params) => {
 };
 
 const DocumentNameRow = (params) => {
-  const [hoveredRowIndex, setHoveredRowIndex] = useState(-1);
-  const [showIcons, setShowIcons] = useState(false);
-  const handleMouseEnter = () => {
-    setHoveredRowIndex(params.rowIndex);
-    setShowIcons(true);
-  };
+  // const [hoveredRowIndex, setHoveredRowIndex] = useState(-1);
+  // const [showIcons, setShowIcons] = useState(false);
+  // const handleMouseEnter = () => {
+  //   setHoveredRowIndex(params.rowIndex);
+  //   setShowIcons(true);
+  // };
 
-  const handleMouseLeave = () => {
-    setShowIcons(false);
-    setHoveredRowIndex(-1);
-  };
+  // const handleMouseLeave = () => {
+  //   setShowIcons(false);
+  //   setHoveredRowIndex(-1);
+  // };
 
   return (
     <Box
       sx={{ display: "flex", alignItems: "center" }}
-      //   className="document-name-cell"
-      //   style={{
-      //     display: "flex",
-      //     height: "100%",
-      //     width: "100%",
-      //     alignItems: "center",
-      //   }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      // onMouseEnter={handleMouseEnter}
+      // onMouseLeave={handleMouseLeave}
     >
       <Typography
         variant="body1"
@@ -98,27 +138,17 @@ const DocumentNameRow = (params) => {
       >
         {params.value}
       </Typography>
-      {hoveredRowIndex === params.rowIndex && showIcons && (
-        <Box
-          component="img"
-          src={EditIcon}
-          alt="Edit"
-          // className="edit-icon"
-          sx={{
-            marginLeft:"2vw",
-            width: { xxl: 22, xl: 20, lg: 18, md: 16, sm: 14, xs: 12 },
-            height: { xxl: 22, xl: 20, lg: 18, md: 16, sm: 14, xs: 12 },
-          }}
-        />
-        // <img
-        //   className="edit-icon"
-        //   src={EditIcon}
-        //   alt="Edit"
-        //   onClick={() => {
-        //     // Handle edit functionality here
-        //   }}
-        // />
-      )}
+      <Box
+        component="img"
+        src={EditIcon}
+        alt="Edit"
+        className="my-icon"
+        sx={{
+          marginLeft: "2vw",
+          width: { xxl: 22, xl: 20, lg: 18, md: 16, sm: 14, xs: 12 },
+          height: { xxl: 22, xl: 20, lg: 18, md: 16, sm: 14, xs: 12 },
+        }}
+      />
     </Box>
   );
 };
@@ -139,16 +169,16 @@ const StatusRow = (params) => {
           }}
         >
           <Box
-          component="img"
-          src={AlertCircle}
-          alt="Failed"
-          // className="edit-icon"
-          sx={{
-            // marginLeft:"2vw",
-            width: iconSize,
-            height: iconSize
-          }}
-        />
+            component="img"
+            src={AlertCircle}
+            alt="Failed"
+            // className="edit-icon"
+            sx={{
+              // marginLeft:"2vw",
+              width: iconSize,
+              height: iconSize,
+            }}
+          />
           {/* <img src={AlertCircle} alt="Failed" style={{}} /> */}
         </Grid>
       );
@@ -165,16 +195,16 @@ const StatusRow = (params) => {
           }}
         >
           <Box
-          component="img"
-          src={Disc}
-          alt="Pending"
-          // className="edit-icon"
-          sx={{
-            // marginLeft:"2vw",
-            width: iconSize,
-            height: iconSize
-          }}
-        />
+            component="img"
+            src={Disc}
+            alt="Pending"
+            // className="edit-icon"
+            sx={{
+              // marginLeft:"2vw",
+              width: iconSize,
+              height: iconSize,
+            }}
+          />
           {/* <img src={Disc} alt="Pending" /> */}
         </Box>
       );
@@ -190,17 +220,17 @@ const StatusRow = (params) => {
             // justifyContent:"center"
           }}
         >
-            <Box
-          component="img"
-          src={CheckCircle}
-          alt="Success"
-          // className="edit-icon"
-          sx={{
-            // marginLeft:"2vw",
-            width: iconSize,
-            height: iconSize
-          }}
-        />
+          <Box
+            component="img"
+            src={CheckCircle}
+            alt="Success"
+            // className="edit-icon"
+            sx={{
+              // marginLeft:"2vw",
+              width: iconSize,
+              height: iconSize,
+            }}
+          />
           {/* <img src={CheckCircle} alt="Success" /> */}
         </Box>
       );
@@ -213,28 +243,28 @@ const StatusRow = (params) => {
 };
 
 const TagRow = (params) => {
-  const [hoveredRowIndex, setHoveredRowIndex] = useState(-1);
-  const [showIcons, setShowIcons] = useState(false);
+  // const [hoveredRowIndex, setHoveredRowIndex] = useState(-1);
+  // const [showIcons, setShowIcons] = useState(false);
   const value = params.value;
-  const handleMouseEnter = () => {
-    setHoveredRowIndex(params.rowIndex);
-    setShowIcons(true);
-  };
+  // const handleMouseEnter = () => {
+  //   setHoveredRowIndex(params.rowIndex);
+  //   setShowIcons(true);
+  // };
 
-  const handleMouseLeave = () => {
-    setShowIcons(false);
-    setHoveredRowIndex(-1);
-  };
+  // const handleMouseLeave = () => {
+  //   setShowIcons(false);
+  //   setHoveredRowIndex(-1);
+  // };
 
   return (
     <Typography
       variant="body1"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      // onMouseEnter={handleMouseEnter}
+      // onMouseLeave={handleMouseLeave}
       sx={{
         color: "rgba(0, 0, 0, 0.60)",
-        height: "100%",
-        width: "100%",
+        // height: "100%",
+        // width: "100%",
         display: "flex",
         alignItems: "center",
       }}
@@ -244,7 +274,17 @@ const TagRow = (params) => {
   );
 };
 
-const Icons = (params) => {
+const HoverIcons = (params) => {
+  // const value=params.value;
+  // const [isHovered, setIsHovered] = useState(false);
+
+  // const handleMouseEnter = () => {
+  //   setIsHovered(true);
+  // };
+
+  // const handleMouseLeave = () => {
+  //   setIsHovered(false);
+  // };
   const [hoveredRowIndex, setHoveredRowIndex] = useState(-1);
   const [showIcons, setShowIcons] = useState(false);
   const handleMouseEnter = () => {
@@ -261,12 +301,17 @@ const Icons = (params) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        height: "100%",
+        // height: "100%",
+        position: "relative",
         display: "flex",
         alignItems: "center",
       }}
     >
-      {hoveredRowIndex === params.rowIndex && showIcons && <AlertCircle />}
+      {/* {value} */}
+      {/* {isHovered && <i className="material-icons">star</i>} */}
+      {hoveredRowIndex === params.rowIndex && showIcons && (
+        <img src={AlertCircle} alt="sccg" />
+      )}
     </div>
   );
 };
@@ -454,36 +499,39 @@ export const columnData = [
     // },
   },
   {
-    headerName: "",
-    field: "",
-    minWidth:300,
+    headerName: " ",
+    field: " ",
+    minWidth: 150,
+    headerComponent: responsiveHeader,
     // sortable: true,
     // filter: true,
     // cellRenderer: ResponsiveFontsize,
-    cellRenderer: Icons,
-    // cellRenderer: (params) => {
-    //   const handleMouseEnter = () => {
-    //     setHoveredRowIndex(params.rowIndex);
-    //     setShowIcons(true);
-    //   };
+    // cellRendererFramework: HoverIcons,
+    cellRenderer: IconRenderer,
+    // cellRenderer: HoverIcons,
+    //   cellRenderer: (params) => {
+    //     const handleMouseEnter = () => {
+    //       setHoveredRowIndex(params.rowIndex);
+    //       setShowIcons(true);
+    //     };
 
-    //   const handleMouseLeave = () => {
-    //     setShowIcons(false);
-    //     setHoveredRowIndex(-1);
-    //   };
-    //   return (
-    //     <div
-    //       onMouseEnter={handleMouseEnter}
-    //       onMouseLeave={handleMouseLeave}
-    //       style={{
-    //         height: "100%",
-    //         display: "flex",
-    //         alignItems: "center",
-    //       }}
-    //     >
-    //       {/* {hoveredRowIndex === params.rowIndex && showIcons && <FourIcons />} */}
-    //     </div>
-    //   );
-    // },
+    //     const handleMouseLeave = () => {
+    //       setShowIcons(false);
+    //       setHoveredRowIndex(-1);
+    //     };
+    //     return (
+    //       <div
+    //         onMouseEnter={handleMouseEnter}
+    //         onMouseLeave={handleMouseLeave}
+    //         style={{
+    //           height: "100%",
+    //           display: "flex",
+    //           alignItems: "center",
+    //         }}
+    //       >
+    //         {hoveredRowIndex === params.rowIndex && showIcons && <AlertCircle />}
+    //       </div>
+    //     );
+    //   },
   },
 ];

@@ -16,6 +16,12 @@
 /* .edit-icon {
   padding-left: 1vw;
 } */
+.my-icon {
+  display: none;
+}
+.ag-row-hover .my-icon {
+  display: initial;
+}
 
 /* .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
   border: 0px;

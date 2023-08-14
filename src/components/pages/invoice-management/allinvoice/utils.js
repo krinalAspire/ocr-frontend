@@ -3,6 +3,7 @@ import { up } from "../../../../theme";
 
 export const classes = {
   root: "root",
+  actionIcons:"actionIcons"
 };
 
 export const Root = styled("div")(({ theme }) => ({
@@ -28,4 +29,31 @@ export const Root = styled("div")(({ theme }) => ({
       margin: "35px 25px",
     },
   },
+  [`& .${classes.actionIcons}`]:{
+    marginRight:"1vw",
+    [up('xs')]:{
+      width:"12",
+      height:"12px"
+    },
+    [up('sm')]:{
+      width:"14",
+      height:"14px"
+    },
+    [up('md')]:{
+      width:"16",
+      height:"16px"
+    },
+    [up('lg')]:{
+      width:"18",
+      height:"18px"
+    },
+    [up('xl')]:{
+      width:"20",
+      height:"20px"
+    },
+    [up('xxl')]:{
+      width:"22",
+      height:"22px"
+    },
+  }
 }));

@@ -10,7 +10,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { classes } from "./utils";
 import axios from "axios";
 import TagSelection from "../allinvoice/TagSelection";
-import { top100Films } from "./options";
+import { Tag } from "./options";
 
 const TagsButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -97,7 +97,7 @@ const TagsButton = () => {
 
   return (
     <>
-      <div>
+      <Box>
         <Button onClick={handleClick} className={classes.TagButton}>
           Tag
           <KeyboardArrowDownIcon />
@@ -114,17 +114,38 @@ const TagsButton = () => {
             vertical: "top",
             horizontal: "left",
           }}
-          sx={{ height: "41vh" }}
+          // sx={{ height: "41vh" }}
         >
-          <div
-            style={{
+          <Box
+            sx={{
               padding: "16px",
               // height: "52vh",
             }}
           >
             <Autocomplete
               //  freeSolo
-              sx={{ width: "21vw" }}
+              sx={{
+                width: "21vw",
+                "& .MuiAutocomplete-popper .MuiListbox-root": {
+                  overflowY: "auto",
+                  scrollbarWidth: "thin", // For Firefox
+                  scrollbarColor: "rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1)",
+                  "&::-webkit-scrollbar": {
+                    width: "6px",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
+                    borderRadius: "6px",
+                  },
+                  "&::-webkit-scrollbar-thumb:hover": {
+                    backgroundColor: "rgba(0, 0, 0, 0.4)",
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    borderRadius: "6px",
+                  },
+                },
+              }}
               multiple
               id="checkboxes-tags-demo"
               // options={top100Films}
@@ -137,7 +158,7 @@ const TagsButton = () => {
               getOptionLabel={(option) => option.tag}
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
-                  <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                  <Checkbox sx={{ marginRight: 1 }} checked={selected} />
                   {option.tag}
                 </li>
               )}
@@ -164,7 +185,7 @@ const TagsButton = () => {
                           },
                         }}
                       >
-                        <AddIcon sx={{marginRight:"1vw"}}/>
+                        <AddIcon sx={{ marginRight: "1vw" }} />
                         Create "{inputValue}"
                       </Button>
                     )}
@@ -259,9 +280,9 @@ const TagsButton = () => {
                   {`Create ${inputValue}`}
                 </Button>
               )} */}
-          </div>
+          </Box>
         </Popover>
-      </div>
+      </Box>
       {/* <Root> */}
       {/* <Button
         variant="text"
