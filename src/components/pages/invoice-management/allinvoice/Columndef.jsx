@@ -6,8 +6,8 @@ import Disc from "../../../../assets/allinvoice-assets/disc.svg";
 import CheckCircle from "../../../../assets/allinvoice-assets/checkCircle.svg";
 import { Box, Grid, Typography } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import FourIcons from "./FourIcons";
 import { lightPalette } from "../../../../theme";
+import Action from "./Action";
 
 const iconSize = {
   xxl: 24,
@@ -200,7 +200,7 @@ const TagRow = (params) => {
 
 const IconRenderer = (props) => (
   <Box className="my-icon">
-    <FourIcons />
+    <Action />
   </Box>
 );
 

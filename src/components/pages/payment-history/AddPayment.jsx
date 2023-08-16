@@ -32,8 +32,18 @@ import { AssessmentOutlined } from "@mui/icons-material";
 import { ADDPAYMENT } from "../../services/constantServices";
 
 function AddPayment({ handleClose }) {
+  const [date, setDate]=useState(null);
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleDate=(date)=>{
+    // const date=event.target.value;
+    const newdate=date;
+    // const newdate=new Date(date)
+    console.log("Date", newdate.$d);
+    console.log("type",typeof(newdate.$d));
+    setDate(newdate);
+  }
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -135,8 +145,10 @@ function AddPayment({ handleClose }) {
             {/* <img src={calendar} alt="ghgjh"/> */}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
-                minDate={dayjs(new Date(2022, 0, 1))}
-                maxDate={dayjs(new Date(2024, 12, 31))}
+                // minDate={dayjs(new Date(2022, 0, 1))}
+                // maxDate={dayjs(new Date(2024, 12, 31))}
+                value={date}
+                onChange={(date) => handleDate(date)}
                 reduceAnimations
                 slots={
                   {
