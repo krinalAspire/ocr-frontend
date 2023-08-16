@@ -1,4 +1,4 @@
-export const Tag = [
+export const tag = [
   {
     "id": "6ryyhb11v",
     "tag": "alert"

@@ -8,9 +8,6 @@ export const classes = {
   SearchField: "SearchField",
   TagButton: "TagButton",
   UploadIcon: "UploadIcon",
-  PopOverBox: "PopOverBox",
-  CreatePopOverButton: "CreatePopOverButton",
-  CreateTagButton: "CreateTagButton",
 };
 
 export const Root = styled("div")(({ theme }) => ({
@@ -157,25 +154,6 @@ export const Root = styled("div")(({ theme }) => ({
     [up("xxl")]: {
       width: "18px",
       height: "18px",
-    },
-  },
-  [`& .${classes.PopOverBox}`]: {
-    display: "flex",
-    flexDirection: "column",
-    width: "18vw",
-  },
-  [`& .${classes.CreatePopOverButton}`]: {
-    backgroundColor: theme.palette.color30.lightest,
-  },
-  [`& .${classes.CreateTagButton}`]: {
-    width: "21vw",
-    height: "7vh",
-    marginTop: "10px",
-    backgroundColor: "rgba(30, 30, 30, 0.1)",
-    color: "rgba(43, 43, 43, 0.8)",
-    ":hover": {
-      backgroundColor: "rgba(30, 30, 30, 0.1)",
-      color: "rgba(43, 43, 43, 0.8)",
     },
   },
 }));

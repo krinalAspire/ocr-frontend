@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  createFilterOptions,
-  TextField,
-  Popover,
-  Button,
-  Checkbox,
-  Autocomplete,
-} from "@mui/material";
+import Popover from "@mui/material/Popover";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { Box, createFilterOptions } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Checkbox, Autocomplete } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { classes } from "./utils";
 import axios from "axios";
 import TagSelection from "../allinvoice/TagSelection";
-import { tag } from "./options";
+import tag from "../../../../assets/allinvoice-assets/tag.svg";
+// import { Tag } from "./options";
 
-const TagsButton = () => {
+const AddTag = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [tagdata, setTagdata] = useState([]);
@@ -101,40 +99,58 @@ const TagsButton = () => {
   return (
     <>
       <Box>
-        <Button onClick={handleClick} className={classes.TagButton}>
+        {/* <Button onClick={handleClick} className={classes.TagButton}>
           Tag
           <KeyboardArrowDownIcon />
-        </Button>
+        </Button> */}
+        <Box component="img" onClick={handleClick} src={tag} alt="sdesf"/>
         <Popover
           open={open}
           anchorEl={anchorEl}
           onClose={handleClose}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "left",
+            horizontal: "right",
           }}
           transformOrigin={{
             vertical: "top",
-            horizontal: "left",
+            horizontal: "right",
           }}
           // sx={{ height: "41vh" }}
         >
           <Box
-            className={classes.PopoverBox}
             sx={{
-              // padding: "10px",
-              padding:{xxl:"10px", xl:"7px", lg:"6px", md:"5px", sm:"5px", xs:"5px"}
+              padding: "16px",
+              // height: "52vh",
             }}
           >
             <Autocomplete
               //  freeSolo
               sx={{
-                // width: "17.81vw",
-                width:{xxl:"13vw", xl:"12vw", lg:"14vw", md:"13.5vw", sm:" 13vh", xs:"15vh"}
+                width: "21vw",
+                "& .MuiAutocomplete-popper .MuiListbox-root": {
+                  overflowY: "auto",
+                  scrollbarWidth: "thin", // For Firefox
+                  scrollbarColor: "rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1)",
+                  "&::-webkit-scrollbar": {
+                    width: "6px",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
+                    borderRadius: "6px",
+                  },
+                  "&::-webkit-scrollbar-thumb:hover": {
+                    backgroundColor: "rgba(0, 0, 0, 0.4)",
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    borderRadius: "6px",
+                  },
+                },
               }}
               multiple
               id="checkboxes-tags-demo"
-              // options={tag}
+              // options={top100Films}
               options={tagdata}
               inputValue={inputValue}
               onInputChange={handleInputChange}
@@ -150,23 +166,7 @@ const TagsButton = () => {
               )}
               renderInput={(params) => (
                 <Box>
-                  <TextField
-                    {...params}
-                    placeholder="Search Tags"
-                    size="small"
-                    // sx={{
-                    //   "& .MuiOutlinedInput-root": {
-                    //     height: {
-                    //       xxl:"40px",
-                    //       xl: "30px",
-                    //       lg: "20px",
-                    //       md: "10px",
-                    //       sm: "10px",
-                    //       xs: "10px",
-                    //     },
-                    //   },
-                    // }}
-                  />
+                  <TextField {...params} placeholder="Search Tags" />
                   {inputValue &&
                     !tagdata.some(
                       (option) =>
@@ -175,14 +175,9 @@ const TagsButton = () => {
                       <Button
                         onClick={getTag}
                         variant="contained"
-                        // className={classes.CreateTagButton}
                         sx={{
-                          // width: "17.81vw",
-                          width:{xxl:"13vw", xl:"12vw", lg:"14vw", md:"13.5vw", sm:" 13vh", xs:"15vh"},
-                          // width:{xxl:"342px", xl:"330px", lg:"320px", md:"310px", sm:"280px", xs:"270px"},
-                          // height: "7vh",
-                          // height:{xxl:"4vh", xl:"4vh", lg:"5.5vh", md:"6vh", sm:" 5vh", xs:"4vh"},
-                          height:{xxl:"40px", xl:"40px", lg:"35px", md:"34px", sm:" 40px", xs:"36px"},
+                          width: "21vw",
+                          height: "7vh",
                           marginTop: "10px",
                           backgroundColor: "rgba(30, 30, 30, 0.1)",
                           color: "rgba(43, 43, 43, 0.8)",
@@ -390,4 +385,4 @@ const TagsButton = () => {
   );
 };
 
-export default TagsButton;
+export default AddTag;
