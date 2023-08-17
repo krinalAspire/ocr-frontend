@@ -1,36 +1,56 @@
 import React, { useEffect, useState } from "react";
-import Popover from "@mui/material/Popover";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Box, createFilterOptions } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Checkbox, Autocomplete } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Popover,
+  Button,
+  Checkbox,
+  Autocomplete,
+  Popper,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { classes } from "./utils";
 import axios from "axios";
-import TagSelection from "../allinvoice/TagSelection";
 import tag from "../../../../assets/allinvoice-assets/tag.svg";
-// import { Tag } from "./options";
+import { tagOptions } from "./rowdata";
 
 const AddTag = () => {
+  // const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // const handleClick = (event) => {
+  //   setAnchorEl(anchorEl ? null : event.currentTarget);
+  // };
+
+  // const open = Boolean(anchorEl);
+  // const id = open ? "simple-popper" : undefined;
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputValue, setInputValue] = useState("");
+  const [hovered, setHovered] = useState(false);
   const [tagdata, setTagdata] = useState([]);
-  // const [createTagValue, setCreateTagValue] = useState("");
+  // // const [clicked, setClicked] = useState(false);
 
-  // const handleInputChange = (event) => {
-  //   setInputValue(event.target.value);
+  // const handleHoverEnter = () => {
+  //   setHovered(true);
+  // };
+
+  // const handleHoverLeave = () => {
+  //   setHovered(false);
   // };
 
   const handleClick = (event) => {
+    console.log("anchorEl", event.currentTarget);
     setAnchorEl(event.currentTarget);
+    setHovered(false);
+    // setClicked(true);
+    // const cellElement = event.currentTarget.closest(".my-icon");
+    // setAnchorEl(cellElement);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
     setInputValue(" ");
-    // setCreateTagValue("");
+    // setClicked(false);
   };
   const open = Boolean(anchorEl);
 
@@ -38,12 +58,7 @@ const AddTag = () => {
     setInputValue(newInputValue);
   };
 
-  // const filter = createFilterOptions();
-
   const getTag = (event) => {
-    // setInputValue(event.target.value);
-    // // console.log(inputValue);
-    // setTagdata(inputValue)
     const data = {
       id: Math.random().toString(36).substr(2, 9),
       tag: inputValue,
@@ -79,32 +94,55 @@ const AddTag = () => {
       });
   }, []);
 
-  // const handleCreateClick = () => {
-  //   if (inputValue.trim() !== "") {
-  //     //   dispatch(addTag({ title: inputValue, checked: false }));
-  //     setInputValue("");
-  //   }
-  // };
-
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-  // const open = Boolean(anchorEl);
-
   return (
     <>
-      <Box>
-        {/* <Button onClick={handleClick} className={classes.TagButton}>
-          Tag
-          <KeyboardArrowDownIcon />
-        </Button> */}
-        <Box component="img" onClick={handleClick} src={tag} alt="sdesf"/>
-        <Popover
+      {/* <div>
+        <button aria-describedby={id} type="button" onClick={handleClick}>
+          Toggle Popper
+        </button>
+        <Popper id={id} open={open} anchorEl={anchorEl}>
+          <Box sx={{zIndex:1000}}>
+          <Autocomplete
+            multiple
+            id="checkboxes-tags-demo"
+            options={tagdata}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.tag}
+            renderOption={(props, option, { selected }) => (
+              <li {...props}>
+                <Checkbox
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                />
+                {option.tag}
+              </li>
+            )}
+            style={{ width: 500 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Checkboxes"
+                placeholder="Favorites"
+              />
+            )}
+          />
+          </Box>
+        </Popper>
+      </div> */}
+
+      <Box sx={{ display: "flex", alignItems: "center", flexDirection:"column",position: 'relative', }}>
+        <Box
+          component="img"
+          onClick={handleClick}
+          // onMouseEnter={handleHoverEnter}
+          // onMouseLeave={handleHoverLeave}
+          src={tag}
+          alt="tag"
+          className={classes.actionIcons}
+          // className="my-icon"
+        />
+      {/* {hovered && !clicked && (   */}
+      <Popover
           open={open}
           anchorEl={anchorEl}
           onClose={handleClose}
@@ -116,36 +154,30 @@ const AddTag = () => {
             vertical: "top",
             horizontal: "right",
           }}
-          // sx={{ height: "41vh" }}
-        >
-          <Box
+         
+        > 
+      {/* {anchorEl  ? */}
+      <Box
             sx={{
-              padding: "16px",
-              // height: "52vh",
+              padding: {
+                xxl: "10px",
+                xl: "7px",
+                lg: "6px",
+                md: "5px",
+                sm: "5px",
+                xs: "5px",
+              },
             }}
           >
             <Autocomplete
-              //  freeSolo
               sx={{
-                width: "21vw",
-                "& .MuiAutocomplete-popper .MuiListbox-root": {
-                  overflowY: "auto",
-                  scrollbarWidth: "thin", // For Firefox
-                  scrollbarColor: "rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1)",
-                  "&::-webkit-scrollbar": {
-                    width: "6px",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: "rgba(0, 0, 0, 0.3)",
-                    borderRadius: "6px",
-                  },
-                  "&::-webkit-scrollbar-thumb:hover": {
-                    backgroundColor: "rgba(0, 0, 0, 0.4)",
-                  },
-                  "&::-webkit-scrollbar-track": {
-                    backgroundColor: "rgba(0, 0, 0, 0.1)",
-                    borderRadius: "6px",
-                  },
+                width: {
+                  xxl: "13vw",
+                  xl: "12vw",
+                  lg: "14vw",
+                  md: "13.5vw",
+                  sm: " 13vh",
+                  xs: "15vh",
                 },
               }}
               multiple
@@ -157,7 +189,7 @@ const AddTag = () => {
               disableCloseOnSelect
               freeSolo
               // getOptionLabel={(option) => option.title}
-              getOptionLabel={(option) => option.tag}
+              getOptionLabel={(option) => option.tag} 
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
                   <Checkbox sx={{ marginRight: 1 }} checked={selected} />
@@ -166,7 +198,11 @@ const AddTag = () => {
               )}
               renderInput={(params) => (
                 <Box>
-                  <TextField {...params} placeholder="Search Tags" />
+                  <TextField
+                    {...params}
+                    placeholder="Search Tags"
+                    size="small"
+                  />
                   {inputValue &&
                     !tagdata.some(
                       (option) =>
@@ -176,8 +212,22 @@ const AddTag = () => {
                         onClick={getTag}
                         variant="contained"
                         sx={{
-                          width: "21vw",
-                          height: "7vh",
+                          width: {
+                            xxl: "13vw",
+                            xl: "12vw",
+                            lg: "14vw",
+                            md: "13.5vw",
+                            sm: " 13vh",
+                            xs: "15vh",
+                          },
+                          height: {
+                            xxl: "40px",
+                            xl: "40px",
+                            lg: "35px",
+                            md: "34px",
+                            sm: " 40px",
+                            xs: "36px",
+                          },
                           marginTop: "10px",
                           backgroundColor: "rgba(30, 30, 30, 0.1)",
                           color: "rgba(43, 43, 43, 0.8)",
@@ -193,194 +243,12 @@ const AddTag = () => {
                     )}
                 </Box>
               )}
-              // renderTags={(value, getTagProps) => (
-              //   <div>
-              //     {value.map((option, index) => (
-              //       <div key={option.tag} {...getTagProps({ index })}>
-              //         {option.tag}
-              //       </div>
-              //     ))}
-              //     {inputValue && !tag.some((option) => option.tag.toLowerCase() === inputValue.toLowerCase()) && (
-              //       <Button onClick={getTag} variant="contained" >
-              //         Create Tag "{inputValue}"
-              //       </Button>
-              //     )}
-              //   </div>
-              // )}
-              // renderInput={(params) => (
-              //   <TextField
-              //     {...params}
-              //     // label="Search Tags"
-              //     placeholder="Search Tags"
-              //     variant="outlined"
-              //     autoFocus
-              //     InputProps={{
-              //       ...params.InputProps,
-              //       endAdornment: (
-              //         <>
-              //           {inputValue && !tag.some((option) => option.tag.toLowerCase() === inputValue.toLowerCase()) && (
-              //             <Button onClick={getTag} color="primary">
-              //               Create Tag "{inputValue}"
-              //             </Button>
-              //           )}
-              //           {params.InputProps.endAdornment}
-              //         </>
-              //       ),
-              //     }}
-              //   />
-              // )}
             />
-            {/* {inputValue &&
-              !tag.some(
-                (option) =>
-                  option.tag.toLowerCase() === inputValue.toLowerCase()
-              ) && (
-                <Button onClick={getTag} color="primary">
-                  Create Tag "{inputValue}"
-                </Button>
-              )} */}
-            {/* <Button
-              variant="contained"
-              onClick={getTag}
-              sx={{
-                width: "21vw",
-                height: "15vh",
-                marginTop: "5vh",
-                backgroundColor: "rgba(30, 30, 30, 0.1)",
-                color: "rgba(43, 43, 43, 0.8)",
-                ":hover": {
-                  backgroundColor: "rgba(30, 30, 30, 0.1)",
-                  color: "rgba(43, 43, 43, 0.8)",
-                },
-              }}
-            >
-              {`Create ${inputValue}`}
-            </Button> */}
-            {/* {inputValue &&
-              !tag.some(
-                (option) =>
-                  option.tag.toLowerCase() === inputValue.toLowerCase()
-              ) && (
-                <Button
-                  onClick={() => {
-                    setCreateTagValue(inputValue);
-                    getTag();
-                  }}
-                  variant="contained"
-                  sx={{
-                    width: "21vw",
-                    height: "15vh",
-                    marginTop: "5vh",
-                    backgroundColor: "rgba(30, 30, 30, 0.1)",
-                    color: "rgba(43, 43, 43, 0.8)",
-                    ":hover": {
-                      backgroundColor: "rgba(30, 30, 30, 0.1)",
-                      color: "rgba(43, 43, 43, 0.8)",
-                    },
-                  }}
-                >
-                  {`Create ${inputValue}`}
-                </Button>
-              )} */}
           </Box>
-        </Popover>
+      {/* {/* : null } */}
+      </Popover>
+      {/* // )} */}
       </Box>
-      {/* <Root> */}
-      {/* <Button
-        variant="text"
-        onClick={handleClick}
-        className={classes.TagButton}
-      >
-        Tags
-        <KeyboardArrowDownIcon />
-      </Button> */}
-      {/* <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-      > */}
-      {/* <TagSelection /> */}
-      {/* <Box
-          // className={classes.PopOverBox}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "18vw",
-          }}
-        >
-          <TextField
-            autoFocus
-            placeholder="Search tags"
-            variant="outlined"
-            margin="normal"
-            name="tag"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          {tag.map((tag) => (
-            <Box
-              key={tag.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography
-                variant="body1"
-                sx={{
-                  padding: "0.5rem",
-                  height: "100%",
-                  width: "100%",
-                  marginBottom: "1vh",
-                  backgroundColor: "rgba(30, 30, 30, 0.1)",
-                }}
-              >
-                {tag.tag}
-              </Typography>
-            </Box>
-          ))}
-          {tag.length > 0 || inputValue ? (
-            <Button
-              disabled={!inputValue}
-              onClick={getTag}
-              variant="contained"
-              startIcon={<AddIcon />}
-              // className={classes.CreatePopOverButton}
-              sx={{
-                backgroundColor: "rgba(30, 30, 30, 0.1)",
-                color: "rgba(43, 43, 43, 0.8)",
-                ":hover": {
-                  backgroundColor: "rgba(30, 30, 30, 0.1)",
-                  color: "rgba(43, 43, 43, 0.8)",
-                },
-                padding: "1vh 0vw",
-              }}
-            >
-              {`Create ${inputValue}`}
-            </Button>
-          ) : (
-            <Typography
-              variant="body1"
-              align="center"
-              sx={{
-                color: "rgba(0, 0, 0, 0.60)",
-                padding: "1vh 0vw",
-              }}
-            >
-              Type to create tag..{" "}
-            </Typography>
-          )}
-        </Box> */}
-      {/* </Popover> */}
-      {/* </Root> */}
     </>
   );
 };

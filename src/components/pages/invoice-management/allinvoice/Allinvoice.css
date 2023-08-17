@@ -20,7 +20,9 @@
   display: none;
 }
 .ag-row-hover .my-icon {
-  display: initial;
+  /* display: initial; */
+  display: block;
+  position: relative;
 }
 
 /* .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {

@@ -1,22 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import EditIcon from "../../../../assets/allinvoice-assets/edit.svg";
 import ArrowUp from "../../../../assets/allinvoice-assets/arrow-up.svg";
 import AlertCircle from "../../../../assets/allinvoice-assets/alert-circle.svg";
 import Disc from "../../../../assets/allinvoice-assets/disc.svg";
 import CheckCircle from "../../../../assets/allinvoice-assets/checkCircle.svg";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Chip, Tooltip } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { lightPalette } from "../../../../theme";
 import Action from "./Action";
-
-const iconSize = {
-  xxl: 24,
-  xl: 22,
-  lg: 20,
-  md: 18,
-  sm: 16,
-  xs: 14,
-};
+import { classes } from "./utils";
+import AddTag from "./AddTag";
 
 function responsiveHeader(params) {
   const value = params.displayName;
@@ -25,31 +18,8 @@ function responsiveHeader(params) {
   const Action = params.displayName === " ";
   return (
     <>
-      {/* { Action ? <EditIcon /> :  <Typography variant="body1" sx={{ color: "#1E1E1E" }}>
-        {value}
-      </Typography>
-      {showArrow ? null : (
-        <Box sx={{ pl: 1.5 }}>
-          <img src={ArrowUp} alt="arrow-up" />
-        </Box>
-      )}} */}
-      {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      {Action ? (
-        <Box>
-          <img src={ArrowUp} alt="arrow-up" />
-        </Box>
-      ) : (
-        <Typography variant="body1" sx={{ color: '#1E1E1E' }}>
-          {value}
-        </Typography>
-      )}
-      {showArrow ? null : (
-        <Box sx={{ pl: 1.5 }}>
-          <img src={ArrowUp} alt="arrow-up" />
-        </Box>
-      )}
-    </div> */}
-      <Typography variant="body1" sx={{ color: "#1E1E1E" }}>
+      {/* <Box> */}
+      <Typography variant="body1" color={lightPalette.color30.main}>
         {value}
       </Typography>
       {showArrow ? null : (
@@ -58,14 +28,15 @@ function responsiveHeader(params) {
         </Box>
       )}
       {Action ? (
+        <Box className={classes.HeaderMoreVertIcon}>
           <MoreVertIcon
             sx={{
               color: lightPalette.color134.main,
-              display: "flex",
-              justifyContent: "flex-end",
             }}
           />
+        </Box>
       ) : null}
+      {/* </Box> */}
     </>
   );
 }
@@ -74,39 +45,30 @@ const ResponsiveFontsize = (params) => {
   const value = params.value;
 
   return (
-    <Typography
-      variant="body1"
-    >
+    <Typography variant="body1" color={lightPalette.color134.main}>
       {value}
     </Typography>
   );
 };
 
 const DocumentNameRow = (params) => {
-
   return (
-    <Box
-      sx={{ display: "flex", alignItems: "center" }}
-    >
+    <Box sx={{ display: "flex", alignItems: "center" }}>
       <Typography
         variant="body1"
-        sx={{
-          color: "rgba(0, 0, 0, 0.60)",
-        }}
+        color={lightPalette.color134.main}
       >
         {params.value}
       </Typography>
-      <Box
-        component="img"
-        src={EditIcon}
-        alt="Edit"
-        className="my-icon"
-        sx={{
-          marginLeft: "2vw",
-          width: { xxl: 22, xl: 20, lg: 18, md: 16, sm: 14, xs: 12 },
-          height: { xxl: 22, xl: 20, lg: 18, md: 16, sm: 14, xs: 12 },
-        }}
-      />
+      <Box className="my-icon">
+        <Box
+          component="img"
+          src={EditIcon}
+          alt="Edit"
+          className={classes.EditIcon}
+        />
+        {/* <AddTag /> */}
+      </Box>
     </Box>
   );
 };
@@ -117,19 +79,13 @@ const StatusRow = (params) => {
     case "failed":
       statusIcon = (
         <Grid
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
+        className={classes.StatusIcon}
         >
           <Box
             component="img"
             src={AlertCircle}
             alt="Failed"
-            sx={{
-              width: iconSize,
-              height: iconSize,
-            }}
+            className={classes.StatusIconSize}
           />
         </Grid>
       );
@@ -137,19 +93,13 @@ const StatusRow = (params) => {
     case "pending":
       statusIcon = (
         <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
+        className={classes.StatusIcon}
         >
           <Box
             component="img"
             src={Disc}
             alt="Pending"
-            sx={{
-              width: iconSize,
-              height: iconSize,
-            }}
+            className={classes.StatusIconSize}
           />
         </Box>
       );
@@ -157,19 +107,13 @@ const StatusRow = (params) => {
     case "success":
       statusIcon = (
         <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
+        className={classes.StatusIcon}
         >
           <Box
             component="img"
             src={CheckCircle}
             alt="Success"
-            sx={{
-              width: iconSize,
-              height: iconSize,
-            }}
+            className={classes.StatusIconSize}
           />
         </Box>
       );
@@ -185,16 +129,22 @@ const TagRow = (params) => {
   const value = params.value;
 
   return (
-    <Typography
-      variant="body1"
-      sx={{
-        color: "rgba(0, 0, 0, 0.60)",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      {value}
-    </Typography>
+    <>
+      <Tooltip title={value} placement="bottom-end" arrow>
+        {value ? (
+          <Chip
+            label={value}
+            className={classes.TagChip}
+          />
+        ) : (
+          <Chip
+            label="Tags"
+            variant="outlined"
+            className={classes.TagChip}
+          />
+        )}
+      </Tooltip>
+    </>
   );
 };
 
@@ -209,7 +159,7 @@ export const columnData = [
     headerName: "Document name",
     field: "documentName",
     headerComponent: responsiveHeader,
-    minWidth: 200,
+    minWidth: 330,
     headerCheckboxSelection: true,
     checkboxSelection: true,
     cellRenderer: DocumentNameRow,
@@ -217,37 +167,42 @@ export const columnData = [
   {
     headerName: "Status",
     field: "status",
+    minWidth: 70,
     headerComponent: responsiveHeader,
     cellRenderer: StatusRow,
   },
   {
     headerName: "Uploaded",
     field: "uploaded",
+    minWidth: 115,
     headerComponent: responsiveHeader,
     cellRenderer: ResponsiveFontsize,
   },
   {
     headerName: "Validated",
     field: "validated",
+    minWidth: 115,
     headerComponent: responsiveHeader,
     cellRenderer: ResponsiveFontsize,
   },
   {
     headerName: "Exported",
     field: "exported",
+    minWidth: 115,
     headerComponent: responsiveHeader,
     cellRenderer: ResponsiveFontsize,
   },
   {
     headerName: "Tags",
     field: "tags",
+    minWidth: 50,
     headerComponent: responsiveHeader,
     cellRenderer: TagRow,
   },
   {
     headerName: " ",
     field: " ",
-    minWidth: 150,
+    minWidth: 145,
     headerComponent: responsiveHeader,
     cellRenderer: IconRenderer,
   },

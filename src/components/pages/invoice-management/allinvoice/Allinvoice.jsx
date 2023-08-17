@@ -7,6 +7,7 @@ import { rowdata } from "./rowdata";
 import "./Allinvoice.css";
 import { Box } from "@mui/material";
 import { classes, Root } from "./utils";
+import AddTag from "./AddTag";
 // import { lightPalette } from "../../../../theme";
 // import FourIcons from "./FourIcons";
 // import Navinvoice from "./NavInvoice";
@@ -89,6 +90,7 @@ function Allinvoice() {
   return (
     <>
       <Root className={classes.root}>
+        {/* <AddTag />s */}
         <Box
           id="ag-grid-container"
           className="ag-theme-alpine"
@@ -96,11 +98,13 @@ function Allinvoice() {
             height: {
               xxl: "55vh",
               xl: "53vh",
-              lg: "41.5vh",
+              lg: "60vh",
               md: "47vh",
               sm: "53vh",
               xs: "58vh",
             },
+            // position:"relative"
+            // overflow:"visible"
           }}
         >
           <AgGridReact

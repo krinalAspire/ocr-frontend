@@ -6,7 +6,7 @@ export const rowdata=[
         "uploaded": "2023-07-31",
         "validated": "Yes",
         "exported": "No",
-        "tags": "Tag1"
+        // "tags": "Tag1"
       },
       {
         // "id": 2,
@@ -15,7 +15,7 @@ export const rowdata=[
         "uploaded": "2023-07-30",
         "validated": "Yes",
         "exported": "Yes",
-        "tags": "Tag3"
+        "tags": "alert"
       },
       {
         // "id": 3,
@@ -24,6 +24,60 @@ export const rowdata=[
         "uploaded": "2023-07-29",
         "validated": "No",
         "exported": "Yes",
-        "tags": "Tag4"
+        "tags": "Pending"
+      },
+      {
+        // "id": 3,
+        "documentName": "Document 3",
+        "status": "success",
+        "uploaded": "2023-07-29",
+        "validated": "No",
+        "exported": "Yes",
+        "tags": "Success"
+      },
+      {
+        // "id": 3,
+        "documentName": "Document 3",
+        "status": "success",
+        "uploaded": "2023-07-29",
+        "validated": "No",
+        "exported": "Yes",
+        "tags": "Tagdsfhjshdjsg"
       }
 ]
+
+export const tagOptions = [
+  {
+    "id": "6ryyhb11v",
+    "tag": "alert"
+  },
+  {
+    "id": "x2zvfew3g",
+    "tag": "pending"
+  },
+  {
+    "id": "go4lcxut4",
+    "tag": "success"
+  },
+  {
+    "id": "3lzdwijwg",
+    "tag": "failed"
+  },
+  {
+    "id": "8b037z8nb",
+    "tag": "krinal"
+  },
+  {
+    "id": "mt5e30df8",
+    "tag": "prince"
+  },
+  {
+    "id": "9vim3z0ib",
+    "tag": "ruttu"
+  },
+  {
+    "id": "xdrgcmlww",
+    "tag": "renuka"
+  }
+  ];
+  
