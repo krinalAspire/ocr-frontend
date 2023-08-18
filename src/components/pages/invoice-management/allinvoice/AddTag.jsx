@@ -7,6 +7,8 @@ import {
   Checkbox,
   Autocomplete,
   Popper,
+  Fade,
+  Paper
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { classes } from "./utils";
@@ -16,12 +18,21 @@ import { tagOptions } from "./rowdata";
 
 const AddTag = () => {
   // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [open, setOpen] = React.useState(false);
+  // const [placement, setPlacement] = React.useState();
 
-  // const handleClick = (event) => {
-  //   setAnchorEl(anchorEl ? null : event.currentTarget);
+  // // const handleClick = (event) => {
+  // //   setAnchorEl(anchorEl ? null : event.currentTarget);
+  // // };
+
+  // const handleClick = (newPlacement) => (event) => {
+  //   setAnchorEl(event.currentTarget);
+  //   setOpen((prev) => placement !== newPlacement || !prev);
+  //   setPlacement(newPlacement);
   // };
 
-  // const open = Boolean(anchorEl);
+
+  // // const open = Boolean(anchorEl);
   // const id = open ? "simple-popper" : undefined;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -41,7 +52,7 @@ const AddTag = () => {
   const handleClick = (event) => {
     console.log("anchorEl", event.currentTarget);
     setAnchorEl(event.currentTarget);
-    setHovered(false);
+    setHovered(true);
     // setClicked(true);
     // const cellElement = event.currentTarget.closest(".my-icon");
     // setAnchorEl(cellElement);
@@ -50,6 +61,7 @@ const AddTag = () => {
   const handleClose = () => {
     setAnchorEl(null);
     setInputValue(" ");
+    setHovered(false);
     // setClicked(false);
   };
   const open = Boolean(anchorEl);
@@ -96,41 +108,101 @@ const AddTag = () => {
 
   return (
     <>
-      {/* <div>
-        <button aria-describedby={id} type="button" onClick={handleClick}>
-          Toggle Popper
-        </button>
-        <Popper id={id} open={open} anchorEl={anchorEl}>
-          <Box sx={{zIndex:1000}}>
-          <Autocomplete
-            multiple
-            id="checkboxes-tags-demo"
-            options={tagdata}
-            disableCloseOnSelect
-            getOptionLabel={(option) => option.tag}
-            renderOption={(props, option, { selected }) => (
-              <li {...props}>
-                <Checkbox
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                />
-                {option.tag}
-              </li>
-            )}
-            style={{ width: 500 }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Checkboxes"
-                placeholder="Favorites"
-              />
-            )}
-          />
+      {/* <Box sx={{display:"flex", alignItems:"center"}}>
+        <Box>
+        <Box component="img" src={tag} alt="tag" aria-describedby={id} type="button" onClick={handleClick('bottom-end')} className={classes.actionIcons}/>
+        </Box> */}
+        {/* <Popper id={id} open={open} anchorEl={anchorEl}> */}
+        {/* <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper>
+          <Box sx={{ bgcolor: "background.paper", p: 1, boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.5)"}}>
+             <Autocomplete
+              sx={{
+                width: {
+                  xxl: "13vw",
+                  xl: "12vw",
+                  lg: "14vw",
+                  md: "13.5vw",
+                  sm: " 13vh",
+                  xs: "15vh",
+                },
+              }}
+              multiple
+              id="checkboxes-tags-demo"
+              // options={top100Films}
+              options={tagdata}
+              inputValue={inputValue}
+              onInputChange={handleInputChange}
+              disableCloseOnSelect
+              freeSolo
+              // getOptionLabel={(option) => option.title}
+              getOptionLabel={(option) => option.tag} 
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox sx={{ marginRight: 1 }} checked={selected} />
+                  {option.tag}
+                </li>
+              )}
+              renderInput={(params) => (
+                <Box>
+                  <TextField
+                    {...params}
+                    placeholder="Search Tags"
+                    size="small"
+                  />
+                  {inputValue &&
+                    !tagdata.some(
+                      (option) =>
+                        option.tag.toLowerCase() === inputValue.toLowerCase()
+                    ) && (
+                      <Button
+                        onClick={getTag}
+                        variant="contained"
+                        sx={{
+                          width: {
+                            xxl: "13vw",
+                            xl: "12vw",
+                            lg: "14vw",
+                            md: "13.5vw",
+                            sm: " 13vh",
+                            xs: "15vh",
+                          },
+                          height: {
+                            xxl: "40px",
+                            xl: "40px",
+                            lg: "35px",
+                            md: "34px",
+                            sm: " 40px",
+                            xs: "36px",
+                          },
+                          marginTop: "10px",
+                          backgroundColor: "rgba(30, 30, 30, 0.1)",
+                          color: "rgba(43, 43, 43, 0.8)",
+                          ":hover": {
+                            backgroundColor: "rgba(30, 30, 30, 0.1)",
+                            color: "rgba(43, 43, 43, 0.8)",
+                          },
+                        }}
+                      >
+                        <AddIcon sx={{ marginRight: "1vw" }} />
+                        Create "{inputValue}"
+                      </Button>
+                    )}
+                </Box>
+              )}
+            />
           </Box>
+          </Paper>
+          </Fade>
+        )}
         </Popper>
-      </div> */}
+      </Box> */}
 
-      <Box sx={{ display: "flex", alignItems: "center", flexDirection:"column",position: 'relative', }}>
+      
+      <Box sx={{ display: "flex", alignItems: "center"}}>
+        <Box className={hovered ? "action" : "my-icon"}>
         <Box
           component="img"
           onClick={handleClick}
@@ -141,7 +213,8 @@ const AddTag = () => {
           className={classes.actionIcons}
           // className="my-icon"
         />
-      {/* {hovered && !clicked && (   */}
+        </Box>
+       {/* {hovered && !clicked && (   */}
       <Popover
           open={open}
           anchorEl={anchorEl}
@@ -155,7 +228,7 @@ const AddTag = () => {
             horizontal: "right",
           }}
          
-        > 
+        >  
       {/* {anchorEl  ? */}
       <Box
             sx={{
@@ -244,7 +317,7 @@ const AddTag = () => {
                 </Box>
               )}
             />
-          </Box>
+      </Box>
       {/* {/* : null } */}
       </Popover>
       {/* // )} */}

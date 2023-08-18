@@ -148,11 +148,18 @@ const TagRow = (params) => {
   );
 };
 
-const IconRenderer = (props) => (
-  <Box className="my-icon">
-    <Action />
-  </Box>
-);
+// const IconRenderer = (props) => (
+//   <Box className="my-icon">
+//     <Action />
+//   </Box>
+// );
+function handleIconClick(rowId) {
+  console.log('Icon clicked for row ID:', rowId);
+  return(
+    <AddTag />
+  )
+  // Implement your logic here
+}
 
 export const columnData = [
   {
@@ -204,6 +211,16 @@ export const columnData = [
     field: " ",
     minWidth: 145,
     headerComponent: responsiveHeader,
-    cellRenderer: IconRenderer,
+    // cellRenderer: IconRenderer,
+    cellRenderer: function (params) {
+      return (
+        // <Action onclick={handleIconClick(params.node.id)}/>
+        // <Box >
+        <AddTag onclick={handleIconClick(params.node.id)}/>
+        // </Box>
+        // <i class="fas fa-trash my-icon" onclick={handleIconClick(params.node.id)}></i>
+      )
+      // `<i class="fas fa-trash my-icon" onclick="handleIconClick(${params.node.id})"></i>`;
+    },
   },
 ];
