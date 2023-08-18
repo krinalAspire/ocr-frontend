@@ -1,15 +1,206 @@
-import React from "react";
+import React, { useState } from "react";
 import EditIcon from "../../../../assets/allinvoice-assets/edit.svg";
 import ArrowUp from "../../../../assets/allinvoice-assets/arrow-up.svg";
 import AlertCircle from "../../../../assets/allinvoice-assets/alert-circle.svg";
 import Disc from "../../../../assets/allinvoice-assets/disc.svg";
 import CheckCircle from "../../../../assets/allinvoice-assets/checkCircle.svg";
-import { Box, Grid, Typography, Chip, Tooltip } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  Chip,
+  Tooltip,
+  Popover,
+  List,
+  ListItem,
+  ListItemIcon,
+  Checkbox,
+  ListItemText,
+  IconButton,
+  ListItemButton,
+} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { lightPalette } from "../../../../theme";
 import Action from "./Action";
 import { classes } from "./utils";
 import AddTag from "./AddTag";
+import TagSelection from "./TagSelection";
+
+function ColumnSelection() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [checked, setChecked] = useState([]);
+
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
+  };
+
+  // const handleToggle = (value) => () => {
+  //   const currentIndex = checked.indexOf(value);
+  //   const newChecked = [...checked];
+
+  //   if (currentIndex === -1) {
+  //     newChecked.push(value);
+  //   } else {
+  //     newChecked.splice(currentIndex, 1);
+  //   }
+
+  //   setChecked(newChecked);
+  // };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
+  const items = [
+    { id: 1, label: "Document Name" },
+    { id: 2, label: "Status" },
+    { id: 3, label: "Uploaded" },
+    { id: 3, label: "Validated" },
+    { id: 3, label: "Exported" },
+    { id: 3, label: "Tags" },
+    // Add more items as needed
+  ];
+
+  return (
+    <>
+      {/* <Box> */}
+      <Box className={classes.HeaderMoreVertIcon}>
+        <MoreVertIcon
+          sx={{
+            color: lightPalette.color134.main,
+          }}
+          onClick={handleClick}
+        />
+      </Box>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
+
+        {/* <List
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        >
+          {[0, 1, 2, 3].map((value) => {
+            const labelId = `checkbox-list-label-${value}`;
+
+            return (
+              <ListItem
+                key={value}
+                // secondaryAction={
+                //   <IconButton edge="end" aria-label="comments">
+                //     <CommentIcon />
+                //   </IconButton>
+                // }
+                disablePadding
+              >
+                <ListItemButton
+                  role={undefined}
+                  onClick={handleToggle(value)}
+                  dense
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      checked={checked.indexOf(value) !== -1}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ "aria-labelledby": labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    id={labelId}
+                    primary={`Line item ${value + 1}`}
+                  />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
+        </List> */}
+        {/* <List dense component="div" role="list">
+        {[0,1,2,3].map((value) => {
+          const labelId = `transfer-list-item-${value}-label`;
+
+          return (
+            <ListItem
+              key={value}
+              role="listitem"
+              button
+              onClick={handleToggle(value)}
+            >
+              <ListItemIcon>
+                <Checkbox
+                  checked={checked.indexOf(value) !== -1}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{
+                    'aria-labelledby': labelId,
+                  }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+            </ListItem>
+          );
+        })}
+      </List> */}
+        <List>
+          {items.map((item) => (
+            <ListItem
+              key={item.id}
+              button
+              onClick={handleToggle(item.id)}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                "& .MuiListItemIcon-root": {
+                  minWidth: 40, // Adjust this value as needed
+                  paddingLeft: 0, // Adjust this value to control spacing
+                },
+              }}
+            >
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={checked.indexOf(item.id) !== -1}
+                  tabIndex={-1}
+                  disableRipple
+                />
+              </ListItemIcon>
+              <ListItemText primary={item.label} />
+            </ListItem>
+          ))}
+        </List>
+      </Popover>
+      {/* </Box> */}
+    </>
+  );
+}
 
 function responsiveHeader(params) {
   const value = params.displayName;
@@ -27,15 +218,7 @@ function responsiveHeader(params) {
           <img src={ArrowUp} alt="arrow-up" />
         </Box>
       )}
-      {Action ? (
-        <Box className={classes.HeaderMoreVertIcon}>
-          <MoreVertIcon
-            sx={{
-              color: lightPalette.color134.main,
-            }}
-          />
-        </Box>
-      ) : null}
+      {Action ? <ColumnSelection /> : null}
       {/* </Box> */}
     </>
   );
@@ -54,10 +237,7 @@ const ResponsiveFontsize = (params) => {
 const DocumentNameRow = (params) => {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Typography
-        variant="body1"
-        color={lightPalette.color134.main}
-      >
+      <Typography variant="body1" color={lightPalette.color134.main}>
         {params.value}
       </Typography>
       <Box className="my-icon">
@@ -78,9 +258,7 @@ const StatusRow = (params) => {
   switch (params.value) {
     case "failed":
       statusIcon = (
-        <Grid
-        className={classes.StatusIcon}
-        >
+        <Grid className={classes.StatusIcon}>
           <Box
             component="img"
             src={AlertCircle}
@@ -92,9 +270,7 @@ const StatusRow = (params) => {
       break;
     case "pending":
       statusIcon = (
-        <Box
-        className={classes.StatusIcon}
-        >
+        <Box className={classes.StatusIcon}>
           <Box
             component="img"
             src={Disc}
@@ -106,9 +282,7 @@ const StatusRow = (params) => {
       break;
     case "success":
       statusIcon = (
-        <Box
-        className={classes.StatusIcon}
-        >
+        <Box className={classes.StatusIcon}>
           <Box
             component="img"
             src={CheckCircle}
@@ -132,38 +306,34 @@ const TagRow = (params) => {
     <>
       <Tooltip title={value} placement="bottom-end" arrow>
         {value ? (
-          <Chip
-            label={value}
-            className={classes.TagChip}
-          />
+          <Chip label={value} className={classes.TagChip} />
         ) : (
-          <Chip
-            label="Tags"
-            variant="outlined"
-            className={classes.TagChip}
-          />
+          <Chip label="Tags" variant="outlined" className={classes.TagChip} />
         )}
       </Tooltip>
     </>
   );
 };
 
-// const IconRenderer = (props) => (
-//   <Box className="my-icon">
-//     <Action />
-//   </Box>
-// );
-function handleIconClick(rowId) {
-  console.log('Icon clicked for row ID:', rowId);
-  return(
-    <AddTag />
-  )
-  // Implement your logic here
-}
+const IconRenderer = (props) => (
+  // <Box className="my-icon">
+  <Action />
+  // <TagSelection />
+  // <AddTag />
+  // </Box>
+);
+
+// function handleIconClick(rowId) {
+//   console.log('Icon clicked for row ID:', rowId);
+//   return(
+//     <AddTag />
+//   )
+//   // Implement your logic here
+// }
 
 export const columnData = [
   {
-    headerName: "Document name",
+    headerName: "Document Name",
     field: "documentName",
     headerComponent: responsiveHeader,
     minWidth: 330,
@@ -211,16 +381,16 @@ export const columnData = [
     field: " ",
     minWidth: 145,
     headerComponent: responsiveHeader,
-    // cellRenderer: IconRenderer,
-    cellRenderer: function (params) {
-      return (
-        // <Action onclick={handleIconClick(params.node.id)}/>
-        // <Box >
-        <AddTag onclick={handleIconClick(params.node.id)}/>
-        // </Box>
-        // <i class="fas fa-trash my-icon" onclick={handleIconClick(params.node.id)}></i>
-      )
-      // `<i class="fas fa-trash my-icon" onclick="handleIconClick(${params.node.id})"></i>`;
-    },
+    cellRenderer: IconRenderer,
+    // cellRenderer: function (params) {
+    // return (
+    // <Action onclick={handleIconClick(params.node.id)}/>
+    // <Box >
+    // <AddTag onclick={handleIconClick(params.node.id)}/>
+    // </Box>
+    // <i class="fas fa-trash my-icon" onclick={handleIconClick(params.node.id)}></i>
+    // )
+    // `<i class="fas fa-trash my-icon" onclick="handleIconClick(${params.node.id})"></i>`;
+    // },
   },
 ];

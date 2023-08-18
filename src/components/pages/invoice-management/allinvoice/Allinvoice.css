@@ -26,6 +26,7 @@
 
 .ag-row-hover .my-icon {
   /* display: initial; */
+  /* background-color: rgba(159, 119, 235, 0.1); */
   display: block;
   position: relative;
 }

@@ -18,17 +18,28 @@ import TagsButton from "../invoice-tabs/TagsButton";
 import AddTag from "./AddTag";
 
 function Action() {
+  const [hover, sethover]=useState(false);
+
+  const handleClick=()=>{
+    sethover(true);
+  }
+
   return (
     <>
       <Box sx={{display:"flex", alignItems:"center"}}>
         <AddTag />
+        {/* <Box className={hover ? "action" : "my-icon"}> */}
+        <Box className="my-icon">
         <Box
           component="img"
           src={CheckCircle}
           alt="check-circle"
           // className="my-icon"
           className={classes.actionIcons}
+          // onClick={handleClick}
         />
+        </Box>
+        <Box className="my-icon">
         <Box
           component="img"
           src={upload}
@@ -36,6 +47,8 @@ function Action() {
           className={classes.actionIcons}
           // className="my-icon"
         />
+        </Box>
+        <Box className="my-icon">
         <Box
           component="img"
           src={trash}
@@ -43,6 +56,7 @@ function Action() {
           className={classes.actionIcons}
           // className="my-icon"
         />
+        </Box>
       </Box>
     </>
   );

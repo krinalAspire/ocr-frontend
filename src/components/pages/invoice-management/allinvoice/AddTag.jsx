@@ -37,7 +37,7 @@ const AddTag = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputValue, setInputValue] = useState("");
-  const [hovered, setHovered] = useState(false);
+  // const [hovered, setHovered] = useState(false);
   const [tagdata, setTagdata] = useState([]);
   // // const [clicked, setClicked] = useState(false);
 
@@ -52,7 +52,7 @@ const AddTag = () => {
   const handleClick = (event) => {
     console.log("anchorEl", event.currentTarget);
     setAnchorEl(event.currentTarget);
-    setHovered(true);
+    // setHovered(true);
     // setClicked(true);
     // const cellElement = event.currentTarget.closest(".my-icon");
     // setAnchorEl(cellElement);
@@ -61,7 +61,7 @@ const AddTag = () => {
   const handleClose = () => {
     setAnchorEl(null);
     setInputValue(" ");
-    setHovered(false);
+    // setHovered(false);
     // setClicked(false);
   };
   const open = Boolean(anchorEl);
@@ -202,12 +202,13 @@ const AddTag = () => {
 
       
       <Box sx={{ display: "flex", alignItems: "center"}}>
-        <Box className={hovered ? "action" : "my-icon"}>
+        <Box className={open ? "action" : "my-icon"}>
+          {/* <Box className="my-icon"> */}
         <Box
           component="img"
           onClick={handleClick}
-          // onMouseEnter={handleHoverEnter}
-          // onMouseLeave={handleHoverLeave}
+          // onMouseEnter={handleClick}
+          // onMouseLeave={handleClose}
           src={tag}
           alt="tag"
           className={classes.actionIcons}

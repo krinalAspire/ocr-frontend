@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTheme, styled } from "@mui/material/styles";
 import Popper from "@mui/material/Popper";
@@ -11,10 +11,13 @@ import ButtonBase from "@mui/material/ButtonBase";
 // import Button from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
-import { Checkbox, TextField,Button } from "@mui/material";
-import Popover from '@mui/material/Popover';
+import { Checkbox, TextField, Button, Fade, Paper } from "@mui/material";
+import Popover from "@mui/material/Popover";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { classes } from "../invoice-tabs/utils";
+import tag from "../../../../assets/allinvoice-assets/tag.svg";
+import AddIcon from "@mui/icons-material/Add";
+import axios from "axios";
 
 // const StyledAutocompletePopper = styled("div")(({ theme }) => ({
 //   [`& .${autocompleteClasses.paper}`]: {
@@ -117,42 +120,210 @@ import { classes } from "../invoice-tabs/utils";
 // }));
 
 function TagSelection() {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [placement, setPlacement] = React.useState();
 
-  const handleClick = (event) => {
+  // // const handleClick = (event) => {
+  // //   setAnchorEl(anchorEl ? null : event.currentTarget);
+  // // };
+
+  const handleClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
+    setOpen((prev) => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
   };
+
+  // const open = Boolean(anchorEl);
+  const id = open ? "simple-popper" : undefined;
+
+  // const [anchorEl, setAnchorEl] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  // const [hovered, setHovered] = useState(false);
+  const [tagdata, setTagdata] = useState([]);
+  // // const [clicked, setClicked] = useState(false);
+
+  // const handleHoverEnter = () => {
+  //   setHovered(true);
+  // };
+
+  // const handleHoverLeave = () => {
+  //   setHovered(false);
+  // };
+
+  // const handleClick = (event) => {
+  //   console.log("anchorEl", event.currentTarget);
+  //   setAnchorEl(event.currentTarget);
+  //   // setHovered(true);
+  //   // setClicked(true);
+  //   // const cellElement = event.currentTarget.closest(".my-icon");
+  //   // setAnchorEl(cellElement);
+  // };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setInputValue(" ");
+    // setHovered(false);
+    // setClicked(false);
   };
-  const open = Boolean(anchorEl);
-
   // const open = Boolean(anchorEl);
-  // const [anchorEl, setAnchorEl] = React.useState(null);
-  // const [value, setValue] = React.useState([labels[1], labels[11]]);
-  // const [pendingValue, setPendingValue] = React.useState([]);
-  // const theme = useTheme();
 
-  // const handleClick = (event) => {
-  //   setPendingValue(value);
-  //   setAnchorEl(event.currentTarget);
-  // };
+  const handleInputChange = (event, newInputValue) => {
+    setInputValue(newInputValue);
+  };
 
-  // const handleClose = () => {
-  //   setValue(pendingValue);
-  //   if (anchorEl) {
-  //     anchorEl.focus();
-  //   }
-  //   setAnchorEl(null);
-  // };
+  const getTag = (event) => {
+    const data = {
+      id: Math.random().toString(36).substr(2, 9),
+      tag: inputValue,
+    };
+    console.log(data);
+    axios
+      .post("http://localhost:5000/Tag", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        // setTagdata([...tag, response.data]);
+        console.log(response?.data);
+        // setTagdata(response?.data);
+        setInputValue("");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  // const open = Boolean(anchorEl);
-  // const id = open ? "github-label" : undefined;
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/Tag")
+      .then((res) => {
+        setTagdata(res.data);
+        //  console.log(res.data)
+      })
+      .catch((err) => {
+        // toast.error("Failed: " + err.message);
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
-    <div>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box className="my-icon">
+          <Box
+            component="img"
+            src={tag}
+            alt="tag"
+            aria-describedby={id}
+            type="button"
+            // onClick={handleClick("bottom-end")}
+            onMouseEnter={handleClick("bottom-end")}
+            onMouseLeave={handleClose}
+            className={classes.actionIcons}
+          />
+        </Box>
+        {/* <Popper id={id} open={open} anchorEl={anchorEl}> */}
+        <Popper
+          open={open}
+          anchorEl={anchorEl}
+          placement={placement}
+          transition
+        >
+          {({ TransitionProps }) => (
+            <Fade {...TransitionProps} timeout={350}>
+              <Paper>
+                <Box
+                  sx={{
+                    bgcolor: "background.paper",
+                    p: 1,
+                    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.5)",
+                  }}
+                >
+                  <Autocomplete
+                    sx={{
+                      width: {
+                        xxl: "13vw",
+                        xl: "12vw",
+                        lg: "14vw",
+                        md: "13.5vw",
+                        sm: " 13vh",
+                        xs: "15vh",
+                      },
+                    }}
+                    multiple
+                    id="checkboxes-tags-demo"
+                    // options={top100Films}
+                    options={tagdata}
+                    inputValue={inputValue}
+                    onInputChange={handleInputChange}
+                    disableCloseOnSelect
+                    freeSolo
+                    // getOptionLabel={(option) => option.title}
+                    getOptionLabel={(option) => option.tag}
+                    renderOption={(props, option, { selected }) => (
+                      <li {...props}>
+                        <Checkbox sx={{ marginRight: 1 }} checked={selected} />
+                        {option.tag}
+                      </li>
+                    )}
+                    renderInput={(params) => (
+                      <Box>
+                        <TextField
+                          {...params}
+                          placeholder="Search Tags"
+                          size="small"
+                        />
+                        {inputValue &&
+                          !tagdata.some(
+                            (option) =>
+                              option.tag.toLowerCase() ===
+                              inputValue.toLowerCase()
+                          ) && (
+                            <Button
+                              onClick={getTag}
+                              variant="contained"
+                              sx={{
+                                width: {
+                                  xxl: "13vw",
+                                  xl: "12vw",
+                                  lg: "14vw",
+                                  md: "13.5vw",
+                                  sm: " 13vh",
+                                  xs: "15vh",
+                                },
+                                height: {
+                                  xxl: "40px",
+                                  xl: "40px",
+                                  lg: "35px",
+                                  md: "34px",
+                                  sm: " 40px",
+                                  xs: "36px",
+                                },
+                                marginTop: "10px",
+                                backgroundColor: "rgba(30, 30, 30, 0.1)",
+                                color: "rgba(43, 43, 43, 0.8)",
+                                ":hover": {
+                                  backgroundColor: "rgba(30, 30, 30, 0.1)",
+                                  color: "rgba(43, 43, 43, 0.8)",
+                                },
+                              }}
+                            >
+                              <AddIcon sx={{ marginRight: "1vw" }} />
+                              Create "{inputValue}"
+                            </Button>
+                          )}
+                      </Box>
+                    )}
+                  />
+                </Box>
+              </Paper>
+            </Fade>
+          )}
+        </Popper>
+      </Box>
+      {/* <div>
       <Button onClick={handleClick}  className={classes.TagButton}>
         Tag
         <KeyboardArrowDownIcon/>
@@ -193,13 +364,13 @@ function TagSelection() {
           />
         </div>
       </Popover>
-    </div>
+    </div> */}
       {/* <Box sx={{  fontSize: 13 }}>
         <Button variant="contained" disableRipple aria-describedby={id} onClick={handleClick}>
           Tag
           <KeyboardArrowDownIcon />
         </Button> */}
-        {/* {value.map((label) => (
+      {/* {value.map((label) => (
           <Box
             key={label.name}
             sx={{
@@ -227,7 +398,7 @@ function TagSelection() {
       >
         <ClickAwayListener onClickAway={handleClose}>
           <div> */}
-            {/* <Box
+      {/* <Box
               sx={{
                 borderBottom: `1px solid ${
                   theme.palette.mode === "light" ? "#eaecef" : "#30363d"
@@ -238,7 +409,7 @@ function TagSelection() {
             >
               Apply labels to this pull request
             </Box> */}
-            {/* <Autocomplete
+      {/* <Autocomplete
               open
               multiple
               onClose={(event, reason) => {
@@ -256,7 +427,7 @@ function TagSelection() {
                   return;
                 }
                 setPendingValue(newValue); */}
-              {/* }}
+      {/* }}
               disableCloseOnSelect
               getOptionLabel={(option) => option.title}
               PopperComponent={PopperComponent}
@@ -274,7 +445,7 @@ function TagSelection() {
                 </li>
               )}
               //   renderOption={(props, option, { selected }) => ( */}
-              {/* //     <li {...props}>
+      {/* //     <li {...props}>
               //       <Box
               //         component={DoneIcon}
               //         sx={{ width: 17, height: 17, mr: "5px", ml: "-2px" }}
