@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { columnData } from "./Columndef";
+import { ColumnSelection, columnData } from "./Columndef";
 import { rowdata } from "./rowdata";
 import "./Allinvoice.css";
 import { Box } from "@mui/material";
@@ -24,7 +24,9 @@ function Allinvoice() {
 
   const gridOptions = {
     rowHeight: 50,
+    sideBar: true,
   };
+  
 
   // useEffect(() => {
   //     const resizeListener = () => {
@@ -113,6 +115,7 @@ function Allinvoice() {
             defaultColDef={defaultColDef}
             gridOptions={gridOptions}
           />
+          {/* <ColumnSelection columnDefs={columnDefs} setColumnDefs={setColumnDefs}/> */}
         </Box>
       </Root>
     </>

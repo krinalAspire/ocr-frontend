@@ -26,7 +26,7 @@ import { classes } from "./utils";
 import AddTag from "./AddTag";
 import TagSelection from "./TagSelection";
 
-function ColumnSelection() {
+export function ColumnSelection() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [checked, setChecked] = useState([]);
 
@@ -43,18 +43,6 @@ function ColumnSelection() {
     setChecked(newChecked);
   };
 
-  // const handleToggle = (value) => () => {
-  //   const currentIndex = checked.indexOf(value);
-  //   const newChecked = [...checked];
-
-  //   if (currentIndex === -1) {
-  //     newChecked.push(value);
-  //   } else {
-  //     newChecked.splice(currentIndex, 1);
-  //   }
-
-  //   setChecked(newChecked);
-  // };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -71,9 +59,9 @@ function ColumnSelection() {
     { id: 1, label: "Document Name" },
     { id: 2, label: "Status" },
     { id: 3, label: "Uploaded" },
-    { id: 3, label: "Validated" },
-    { id: 3, label: "Exported" },
-    { id: 3, label: "Tags" },
+    { id: 4, label: "Validated" },
+    { id: 5, label: "Exported" },
+    { id: 6, label: "Tags" },
     // Add more items as needed
   ];
 
@@ -102,92 +90,27 @@ function ColumnSelection() {
           horizontal: "right",
         }}
       >
-        {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
-
-        {/* <List
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-        >
-          {[0, 1, 2, 3].map((value) => {
-            const labelId = `checkbox-list-label-${value}`;
-
-            return (
-              <ListItem
-                key={value}
-                // secondaryAction={
-                //   <IconButton edge="end" aria-label="comments">
-                //     <CommentIcon />
-                //   </IconButton>
-                // }
-                disablePadding
-              >
-                <ListItemButton
-                  role={undefined}
-                  onClick={handleToggle(value)}
-                  dense
-                >
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={checked.indexOf(value) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      inputProps={{ "aria-labelledby": labelId }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText
-                    id={labelId}
-                    primary={`Line item ${value + 1}`}
-                  />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List> */}
-        {/* <List dense component="div" role="list">
-        {[0,1,2,3].map((value) => {
-          const labelId = `transfer-list-item-${value}-label`;
-
-          return (
-            <ListItem
-              key={value}
-              role="listitem"
-              button
-              onClick={handleToggle(value)}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  checked={checked.indexOf(value) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{
-                    'aria-labelledby': labelId,
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
-            </ListItem>
-          );
-        })}
-      </List> */}
-        <List>
+        <List sx={{width:"13vw"}}>
           {items.map((item) => (
             <ListItem
               key={item.id}
-              button
-              onClick={handleToggle(item.id)}
+              // button
+              // onClick={handleToggle(item.id)}
+              onClick={handleToggle(item.label)}
               sx={{
-                display: "flex",
-                alignItems: "center",
+                // display: "flex",
+                // alignItems: "center",
                 "& .MuiListItemIcon-root": {
-                  minWidth: 40, // Adjust this value as needed
-                  paddingLeft: 0, // Adjust this value to control spacing
+                  minWidth: 15, 
+                  // paddingLeft: 0, // Adjust this value to control spacing
                 },
               }}
             >
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={checked.indexOf(item.id) !== -1}
+                  // checked={checked.indexOf(item.id) !== -1}
+                  checked={checked.indexOf(item.label) !== -1}
                   tabIndex={-1}
                   disableRipple
                 />
@@ -340,6 +263,7 @@ export const columnData = [
     headerCheckboxSelection: true,
     checkboxSelection: true,
     cellRenderer: DocumentNameRow,
+    hide: false,
   },
   {
     headerName: "Status",
@@ -347,6 +271,7 @@ export const columnData = [
     minWidth: 70,
     headerComponent: responsiveHeader,
     cellRenderer: StatusRow,
+    hide: false,
   },
   {
     headerName: "Uploaded",
@@ -354,6 +279,7 @@ export const columnData = [
     minWidth: 115,
     headerComponent: responsiveHeader,
     cellRenderer: ResponsiveFontsize,
+    hide: false,
   },
   {
     headerName: "Validated",
@@ -361,6 +287,7 @@ export const columnData = [
     minWidth: 115,
     headerComponent: responsiveHeader,
     cellRenderer: ResponsiveFontsize,
+    hide: false,
   },
   {
     headerName: "Exported",
@@ -368,6 +295,7 @@ export const columnData = [
     minWidth: 115,
     headerComponent: responsiveHeader,
     cellRenderer: ResponsiveFontsize,
+    hide: false,
   },
   {
     headerName: "Tags",
@@ -375,6 +303,7 @@ export const columnData = [
     minWidth: 50,
     headerComponent: responsiveHeader,
     cellRenderer: TagRow,
+    hide: false,
   },
   {
     headerName: " ",
