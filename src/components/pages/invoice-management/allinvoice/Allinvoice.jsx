@@ -16,6 +16,21 @@ function Allinvoice() {
   // const [rowData, setRowData] = useState([]);
   const [rowData, setRowData] = useState(rowdata);
   const [columnDefs, setColumnDefs] = useState(columnData);
+  const [gridApi, setGridApi] = useState(null);
+  const [columnApi, setColumnApi] = useState(null);
+
+  const onGridReady = (params) => {
+    setGridApi(params.api);
+    setColumnApi(params.columnApi);
+  };
+
+  const showColumn = (columnName) => {
+    columnApi.setColumnVisible(columnName, true);
+  };
+
+  const hideColumn = (columnName) => {
+    columnApi.setColumnVisible(columnName, false);
+  };
 
   const defaultColDef = {
     flex: 1,
@@ -26,6 +41,38 @@ function Allinvoice() {
     rowHeight: 50,
     sideBar: true,
   };
+
+  // const [gridApi, setGridApi] = useState(null);
+  // const [columnApi, setColumnApi] = useState(null);
+
+  // const onGridReady = (params) => {
+  //   setGridApi(params.api);
+  //   setColumnApi(params.columnApi);
+  // };
+
+  // const showColumn = (columnName) => {
+  //   if (columnApi) {
+  //     columnApi.setColumnVisible(columnName, true);
+  //   }
+  // };
+
+  // const hideColumn = (columnName) => {
+  //   if (columnApi) {
+  //     columnApi.setColumnVisible(columnName, false);
+  //   }
+  // };
+
+  // const columnDefs = [
+  //   { headerName: "Name", field: "name" },
+  //   { headerName: "Age", field: "age" },
+  //   // Other columns
+  // ];
+
+  // const rowData = [
+  //   { name: "John", age: 28 },
+  //   { name: "Jane", age: 24 },
+  //   // Other rows
+  // ];
   
 
   // useEffect(() => {
@@ -109,14 +156,26 @@ function Allinvoice() {
             // overflow:"visible"
           }}
         >
+         <button onClick={() => showColumn("documentName")}>Show Document Name Column</button>
+      <button onClick={() => hideColumn("documentName")}>Hide Document Name Column</button>
           <AgGridReact
             columnDefs={columnDefs}
             rowData={rowData}
             defaultColDef={defaultColDef}
             gridOptions={gridOptions}
+            onGridReady={onGridReady}
           />
           {/* <ColumnSelection columnDefs={columnDefs} setColumnDefs={setColumnDefs}/> */}
         </Box>
+        {/* <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
+      <button onClick={() => showColumn("age")}>Show Age Column</button>
+      <button onClick={() => hideColumn("age")}>Hide Age Column</button>
+      <AgGridReact
+        columnDefs={columnDefs}
+        rowData={rowData}
+        onGridReady={onGridReady}
+      />
+    </div> */}
       </Root>
     </>
   );
