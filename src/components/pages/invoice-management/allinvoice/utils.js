@@ -9,7 +9,7 @@ export const classes = {
   StatusIcon: "StatusIcon",
   StatusIconSize: "StatusIconSize",
   TagChip: "TagChip",
-  Test:"Test"
+  ColumnSelectionBox: "ColumnSelectionBox"
 };
 
 export const Root = styled("div")(({ theme }) => ({
@@ -37,7 +37,7 @@ export const Root = styled("div")(({ theme }) => ({
   },
   [`& .${classes.actionIcons}`]: {
     marginRight: "1vw",
-    cursor:"pointer",
+    cursor: "pointer",
     [up("xs")]: {
       width: "12",
       height: "12px",
@@ -65,7 +65,7 @@ export const Root = styled("div")(({ theme }) => ({
   },
   [`& .${classes.EditIcon}`]: {
     marginLeft: "8vw",
-    cursor:"pointer",
+    cursor: "pointer",
     [up("xs")]: {
       width: "12",
       height: "12px",
@@ -131,4 +131,10 @@ export const Root = styled("div")(({ theme }) => ({
     color: theme.palette.color134.main,
     cursor: "pointer",
   },
+  [`& .${classes.ColumnSelectionBox}`]: {
+    position: "absolute",
+    zIndex: 1000,
+    top: "12px",
+    right: "0px"
+  }
 }));

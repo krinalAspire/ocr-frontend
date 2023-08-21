@@ -2,12 +2,23 @@ import React, { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { ColumnSelection, columnData } from "./Columndef";
+import { columnData } from "./Columndef";
 import { rowdata } from "./rowdata";
 import "./Allinvoice.css";
-import { Box } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  List,
+  ListItem,
+  ListItemText,
+  Popover,
+  Typography,
+} from "@mui/material";
 import { classes, Root } from "./utils";
 import AddTag from "./AddTag";
+import { lightPalette } from "../../../../theme";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import AlertCircle from "../../../../assets/allinvoice-assets/alert-circle.svg";
 // import { lightPalette } from "../../../../theme";
 // import FourIcons from "./FourIcons";
 // import Navinvoice from "./NavInvoice";
@@ -18,18 +29,107 @@ function Allinvoice() {
   const [columnDefs, setColumnDefs] = useState(columnData);
   const [gridApi, setGridApi] = useState(null);
   const [columnApi, setColumnApi] = useState(null);
+  const [selectedRows, setSelectedRows] = useState([]);
+  // const [selectedColumns, setSelectedColumns] = useState({});
+  const [selectedColumns, setSelectedColumns] = useState(
+    columnDefs.reduce((obj, column) => {
+      obj[column.field] = true;
+      return obj;
+    }, {})
+  );
+
+  function ColumnSelection() {
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? "simple-popover" : undefined;
+    return (
+      <>
+        <Box>
+          <Box className={classes.HeaderMoreVertIcon}>
+            <MoreVertIcon
+              sx={{
+                color: lightPalette.color134.main,
+              }}
+              onClick={handleClick}
+            />
+          </Box>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            <List
+              sx={{
+                width: {
+                  xxl: "10vw",
+                  xl: "12vw",
+                  lg: "11vw",
+                  md: "12vw",
+                  sm: "11.5vh",
+                  xs: "13vw",
+                },
+              }}
+            >
+              {columnDefs.map((column) =>
+                column.field !== " " ? (
+                  <ListItem key={column.field} disablePadding>
+                    <Checkbox
+                      checked={selectedColumns[column.field] || false}
+                      onChange={(e) =>
+                        handleCheckboxChange(column.field, e.target.checked)
+                      }
+                    />
+                    <ListItemText primary={column.headerName} />
+                  </ListItem>
+                ) : null
+              )}
+            </List>
+          </Popover>
+        </Box>
+      </>
+    );
+  }
+
+  const handleCheckboxChange = (columnName, isChecked) => {
+    setSelectedColumns((prevSelectedColumns) => ({
+      ...prevSelectedColumns,
+      [columnName]: isChecked,
+    }));
+    console.log("selectedColumns", selectedColumns);
+
+    if (columnApi) {
+      columnApi.setColumnVisible(columnName, isChecked);
+      // console.log("column",columnApi.setColumnVisible(columnName, isChecked));
+      console.log(`Column '${columnName}' visibility set to ${isChecked}`);
+    }
+  };
+
+  const handleSelectionChanged = (event) => {
+    setSelectedRows(event.api.getSelectedRows());
+    console.log(selectedRows);
+  };
 
   const onGridReady = (params) => {
     setGridApi(params.api);
     setColumnApi(params.columnApi);
-  };
-
-  const showColumn = (columnName) => {
-    columnApi.setColumnVisible(columnName, true);
-  };
-
-  const hideColumn = (columnName) => {
-    columnApi.setColumnVisible(columnName, false);
   };
 
   const defaultColDef = {
@@ -39,41 +139,8 @@ function Allinvoice() {
 
   const gridOptions = {
     rowHeight: 50,
-    sideBar: true,
+    // rowSelection: 'multiple',
   };
-
-  // const [gridApi, setGridApi] = useState(null);
-  // const [columnApi, setColumnApi] = useState(null);
-
-  // const onGridReady = (params) => {
-  //   setGridApi(params.api);
-  //   setColumnApi(params.columnApi);
-  // };
-
-  // const showColumn = (columnName) => {
-  //   if (columnApi) {
-  //     columnApi.setColumnVisible(columnName, true);
-  //   }
-  // };
-
-  // const hideColumn = (columnName) => {
-  //   if (columnApi) {
-  //     columnApi.setColumnVisible(columnName, false);
-  //   }
-  // };
-
-  // const columnDefs = [
-  //   { headerName: "Name", field: "name" },
-  //   { headerName: "Age", field: "age" },
-  //   // Other columns
-  // ];
-
-  // const rowData = [
-  //   { name: "John", age: 28 },
-  //   { name: "Jane", age: 24 },
-  //   // Other rows
-  // ];
-  
 
   // useEffect(() => {
   //     const resizeListener = () => {
@@ -131,33 +198,37 @@ function Allinvoice() {
   //     //     params.api.setDatasource(dataSource);
   //     //   });
   //   }, []);
-
-  // const frameworkComponents = {
-  //   iconRenderer: IconRenderer,
-  // };
-
   return (
     <>
       <Root className={classes.root}>
+      {selectedRows.length > 0 && (
+            <Box>
+              {/* Render your icon here */}
+              <img src={AlertCircle} alt="selected-icon" />
+            </Box>
+          )}
         {/* <AddTag />s */}
         <Box
           id="ag-grid-container"
           className="ag-theme-alpine"
           sx={{
             height: {
-              xxl: "55vh",
-              xl: "53vh",
-              lg: "60vh",
-              md: "47vh",
-              sm: "53vh",
-              xs: "58vh",
+              xxl: "68vh",
+              xl: "65vh",
+              lg: "65vh",
+              md: "67vh",
+              sm: "75vh",
+              xs: "75vh",
             },
-            // position:"relative"
+            // position: "relative",
+            // zIndex: 1000,
             // overflow:"visible"
           }}
         >
-         <button onClick={() => showColumn("documentName")}>Show Document Name Column</button>
-      <button onClick={() => hideColumn("documentName")}>Hide Document Name Column</button>
+          {/* <Box sx={{width:"95%", position:"absolute", zIndex:1000, top:"12px", right:"0px"}}><Typography>Hey there...</Typography></Box> */}
+          <Box className={classes.ColumnSelectionBox}>
+            <ColumnSelection />
+          </Box>
           <AgGridReact
             columnDefs={columnDefs}
             rowData={rowData}
@@ -165,17 +236,7 @@ function Allinvoice() {
             gridOptions={gridOptions}
             onGridReady={onGridReady}
           />
-          {/* <ColumnSelection columnDefs={columnDefs} setColumnDefs={setColumnDefs}/> */}
         </Box>
-        {/* <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
-      <button onClick={() => showColumn("age")}>Show Age Column</button>
-      <button onClick={() => hideColumn("age")}>Hide Age Column</button>
-      <AgGridReact
-        columnDefs={columnDefs}
-        rowData={rowData}
-        onGridReady={onGridReady}
-      />
-    </div> */}
       </Root>
     </>
   );

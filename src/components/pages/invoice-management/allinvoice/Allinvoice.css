@@ -1,4 +1,6 @@
 .ag-theme-alpine {
+  position: relative;
+  /* z-index: 1; */
   --ag-foreground-color: rgba(0, 0, 0, 0.6);
   --ag-header-foreground-color: #1e1e1e;
   --ag-header-background-color: rgba(134, 134, 134, 0.1);
@@ -24,9 +26,18 @@
   display: block;
 }
 
+.selected {
+  display: none;
+}
+
 .ag-row-hover .my-icon {
   /* display: initial; */
   /* background-color: rgba(159, 119, 235, 0.1); */
+  display: block;
+  position: relative;
+}
+
+.ag-row-selected .selected{
   display: block;
   position: relative;
 }
@@ -39,6 +50,7 @@
   border-radius: 5px;
   border-color: rgb(232, 232, 232);
 }
+
 /* 
 .ag-pinned-left-cols-container {
   position: absolute !important;
