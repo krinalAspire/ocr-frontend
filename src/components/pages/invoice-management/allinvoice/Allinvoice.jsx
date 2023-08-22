@@ -7,6 +7,7 @@ import { rowdata } from "./rowdata";
 import "./Allinvoice.css";
 import {
   Box,
+  Button,
   Checkbox,
   List,
   ListItem,
@@ -18,7 +19,10 @@ import { classes, Root } from "./utils";
 import AddTag from "./AddTag";
 import { lightPalette } from "../../../../theme";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import AlertCircle from "../../../../assets/allinvoice-assets/alert-circle.svg";
+import CheckCircle from "../../../../assets/allinvoice-assets/check-circle.svg";
+import trash from "../../../../assets/allinvoice-assets/trash-2.svg";
+import upload from "../../../../assets/allinvoice-assets/upload.svg";
+import tag from "../../../../assets/allinvoice-assets/tag.svg";
 // import { lightPalette } from "../../../../theme";
 // import FourIcons from "./FourIcons";
 // import Navinvoice from "./NavInvoice";
@@ -122,10 +126,21 @@ function Allinvoice() {
     }
   };
 
-  const handleSelectionChanged = (event) => {
-    setSelectedRows(event.api.getSelectedRows());
-    console.log(selectedRows);
-  };
+  function onSelectionChanged() {
+    const selectedNodes = gridOptions.api.getSelectedNodes();
+    const selectedData = selectedNodes.map((node) => node.data);
+    setSelectedRows(selectedData);
+  }
+
+  function handleButtonClick() {
+    // Perform your action on the selected rows
+    console.log("Selected Rows:", selectedRows);
+  }
+
+  // const handleSelectionChanged = (event) => {
+  //   setSelectedRows(event.api.getSelectedRows());
+  //   console.log(selectedRows);
+  // };
 
   const onGridReady = (params) => {
     setGridApi(params.api);
@@ -139,6 +154,7 @@ function Allinvoice() {
 
   const gridOptions = {
     rowHeight: 50,
+    onSelectionChanged: onSelectionChanged,
     // rowSelection: 'multiple',
   };
 
@@ -201,13 +217,23 @@ function Allinvoice() {
   return (
     <>
       <Root className={classes.root}>
-      {selectedRows.length > 0 && (
-            <Box>
-              {/* Render your icon here */}
-              <img src={AlertCircle} alt="selected-icon" />
+        <AddTag />
+        {selectedRows.length > 0 && (
+            <Box
+              // className="selected-row-button-container"
+              sx={{ display: "flex", justifyContent: "flex-end" }}
+            >
+              <Box sx={{ margin:"8px 15px", p:1, display:"flex", bgcolor: 'background.paper',boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.5)", zIndex:1000, position:"absolute"}}>
+                {/* <Box > */}
+                <Typography sx={{marginRight:"1vw"}}>{selectedRows.length} row selected</Typography>
+                {/* <Box component="img" src={tag} alt="tag" className={classes.actionIcons} /> */}
+                <AddTag />
+                <Box component="img" src={CheckCircle} alt="tag" className={classes.actionIcons} />
+                <Box component="img" src={upload} alt="tag" className={classes.actionIcons} />
+                <Box component="img" src={trash} alt="tag" className={classes.actionIcons} />
+              </Box>
             </Box>
           )}
-        {/* <AddTag />s */}
         <Box
           id="ag-grid-container"
           className="ag-theme-alpine"
@@ -215,7 +241,8 @@ function Allinvoice() {
             height: {
               xxl: "68vh",
               xl: "65vh",
-              lg: "65vh",
+              // lg: "65vh",
+              lg: "58vh",
               md: "67vh",
               sm: "75vh",
               xs: "75vh",
@@ -225,7 +252,6 @@ function Allinvoice() {
             // overflow:"visible"
           }}
         >
-          {/* <Box sx={{width:"95%", position:"absolute", zIndex:1000, top:"12px", right:"0px"}}><Typography>Hey there...</Typography></Box> */}
           <Box className={classes.ColumnSelectionBox}>
             <ColumnSelection />
           </Box>
