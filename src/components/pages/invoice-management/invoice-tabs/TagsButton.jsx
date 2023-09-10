@@ -152,12 +152,44 @@ const TagsButton = () => {
     //   }
     // }
     // console.log("updated value",updatedValue );
-    console.log("tag",tag );
+    // console.log("tag",tag );
   
     setValue(updatedValue);
     // getTagdata(tag); // Pass the extracted tag string directly
     // getTagfromAPi();
   };
+
+  // const handleAddValue = (newValue) => {
+  //   let updatedValue = [];
+  //   let tag = '';
+  
+  //   console.log('Before setting tag:', tag); // Log before setting 'tag'
+  
+  //   if (typeof newValue === 'string') {
+  //     updatedValue = [...value, newValue];
+  //     tag = newValue; // Set the tag
+  //     // console.log("upd", updatedValue);
+  //   } else if (newValue && newValue.inputValue) {
+  //     updatedValue = [...value, newValue.inputValue];
+  //     tag = newValue.inputValue; // Set the tag
+  //   } else {
+  //     updatedValue = newValue;
+  //   }
+  
+  //   console.log('After setting tag:', tag); // Log after setting 'tag'
+  //   console.log(updatedValue);
+  
+  //   setValue(updatedValue);
+  
+  //   if (tag) {
+  //     console.log('tag', tag); // Log 'tag' if it's truthy
+  //     getTagdata(tag); // Pass the extracted tag string directly
+  //   }
+  
+  //   getTagfromAPi(); // This might be unrelated to tag selection/addition
+  // };
+  
+  
   
   // console.log("newtag", newtag);
   // console.log("value", value);
@@ -178,6 +210,15 @@ const TagsButton = () => {
   // };
 
   // const open = Boolean(anchorEl);
+  const handleinputchageforTag = (newValue) => {
+    console.log("inputvhange",newValue);
+    const newtag= newValue;
+    console.log("inputvhange",newtag);
+    // setValue(newValue)
+  }
+
+  console.log("value", value);
+
 const filter = createFilterOptions();
 
   return (
@@ -185,7 +226,22 @@ const filter = createFilterOptions();
      <Autocomplete
      multiple
       value={value}
-      onChange={(event, newValue) => {handleAddValue(newValue)}}
+      // onChange={(event, newValue) => {handleAddValue(newValue)}}
+      onChange={(event, newValue) => {
+        if (typeof newValue === 'string') {
+          setValue({
+            tag: newValue,
+          });
+        } else if (newValue && newValue.inputValue) {
+          // Create a new value from the user input
+          setValue({
+            tag: newValue.inputValue,
+          });
+        } else {
+          setValue(newValue);
+        }
+      }}
+      onInputChange={(event, newValue) => {handleinputchageforTag(newValue)}}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);
 
