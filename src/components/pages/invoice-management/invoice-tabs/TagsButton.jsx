@@ -6,7 +6,7 @@ import {
   Popover,
   Button,
   Checkbox,
-  Autocomplete, 
+  Autocomplete,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
@@ -19,7 +19,9 @@ const TagsButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputValueAutocomplete, setInputValue] = useState("");
   const [tagdata, setTagdata] = useState([]);
-   const [value, setValue] = useState([]);
+  const [value, setValue] = useState([]);
+  // const [createdTags, setCreatedTags] = useState(false);
+
   //  const [newtag, setnewTag] = useState(null);
 
   // const [createTagValue, setCreateTagValue] = useState("");
@@ -30,18 +32,17 @@ const TagsButton = () => {
 
   const getTagfromAPi = () => {
     axios
-    .get("http://localhost:5000/Tag")
-    .then((res) => {
-      setTagdata(res.data);
-      //  console.log(res.data)
-    })
-    .catch((err) => {
-      // toast.error("Failed: " + err.message);
-      console.log(err);
-    });
-  }
+      .get("http://localhost:5000/Tag")
+      .then((res) => {
+        setTagdata(res.data);
+        //  console.log(res.data)
+      })
+      .catch((err) => {
+        // toast.error("Failed: " + err.message);
+        console.log(err);
+      });
+  };
 
-  
   useEffect(() => {
     getTagfromAPi();
   }, []);
@@ -99,7 +100,7 @@ const TagsButton = () => {
       tag: tag,
       // data
     };
-    console.log("data",data);
+    console.log("data", data);
     axios
       .post("http://localhost:5000/Tag", data, {
         headers: {
@@ -111,60 +112,131 @@ const TagsButton = () => {
         console.log(response?.data);
         // setTagdata(response?.data);
         setInputValue("");
+        // setCreatedTags(true);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const handleAddValue = (newValue) => {
-    // console.log("new value", newValue);
-    let updatedValue = [];
+  // const handleAddValue = (newValue) => {
+  //   console.log("new value", newValue[0]);
+  //   let updatedValue = [];
 
-    if (typeof newValue === "string") {
-      updatedValue = [...value, newValue];
-    } else if (newValue && newValue.inputValue) {
-      updatedValue = [...value, newValue.inputValue];
-    } else {
-      updatedValue = newValue;
-    }
+  //   if (typeof newValue === "string") {
+  //     updatedValue = [...value, newValue[0].tag];
+  //   } else if (newValue && newValue.inputValue) {
+  //     updatedValue = [...value, newValue.inputValue];
+  //     tag=newValue.inputValue
+  //   } else {
+  //     updatedValue = newValue;
+  //   }
+
+  //   let tag = "";
+
+  //   if (Array.isArray(updatedValue)) {
+  //     // console.log("updatedValue", updatedValue);
+  //     // console.log("updatedvalue", updatedValue[0].tag);
+  //     const firstItem = updatedValue[0];
+  //     if (typeof firstItem === "string") {
+  //       // setnewTag(firstItem)
+  //       tag = firstItem;
+  //     } else if (firstItem && firstItem.inputValue) {
+  //       // setTagdata(firstItem.inputValue)
+  //       tag = firstItem.inputValue;
+  //     }
+  //   }
+
+  //   // if (Array.isArray(updatedValue)) {
+  //   //   const firstItem = updatedValue[0];
+  //   //   if (typeof firstItem === "string" && firstItem.startsWith('Add "')) {
+  //   //     // Extract the tag from the string format "Add 'tagname'"
+  //   //     tag = firstItem.slice(5, -1); // Remove the "Add " and the trailing double quote
+  //   //   } else if (firstItem && firstItem.inputValue) {
+  //   //     tag = firstItem.inputValue;
+  //   //   }
+  //   // }
+  //   console.log("updated value",updatedValue );
+  //   // console.log("tag",tag );
+
+  //   setValue(updatedValue);
+
+
+  //   if (tag.length !== 0) {
+  //     console.log("tag", tag);
+  //     // getTagdata(tag); // Pass the extracted tag string directly
+  //     // getTagfromAPi();
+  //   }
+
+  //   // if (tag.length !== 0 && !value.includes(tag)) {
+  //   //   console.log("tag", tag);
+  //   //   getTagdata(tag); // Pass the extracted tag string directly
+  //   //   getTagfromAPi();
+  //   // }
+  //   // getTagdata(tag); // Pass the extracted tag string directly
+  //   // getTagfromAPi();
+  // };
+
+
+  const handleAddValue = (newValue) => {
+    if (newValue && newValue.inputValue) {
+      const newTag = newValue.inputValue;
   
-    let tag = '';
+      // Check if the newTag is not already in the value array
+      if (!value.includes(newTag)) {
+        // Call the create tag post API with the newTag
+        console.log("newtag", newTag);
+        // createTagAPI(newTag)
+        //   .then((response) => {
+        //     // Handle the response as needed
+        //     console.log("Tag created successfully:", response.data);
   
-    if (Array.isArray(updatedValue)) {
-      console.log("updatedvalue", updatedValue[0].tag);
-      const firstItem = updatedValue[0];
-      if (typeof firstItem === "string") {
-        // setnewTag(firstItem)
-        tag = firstItem;
-      } else if (firstItem && firstItem.inputValue) {
-        // setTagdata(firstItem.inputValue)
-        tag = firstItem.inputValue;
+        //     // Update the value state with the newTag
+        //     setValue([...value, newTag]);
+        //   })
+        //   .catch((error) => {
+        //     console.error("Error creating tag:", error);
+        //   });
       }
+    } else {
+      // Handle other cases (e.g., selecting from the list) as needed
+      // You can put your existing logic here
+      // ...
+      console.log("selected options");
     }
-    // if (Array.isArray(updatedValue)) {
-    //   const firstItem = updatedValue[0];
-    //   if (typeof firstItem === "string" && firstItem.startsWith('Add "')) {
-    //     // Extract the tag from the string format "Add 'tagname'"
-    //     tag = firstItem.slice(5, -1); // Remove the "Add " and the trailing double quote
-    //   } else if (firstItem && firstItem.inputValue) {
-    //     tag = firstItem.inputValue;
-    //   }
-    // }
-    // console.log("updated value",updatedValue );
-    // console.log("tag",tag );
-  
-    setValue(updatedValue);
-    // getTagdata(tag); // Pass the extracted tag string directly
-    // getTagfromAPi();
   };
+  
+
+  // const handleAddValue = (newValue) => {
+  //   let updatedValue = [];
+  //   let tag = "";
+  
+  //   if (typeof newValue === "string") {
+  //     updatedValue = [...value, newValue];
+  //   } else if (newValue && newValue.inputValue) {
+  //     tag = newValue.inputValue;
+  
+  //     // Check if the tag is not already in the createdTags list
+  //     if (!createdTags.includes(tag)) {
+  //       setCreatedTags([...createdTags, tag]);
+  //       // Log the tag if it's created
+  //       console.log("tag created:", tag);
+  //     }
+  
+  //     updatedValue = [...value, tag];
+  //   } else {
+  //     updatedValue = newValue;
+  //   }
+  
+  //   setValue(updatedValue);
+  // };
 
   // const handleAddValue = (newValue) => {
   //   let updatedValue = [];
   //   let tag = '';
-  
+
   //   console.log('Before setting tag:', tag); // Log before setting 'tag'
-  
+
   //   if (typeof newValue === 'string') {
   //     updatedValue = [...value, newValue];
   //     tag = newValue; // Set the tag
@@ -175,22 +247,20 @@ const TagsButton = () => {
   //   } else {
   //     updatedValue = newValue;
   //   }
-  
+
   //   console.log('After setting tag:', tag); // Log after setting 'tag'
   //   console.log(updatedValue);
-  
+
   //   setValue(updatedValue);
-  
+
   //   if (tag) {
   //     console.log('tag', tag); // Log 'tag' if it's truthy
   //     getTagdata(tag); // Pass the extracted tag string directly
   //   }
-  
+
   //   getTagfromAPi(); // This might be unrelated to tag selection/addition
   // };
-  
-  
-  
+
   // console.log("newtag", newtag);
   // console.log("value", value);
 
@@ -211,37 +281,37 @@ const TagsButton = () => {
 
   // const open = Boolean(anchorEl);
   const handleinputchageforTag = (newValue) => {
-    console.log("inputvhange",newValue);
-    const newtag= newValue;
-    console.log("inputvhange",newtag);
+    console.log("inputvhange", newValue);
+    const newtag = newValue;
+    console.log("inputvhange", newtag);
     // setValue(newValue)
-  }
+  };
 
-  console.log("value", value);
+  console.log("value", value.map(item => item.tag));
 
-const filter = createFilterOptions();
+  const filter = createFilterOptions();
 
   return (
     <>
-     <Autocomplete
+      {/* <Autocomplete
      multiple
       value={value}
-      // onChange={(event, newValue) => {handleAddValue(newValue)}}
-      onChange={(event, newValue) => {
-        if (typeof newValue === 'string') {
-          setValue({
-            tag: newValue,
-          });
-        } else if (newValue && newValue.inputValue) {
-          // Create a new value from the user input
-          setValue({
-            tag: newValue.inputValue,
-          });
-        } else {
-          setValue(newValue);
-        }
-      }}
-      onInputChange={(event, newValue) => {handleinputchageforTag(newValue)}}
+      onChange={(event, newValue) => {handleAddValue(newValue)}}
+      // onChange={(event, newValue) => {
+      //   if (typeof newValue === 'string') {
+      //     setValue({
+      //       tag: newValue,
+      //     });
+      //   } else if (newValue && newValue.inputValue) {
+      //     // Create a new value from the user input
+      //     setValue({
+      //       tag: newValue.inputValue,
+      //     });
+      //   } else {
+      //     setValue(newValue);
+      //   }
+      // }}
+      // onInputChange={(event, newValue) => {handleinputchageforTag(newValue)}}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);
 
@@ -287,7 +357,7 @@ const filter = createFilterOptions();
       renderInput={(params) => (
         <TextField {...params} placeholder="Search Tags" size="small" />
       )}
-    />
+    /> */}
 
       <Box>
         <Button onClick={handleClick} className={classes.TagButton}>
@@ -312,10 +382,91 @@ const filter = createFilterOptions();
             className={classes.PopoverBox}
             sx={{
               // padding: "10px",
-              padding:{xxl:"10px", xl:"7px", lg:"6px", md:"5px", sm:"5px", xs:"5px"}
+              padding: {
+                xxl: "10px",
+                xl: "7px",
+                lg: "6px",
+                md: "5px",
+                sm: "5px",
+                xs: "5px",
+              },
             }}
           >
             <Autocomplete
+              multiple
+              value={value}
+              onChange={(event, newValue) => {
+                handleAddValue(newValue);
+              }}
+              // onChange={(event, newValue) => {
+              //   if (typeof newValue === 'string') {
+              //     setValue({
+              //       tag: newValue,
+              //     });
+              //   } else if (newValue && newValue.inputValue) {
+              //     // Create a new value from the user input
+              //     setValue({
+              //       tag: newValue.inputValue,
+              //     });
+              //   } else {
+              //     setValue(newValue);
+              //   }
+              // }}
+              // onInputChange={(event, newValue) => {handleinputchageforTag(newValue)}}
+              filterOptions={(options, params) => {
+                const filtered = filter(options, params);
+
+                const { inputValue } = params;
+                // Suggest the creation of a new value
+                const isExisting = options.some(
+                  (option) => inputValue === option.tag
+                );
+                if (inputValue !== "" && !isExisting) {
+                  filtered.push({
+                    inputValue,
+                    tag: `Add "${inputValue}"`,
+                  });
+                }
+
+                return filtered;
+              }}
+              selectOnFocus
+              clearOnBlur
+              handleHomeEndKeys
+              disableCloseOnSelect
+              id="free-solo-with-text-demo"
+              options={tagdata}
+              getOptionLabel={(option) => {
+                // Value selected with enter, right from the input
+                if (typeof option === "string") {
+                  return option;
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                  return option.inputValue;
+                }
+                // Regular option
+                return option.tag;
+              }}
+              // renderOption={(props, option) => <li {...props}>{option.title}</li>}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    sx={{ marginRight: 1 }}
+                    checked={selected}
+                    //  checked={option.tag ? true : false}
+                  />
+                  {option.tag}
+                </li>
+              )}
+              sx={{ width: 300 }}
+              freeSolo
+              renderInput={(params) => (
+                <TextField {...params} placeholder="Search Tags" size="small" />
+              )}
+            />
+
+            {/* <Autocomplete
               //  freeSolo
               sx={{
                 // width: "17.81vw",
@@ -355,8 +506,8 @@ const filter = createFilterOptions();
                     //     },
                     //   },
                     // }}
-                  />
-                  {inputValueAutocomplete &&
+                  /> */}
+            {/* {inputValueAutocomplete &&
                     !tagdata.some(
                       (option) =>
                         option.tag.toLowerCase() === inputValueAutocomplete.toLowerCase()
@@ -380,50 +531,50 @@ const filter = createFilterOptions();
                             color: "rgba(43, 43, 43, 0.8)",
                           },
                         }}
-                      >
-                        <AddIcon sx={{ marginRight: "1vw" }} />
+                      > */}
+            {/* <AddIcon sx={{ marginRight: "1vw" }} />
                         Create "{inputValueAutocomplete}"
                       </Button>
                     )}
                 </Box>
+              )} */}
+            {/* renderTags={(value, getTagProps) => (
+                <div>
+                  {value.map((option, index) => (
+                    <div key={option.tag} {...getTagProps({ index })}>
+                      {option.tag}
+                    </div>
+                  ))}
+                  {inputValue && !tag.some((option) => option.tag.toLowerCase() === inputValue.toLowerCase()) && (
+                    <Button onClick={getTag} variant="contained" >
+                      Create Tag "{inputValue}"
+                    </Button>
+                  )}
+                </div>
               )}
-              // renderTags={(value, getTagProps) => (
-              //   <div>
-              //     {value.map((option, index) => (
-              //       <div key={option.tag} {...getTagProps({ index })}>
-              //         {option.tag}
-              //       </div>
-              //     ))}
-              //     {inputValue && !tag.some((option) => option.tag.toLowerCase() === inputValue.toLowerCase()) && (
-              //       <Button onClick={getTag} variant="contained" >
-              //         Create Tag "{inputValue}"
-              //       </Button>
-              //     )}
-              //   </div>
-              // )}
-              // renderInput={(params) => (
-              //   <TextField
-              //     {...params}
-              //     // label="Search Tags"
-              //     placeholder="Search Tags"
-              //     variant="outlined"
-              //     autoFocus
-              //     InputProps={{
-              //       ...params.InputProps,
-              //       endAdornment: (
-              //         <>
-              //           {inputValue && !tag.some((option) => option.tag.toLowerCase() === inputValue.toLowerCase()) && (
-              //             <Button onClick={getTag} color="primary">
-              //               Create Tag "{inputValue}"
-              //             </Button>
-              //           )}
-              //           {params.InputProps.endAdornment}
-              //         </>
-              //       ),
-              //     }}
-              //   />
-              // )}
-            />
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  // label="Search Tags"
+                  placeholder="Search Tags"
+                  variant="outlined"
+                  autoFocus
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {inputValue && !tag.some((option) => option.tag.toLowerCase() === inputValue.toLowerCase()) && (
+                          <Button onClick={getTag} color="primary">
+                            Create Tag "{inputValue}"
+                          </Button>
+                        )}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
+                /> */}
+            {/* )}
+            /> */}
             {/* {inputValue &&
               !tag.some(
                 (option) =>
@@ -582,128 +733,129 @@ const filter = createFilterOptions();
 export default TagsButton;
 
 const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
+  { title: "The Shawshank Redemption", year: 1994 },
+  { title: "The Godfather", year: 1972 },
+  { title: "The Godfather: Part II", year: 1974 },
+  { title: "The Dark Knight", year: 2008 },
+  { title: "12 Angry Men", year: 1957 },
   { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
+  { title: "Pulp Fiction", year: 1994 },
   {
-    title: 'The Lord of the Rings: The Return of the King',
+    title: "The Lord of the Rings: The Return of the King",
     year: 2003,
   },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
+  { title: "The Good, the Bad and the Ugly", year: 1966 },
+  { title: "Fight Club", year: 1999 },
   {
-    title: 'The Lord of the Rings: The Fellowship of the Ring',
+    title: "The Lord of the Rings: The Fellowship of the Ring",
     year: 2001,
   },
   {
-    title: 'Star Wars: Episode V - The Empire Strikes Back',
+    title: "Star Wars: Episode V - The Empire Strikes Back",
     year: 1980,
   },
-  { title: 'Forrest Gump', year: 1994 },
-  { title: 'Inception', year: 2010 },
+  { title: "Forrest Gump", year: 1994 },
+  { title: "Inception", year: 2010 },
   {
-    title: 'The Lord of the Rings: The Two Towers',
+    title: "The Lord of the Rings: The Two Towers",
     year: 2002,
   },
   { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-  { title: 'Goodfellas', year: 1990 },
-  { title: 'The Matrix', year: 1999 },
-  { title: 'Seven Samurai', year: 1954 },
+  { title: "Goodfellas", year: 1990 },
+  { title: "The Matrix", year: 1999 },
+  { title: "Seven Samurai", year: 1954 },
   {
-    title: 'Star Wars: Episode IV - A New Hope',
+    title: "Star Wars: Episode IV - A New Hope",
     year: 1977,
   },
-  { title: 'City of God', year: 2002 },
-  { title: 'Se7en', year: 1995 },
-  { title: 'The Silence of the Lambs', year: 1991 },
+  { title: "City of God", year: 2002 },
+  { title: "Se7en", year: 1995 },
+  { title: "The Silence of the Lambs", year: 1991 },
   { title: "It's a Wonderful Life", year: 1946 },
-  { title: 'Life Is Beautiful', year: 1997 },
-  { title: 'The Usual Suspects', year: 1995 },
-  { title: 'Léon: The Professional', year: 1994 },
-  { title: 'Spirited Away', year: 2001 },
-  { title: 'Saving Private Ryan', year: 1998 },
-  { title: 'Once Upon a Time in the West', year: 1968 },
-  { title: 'American History X', year: 1998 },
-  { title: 'Interstellar', year: 2014 },
-  { title: 'Casablanca', year: 1942 },
-  { title: 'City Lights', year: 1931 },
-  { title: 'Psycho', year: 1960 },
-  { title: 'The Green Mile', year: 1999 },
-  { title: 'The Intouchables', year: 2011 },
-  { title: 'Modern Times', year: 1936 },
-  { title: 'Raiders of the Lost Ark', year: 1981 },
-  { title: 'Rear Window', year: 1954 },
-  { title: 'The Pianist', year: 2002 },
-  { title: 'The Departed', year: 2006 },
-  { title: 'Terminator 2: Judgment Day', year: 1991 },
-  { title: 'Back to the Future', year: 1985 },
-  { title: 'Whiplash', year: 2014 },
-  { title: 'Gladiator', year: 2000 },
-  { title: 'Memento', year: 2000 },
-  { title: 'The Prestige', year: 2006 },
-  { title: 'The Lion King', year: 1994 },
-  { title: 'Apocalypse Now', year: 1979 },
-  { title: 'Alien', year: 1979 },
-  { title: 'Sunset Boulevard', year: 1950 },
+  { title: "Life Is Beautiful", year: 1997 },
+  { title: "The Usual Suspects", year: 1995 },
+  { title: "Léon: The Professional", year: 1994 },
+  { title: "Spirited Away", year: 2001 },
+  { title: "Saving Private Ryan", year: 1998 },
+  { title: "Once Upon a Time in the West", year: 1968 },
+  { title: "American History X", year: 1998 },
+  { title: "Interstellar", year: 2014 },
+  { title: "Casablanca", year: 1942 },
+  { title: "City Lights", year: 1931 },
+  { title: "Psycho", year: 1960 },
+  { title: "The Green Mile", year: 1999 },
+  { title: "The Intouchables", year: 2011 },
+  { title: "Modern Times", year: 1936 },
+  { title: "Raiders of the Lost Ark", year: 1981 },
+  { title: "Rear Window", year: 1954 },
+  { title: "The Pianist", year: 2002 },
+  { title: "The Departed", year: 2006 },
+  { title: "Terminator 2: Judgment Day", year: 1991 },
+  { title: "Back to the Future", year: 1985 },
+  { title: "Whiplash", year: 2014 },
+  { title: "Gladiator", year: 2000 },
+  { title: "Memento", year: 2000 },
+  { title: "The Prestige", year: 2006 },
+  { title: "The Lion King", year: 1994 },
+  { title: "Apocalypse Now", year: 1979 },
+  { title: "Alien", year: 1979 },
+  { title: "Sunset Boulevard", year: 1950 },
   {
-    title: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
+    title:
+      "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
     year: 1964,
   },
-  { title: 'The Great Dictator', year: 1940 },
-  { title: 'Cinema Paradiso', year: 1988 },
-  { title: 'The Lives of Others', year: 2006 },
-  { title: 'Grave of the Fireflies', year: 1988 },
-  { title: 'Paths of Glory', year: 1957 },
-  { title: 'Django Unchained', year: 2012 },
-  { title: 'The Shining', year: 1980 },
-  { title: 'WALL·E', year: 2008 },
-  { title: 'American Beauty', year: 1999 },
-  { title: 'The Dark Knight Rises', year: 2012 },
-  { title: 'Princess Mononoke', year: 1997 },
-  { title: 'Aliens', year: 1986 },
-  { title: 'Oldboy', year: 2003 },
-  { title: 'Once Upon a Time in America', year: 1984 },
-  { title: 'Witness for the Prosecution', year: 1957 },
-  { title: 'Das Boot', year: 1981 },
-  { title: 'Citizen Kane', year: 1941 },
-  { title: 'North by Northwest', year: 1959 },
-  { title: 'Vertigo', year: 1958 },
+  { title: "The Great Dictator", year: 1940 },
+  { title: "Cinema Paradiso", year: 1988 },
+  { title: "The Lives of Others", year: 2006 },
+  { title: "Grave of the Fireflies", year: 1988 },
+  { title: "Paths of Glory", year: 1957 },
+  { title: "Django Unchained", year: 2012 },
+  { title: "The Shining", year: 1980 },
+  { title: "WALL·E", year: 2008 },
+  { title: "American Beauty", year: 1999 },
+  { title: "The Dark Knight Rises", year: 2012 },
+  { title: "Princess Mononoke", year: 1997 },
+  { title: "Aliens", year: 1986 },
+  { title: "Oldboy", year: 2003 },
+  { title: "Once Upon a Time in America", year: 1984 },
+  { title: "Witness for the Prosecution", year: 1957 },
+  { title: "Das Boot", year: 1981 },
+  { title: "Citizen Kane", year: 1941 },
+  { title: "North by Northwest", year: 1959 },
+  { title: "Vertigo", year: 1958 },
   {
-    title: 'Star Wars: Episode VI - Return of the Jedi',
+    title: "Star Wars: Episode VI - Return of the Jedi",
     year: 1983,
   },
-  { title: 'Reservoir Dogs', year: 1992 },
-  { title: 'Braveheart', year: 1995 },
-  { title: 'M', year: 1931 },
-  { title: 'Requiem for a Dream', year: 2000 },
-  { title: 'Amélie', year: 2001 },
-  { title: 'A Clockwork Orange', year: 1971 },
-  { title: 'Like Stars on Earth', year: 2007 },
-  { title: 'Taxi Driver', year: 1976 },
-  { title: 'Lawrence of Arabia', year: 1962 },
-  { title: 'Double Indemnity', year: 1944 },
+  { title: "Reservoir Dogs", year: 1992 },
+  { title: "Braveheart", year: 1995 },
+  { title: "M", year: 1931 },
+  { title: "Requiem for a Dream", year: 2000 },
+  { title: "Amélie", year: 2001 },
+  { title: "A Clockwork Orange", year: 1971 },
+  { title: "Like Stars on Earth", year: 2007 },
+  { title: "Taxi Driver", year: 1976 },
+  { title: "Lawrence of Arabia", year: 1962 },
+  { title: "Double Indemnity", year: 1944 },
   {
-    title: 'Eternal Sunshine of the Spotless Mind',
+    title: "Eternal Sunshine of the Spotless Mind",
     year: 2004,
   },
-  { title: 'Amadeus', year: 1984 },
-  { title: 'To Kill a Mockingbird', year: 1962 },
-  { title: 'Toy Story 3', year: 2010 },
-  { title: 'Logan', year: 2017 },
-  { title: 'Full Metal Jacket', year: 1987 },
-  { title: 'Dangal', year: 2016 },
-  { title: 'The Sting', year: 1973 },
-  { title: '2001: A Space Odyssey', year: 1968 },
+  { title: "Amadeus", year: 1984 },
+  { title: "To Kill a Mockingbird", year: 1962 },
+  { title: "Toy Story 3", year: 2010 },
+  { title: "Logan", year: 2017 },
+  { title: "Full Metal Jacket", year: 1987 },
+  { title: "Dangal", year: 2016 },
+  { title: "The Sting", year: 1973 },
+  { title: "2001: A Space Odyssey", year: 1968 },
   { title: "Singin' in the Rain", year: 1952 },
-  { title: 'Toy Story', year: 1995 },
-  { title: 'Bicycle Thieves', year: 1948 },
-  { title: 'The Kid', year: 1921 },
-  { title: 'Inglourious Basterds', year: 2009 },
-  { title: 'Snatch', year: 2000 },
-  { title: '3 Idiots', year: 2009 },
-  { title: 'Monty Python and the Holy Grail', year: 1975 },
+  { title: "Toy Story", year: 1995 },
+  { title: "Bicycle Thieves", year: 1948 },
+  { title: "The Kid", year: 1921 },
+  { title: "Inglourious Basterds", year: 2009 },
+  { title: "Snatch", year: 2000 },
+  { title: "3 Idiots", year: 2009 },
+  { title: "Monty Python and the Holy Grail", year: 1975 },
 ];
