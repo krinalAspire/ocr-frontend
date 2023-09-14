@@ -7,6 +7,10 @@ import {
   Button,
   Checkbox,
   Autocomplete,
+  List,
+  ListItemText,
+  ListItem,
+  Chip,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
@@ -20,10 +24,17 @@ const TagsButton = () => {
   const [inputValueAutocomplete, setInputValue] = useState("");
   const [tagdata, setTagdata] = useState([]);
   const [value, setValue] = useState([]);
-  const [newtag, setnewTag] = useState(null);
+  // const [newtag, setnewTag] = useState(null);
   const [loggedTags, setLoggedTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
+  // const [selectedTags, setSelectedTags] = useState([]);
   const [tagNames, setTagNames] = useState([]);
+  const fixedOptions = [top100Films[6]];
+  const [tesvalue, settesValue] = useState([
+    ...fixedOptions,
+    top100Films[13],
+  ]);
+  // const [filterapi, setfilterapi] = useState(false);
+  // const [options, setOptions] = React.useState(tagdata);
 
   // const [createdTags, setCreatedTags] = useState(false);
 
@@ -103,10 +114,8 @@ const TagsButton = () => {
     const data = {
       id: Math.random().toString(36).substr(2, 9),
       tag: tag,
-      // selected: true,
-      // data
     };
-    console.log("data", data);
+    // console.log("data", data);
     axios
       .post("http://localhost:5000/Tag", data, {
         headers: {
@@ -115,9 +124,10 @@ const TagsButton = () => {
       })
       .then((response) => {
         // setTagdata([...tag, response.data]);
-        console.log(response?.data);
+        // console.log(response?.data);
         // setTagdata(response?.data);
         setInputValue("");
+        // setfilterapi(true)
         // setCreatedTags(true);
       })
       .catch((err) => {
@@ -125,21 +135,25 @@ const TagsButton = () => {
       });
   };
 
-
   const handleAddValue = (newValue) => {
     if (newValue && newValue.inputValue) {
       const inputValue = newValue.inputValue.toLowerCase();
-      if (inputValue === 'add tag') {
+      if (inputValue === "add tag") {
         // Handle the creation of a new tag here
-        console.log('Creating a new tag:', inputValue);
-        // const newTag = {
-        //   inputValue: `Add "${inputValue}"`,
-        //   tag: inputValue,
-        // };
+        console.log("Creating a new tag:", inputValue);
+        // handleOptionCreate(newValue.inputValue);
+        const newTag = {
+          inputValue: `Add "${inputValue}"`,
+          tag: inputValue,
+        };
         // // Update the selected tags
         // setSelectedTags([...selectedTags, newTag]);
-        setValue([...value, { id: Math.random().toString(36).substr(2, 9), tag: inputValue }]);
-        // setTagNames((prevTagNames) => [...prevTagNames, inputValue]);
+        // setValue([
+        //   ...value,
+        //   { id: Math.random().toString(36).substr(2, 9), tag: inputValue },
+        // ]);
+        setTagNames((prevTagNames) => [...prevTagNames, inputValue]);
+        // setTagNames([...tagNames, inputValue]);
       } else {
         // Set the selected option when it's not "Add tag"
         setValue(newValue);
@@ -155,36 +169,54 @@ const TagsButton = () => {
         } else if (item.tag) {
           return item.tag; // Return the tag name if it's not in the "Add" format
         } else {
-          return ''; // Return an empty string for other cases
+          return ""; // Return an empty string for other cases
         }
       });
-      
+
       setTagNames(newTagNames);
       // setTagNames( newValue.map((item) => item.tag));
     }
-  }
+  };
 
   useEffect(() => {
-  for (const item of value) {
-    if (item.tag && item.tag.startsWith('Add "')) {
-      const tag = item.tag.slice(5, -1); 
-      if (!loggedTags.includes(item.tag)) {
-        console.log("Tag with 'Add':", tag);
-        setLoggedTags((prevLoggedTags) => [...prevLoggedTags, item.tag]);
-        getTagdata(tag);
-        getTagfromAPi();
+    for (const item of value) {
+      if (item.tag && item.tag.startsWith('Add "')) {
+        const tag = item.tag.slice(5, -1);
+        if (!loggedTags.includes(item.tag)) {
+          // console.log("Tag with 'Add':", tag);
+          setLoggedTags((prevLoggedTags) => [...prevLoggedTags, item.tag]);
+          getTagdata(tag);
+          getTagfromAPi();
+        }
       }
     }
-  }
-}, [value]);
+  }, [value]);
 
-useEffect(()=>{
-  if(tagNames.length > 0){
-    console.log("fire filter api");
-  }
-}, [tagNames]);
+  useEffect(() => {
+    if (tagNames.length > 0) {
+      console.log(`Fire filter api - ${new Date().toLocaleTimeString()}`);
+      // console.log("fire filter api", tagNames);
+    }
+  }, [tagNames]);
 
-  
+  // useEffect(() => {
+  //   for (const item of value) {
+  //     if (item.tag && item.tag.startsWith('Add "')) {
+  //       const tag = item.tag.slice(5, -1);
+  //       if (!loggedTags.includes(item.tag)) {
+  //         console.log("Tag with 'Add':", tag);
+  //         setLoggedTags((prevLoggedTags) => [...prevLoggedTags, item.tag]);
+  //         getTagdata(tag);
+  //         getTagfromAPi();
+  //       }
+  //     }
+  //   }
+
+  //   if (tagNames.length > 0) {
+  //     console.log("fire filter api", tagNames);
+  //   }
+  // }, [value, tagNames]);
+
   const handleinputchageforTag = (newValue) => {
     console.log("inputvhange", newValue);
     const newtag = newValue;
@@ -194,8 +226,11 @@ useEffect(()=>{
 
   // console.log("value", value.map(item => item.tag));
   // console.log("value", value);
+  // console.log("tagdata", tagdata);
+  // console.log("options", options);
+  // console.log("value", value);
   // console.log("selectedvalues", selectedTags);
-  console.log("tag array", tagNames);
+  // console.log("tag array", tagNames);
 
   const filter = createFilterOptions();
 
@@ -267,6 +302,33 @@ useEffect(()=>{
       )}
     /> */}
 
+      <Autocomplete
+        multiple
+        id="fixed-tags-demo"
+        value={tesvalue}
+        onChange={(event, newValue) => {
+          settesValue([
+            ...fixedOptions,
+            ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
+          ]);
+        }}
+        options={top100Films}
+        getOptionLabel={(option) => option.title}
+        renderTags={(tagValue, getTagProps) =>
+          tagValue.map((option, index) => (
+            <Chip
+              label={option.title}
+              {...getTagProps({ index })}
+              disabled={fixedOptions.indexOf(option) !== -1}
+            />
+          ))
+        }
+        style={{ width: 500 }}
+        renderInput={(params) => (
+          <TextField {...params} label="Fixed tag" placeholder="Favorites" />
+        )}
+      />
+
       <Box>
         <Button onClick={handleClick} className={classes.TagButton}>
           Tag
@@ -303,6 +365,7 @@ useEffect(()=>{
             <Autocomplete
               multiple
               value={value}
+              // value={selectedTags}
               onChange={(event, newValue) => {
                 handleAddValue(newValue);
               }}
@@ -310,12 +373,14 @@ useEffect(()=>{
                 const filtered = filter(options, params);
 
                 const { inputValue } = params;
+                // const {id} = tagdata.some((option)=> option.id)
                 const isExisting = options.some(
                   (option) => inputValue === option.tag
                 );
                 if (inputValue !== "" && !isExisting) {
                   filtered.push({
                     inputValue,
+                    // id,
                     tag: `Add "${inputValue}"`,
                   });
                 }
@@ -341,17 +406,32 @@ useEffect(()=>{
                 return option.tag;
               }}
               // renderOption={(props, option) => <li {...props}>{option.title}</li>}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox
-                    sx={{ marginRight: 1 }}
-                    checked={selected}
-                    // checked={value.map((tagObj) => tagObj.tag) ? true : false}
-                    //  checked={option.tag ? true : false}
-                  />
-                  {option.tag}
-                </li>
-              )}
+              // renderOption={(props, option, { selected }) => (
+              //   // <li {...props}>
+              //   //   <Checkbox
+              //   //     sx={{ marginRight: 1 }}
+              //   //     // checked={selected}
+              //   //     // checked={selected && value.map((tagObj) => tagObj.tag) ? true : false}
+              //   //     checked={selected || value.some((tagObj) => tagObj.tag === option.tag)}
+              //   //     //  checked={option.tag ? true : false}
+              //   //   />
+              //   //   {option.tag}
+              //   // </li>
+              //   <List>
+              //   {/* {option.map((item) => ( */}
+              //     <ListItem key={option.id} dense button onClick={() => handleToggle(option.id)}>
+              //       <Checkbox
+              //         edge="start"
+              //         checked={option.checked || false}
+              //         tabIndex={-1}
+              //         disableRipple
+              //       />
+              //       <ListItemText primary={option.tag} />
+              //     </ListItem>
+              //   {/* ))} */}
+              // </List>
+
+              // )}
 
               // renderOption={(props, option, { selected }) => (
               //   <li {...props}>
@@ -377,12 +457,172 @@ useEffect(()=>{
               //   <li {...props}>
               //     <Checkbox
               //       sx={{ marginRight: 1 }}
-              //       checked={selectedTags.some((tag) => tag.tag === option)}
+              //       checked={selectedTags.includes(option.tag) ? true : false}
               //     />
-              //     {option}
+              //     {option.tag}
               //   </li>
               // )}
-              
+
+              // renderOption={(props, option) => (
+              //   <li {...props}>
+              //     <Checkbox
+              //       checked={value.some((val) => val.tag === option.tag)}
+              //     />
+              //     {option.tag}
+              //   </li>
+              // )}
+
+              // renderOption={(props, option) => (
+              //   <li {...props}>
+              //     {option.inputValue ? (
+              //       <>
+              //         <Checkbox checked={false} />
+              //         {option.inputValue}
+              //       </>
+              //     ) : (
+              //       <>
+              //         <Checkbox
+              //           // checked={value.some((val) => val.tag === option.tag)}
+              //           checked={value.some((val) => {
+              //             if (val.tag.startsWith('Add "')) {
+              //               // Extract the tag name from the format "Add 'tagname'"
+              //               const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+              //               if (extractedTag) {
+              //                 return extractedTag[1] === option.tag;
+              //               }
+              //             }
+              //             return val.tag === option.tag;
+              //           })}
+              //         />
+              //         {option.tag}
+              //       </>
+              //     )}
+              //   </li>
+              // )}
+
+              renderOption={(props, option) => (
+                <li {...props}>
+                  {/* {option.inputValue ? (
+                    <>
+                      <Checkbox
+                        checked={value.some((val) => val.tag === option.inputValue)}
+                        onChange={() => {
+                          // Handle unchecking a created tag here
+                          const newValue = value.filter((val) => val.tag !== option.inputValue);
+                          setValue(newValue);
+                        }}
+                      />
+                      Add "{option.inputValue}"
+                    </>
+                  ) : ( */}
+                  <>
+                    <Checkbox
+                      checked={value.some((val) => {
+                        if (val.tag.startsWith('Add "')) {
+                          const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+                          if (extractedTag) {
+                            return extractedTag[1] === option.tag;
+                          }
+                        }
+                        return val.tag === option.tag;
+                      })}
+                      onChange={() => {
+                        // Handle checking/unchecking a regular tag here
+                        const isChecked = value.some((val) => {
+                          if (val.tag.startsWith('Add "')) {
+                            const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+                            if (extractedTag) {
+                              return extractedTag[1] === option.tag;
+                            }
+                          }
+                          return val.tag === option.tag;
+                        });
+
+                        if (isChecked) {
+                          // Uncheck the tag
+                          const newValue = value.filter((val) => {
+                            if (val.tag.startsWith('Add "')) {
+                              const extractedTag =
+                                val.tag.match(/^Add "(.*?)"$/);
+                              if (extractedTag) {
+                                return extractedTag[1] !== option.tag;
+                              }
+                            }
+                            return val.tag !== option.tag;
+                          });
+                          setValue(newValue);
+                        } else {
+                          // Check the tag
+                          const newValue = [
+                            ...value,
+                            {
+                              id: Math.random().toString(36).substr(2, 9),
+                              tag: option.tag,
+                            },
+                          ];
+                          setValue(newValue);
+                        }
+                      }}
+                    />
+                    {option.tag}
+                  </>
+                  {/* )} */}
+                </li>
+              )}
+              // renderOption={(props, option) => (
+              //   <li {...props}>
+              //     {option.inputValue ? (
+              //       <>
+              //         <Checkbox
+              //           checked={value.some((val) => val.tag === option.inputValue)}
+              //           onChange={() => {
+              //             // Handle unchecking a created tag here
+              //             const newValue = value.filter((val) => val.tag !== option.inputValue);
+              //             setValue(newValue);
+              //           }}
+              //         />
+              //         {option.inputValue}
+              //       </>
+              //     ) : (
+              //       <>
+              //         <Checkbox
+              //           checked={value.some((val) => {
+              //             if (val.tag.startsWith('Add "')) {
+              //               const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+              //               if (extractedTag) {
+              //                 return extractedTag[1] === option.tag;
+              //               }
+              //             }
+              //             return val.tag === option.tag;
+              //           })}
+              //           onChange={() => {
+              //             // Find the existing tag in the value array
+              //             const existingTag = value.find((val) => {
+              //               if (val.tag.startsWith('Add "')) {
+              //                 const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+              //                 if (extractedTag) {
+              //                   return extractedTag[1] === option.tag;
+              //                 }
+              //               }
+              //               return val.tag === option.tag;
+              //             });
+
+              //             if (existingTag) {
+              //               // If the tag exists, uncheck it (remove from the value array)
+              //               const newValue = value.filter((val) => val !== existingTag);
+              //               setValue(newValue);
+              //             } else {
+              //               // If the tag doesn't exist, check it (add to the value array)
+              //               const newValue = [...value, { id: Math.random().toString(36).substr(2, 9), tag: option.tag }];
+              //               setValue(newValue);
+              //             }
+              //           }}
+              //         />
+              //         {option.tag}
+              //       </>
+              //     )}
+              //   </li>
+              // )}
               sx={{ width: 300 }}
               freeSolo
               renderInput={(params) => (
