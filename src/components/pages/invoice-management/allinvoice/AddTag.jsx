@@ -17,23 +17,69 @@ import AddIcon from "@mui/icons-material/Add";
 import { classes } from "./utils";
 import axios from "axios";
 import tag from "../../../../assets/allinvoice-assets/tag.svg";
-import { tagOptions } from "./rowdata";
+import { rowdata, tagOptions } from "./rowdata";
 
-const AddTag = () => {
+const AddTag = ({id, handleclick}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputValueAutocomplete, setInputValue] = useState("");
   const [tagdata, setTagdata] = useState([]);
-  const fixedOptions = [tagdata[6]];
-  const [value, setValue] = useState([...fixedOptions, tagdata[13]]);
+  const [fixedOptions, setfixedOptions] = useState([]);
+  const [value, setValue] =  useState([]);
   const [loggedTags, setLoggedTags] = useState([]);
   const [tagNames, setTagNames] = useState([]);
 
-  const getTagfromAPi = () => {
+  // console.log("addtag", id);
+
+  const getTagfromAPi = (id) => {
+    // console.log("inside function addtag", id);
     axios
       .get("http://localhost:5000/Tag")
       .then((res) => {
+        // console.log(res.data);
+        const responseData = res.data;
         setTagdata(res.data);
+        // console.log(res.data[13]);
+        // const tagsInDocuments = responseData.map((doc) => doc.tag);
+        // console.log("tagIndocuments", tagsInDocuments);
+        // setfixedOptions(tagsInDocuments);
+        // // Set an initial value (if needed)
+        // setValue(tagsInDocuments);
+
+        // setfixedOptions([res['data'][4]])
+        // console.log("dhshf",[res['data'][4]]);
+        // setfixedOptions([res['data'][4]])
+        // const fixedOptions = [...];
+        // setValue([res.data[4], res.data[13]]);
         //  console.log(res.data)
+
+        const specificDocumentId = id; // Change this to the desired document id
+        // console.log("specificDocumentId",specificDocumentId );
+        const specificDocument = rowdata.find((doc) => doc.id === specificDocumentId);
+        // console.log('specificDocument', specificDocument);
+  
+        if (specificDocument) {
+          // Extract the tags associated with the specific document and set them as fixedOptions
+          const tagsForSpecificDocument = [specificDocument]; // If you want it as an array
+
+          const extractedData = tagsForSpecificDocument.map(({ id, tag }) => ({ id, tag }));
+  
+          // setfixedOptions(tagsForSpecificDocument.map(({ tag, id }) => ({ tag, id })));
+
+          if (extractedData.length > 0) {
+            // Set the 'value' state only if 'extractedData' is not empty
+            setValue(extractedData);
+          } else {
+            // Handle the case where there are no valid tags
+            console.log("No valid tags found for this document.");
+          }
+
+          console.log("tagsForSpecificDocument",extractedData);
+          // console.log("tagsForSpecificDocument",tagsForSpecificDocument.id, tagsForSpecificDocument.tag);
+        } else {
+          console.log(`Document with id '${specificDocumentId}' not found.`);
+        }
+
+        // console.log("value", value);
       })
       .catch((err) => {
         // toast.error("Failed: " + err.message);
@@ -41,12 +87,14 @@ const AddTag = () => {
       });
   };
 
-  useEffect(() => {
-    getTagfromAPi();
-  }, []);
+  // useEffect(() => {
+  //   getTagfromAPi(id);
+  // }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    getTagfromAPi(id);
+    // handleclick();
   };
 
   const handleClose = () => {
@@ -56,118 +104,7 @@ const AddTag = () => {
   };
   const open = Boolean(anchorEl);
 
-  const handleInputChange = (event, newInputValue) => {
-    setInputValue(newInputValue);
-  };
-
-  const getTagdata = (tag) => {
-    // setInputValue(event.target.value);
-    // // console.log(inputValue);
-    // setTagdata(inputValue)
-    console.log("getTagdata is called");
-    const data = {
-      id: Math.random().toString(36).substr(2, 9),
-      tag: tag,
-    };
-    // console.log("data", data);
-    axios
-      .post("http://localhost:5000/Tag", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        // setTagdata([...tag, response.data]);
-        // console.log(response?.data);
-        // setTagdata(response?.data);
-        setInputValue("");
-        // setfilterapi(true)
-        // setCreatedTags(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleAddValue = (newValue) => {
-    if (newValue && newValue.inputValue) {
-      const inputValue = newValue.inputValue.toLowerCase();
-      if (inputValue === "add tag") {
-        // Handle the creation of a new tag here
-        console.log("Creating a new tag:", inputValue);
-        // handleOptionCreate(newValue.inputValue);
-        const newTag = {
-          inputValue: `Add "${inputValue}"`,
-          tag: inputValue,
-        };
-        // // Update the selected tags
-        // setSelectedTags([...selectedTags, newTag]);
-        // setValue([
-        //   ...value,
-        //   { id: Math.random().toString(36).substr(2, 9), tag: inputValue },
-        // ]);
-        setTagNames((prevTagNames) => [...prevTagNames, inputValue]);
-        // setTagNames([...tagNames, inputValue]);
-      } else {
-        // Set the selected option when it's not "Add tag"
-        setValue([
-          ...fixedOptions,
-          ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
-        ]);
-        setValue(newValue);
-      }
-    } else {
-      // Set the selected option when newValue is not an object with inputValue
-      setValue([
-        ...fixedOptions,
-        ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
-      ]);
-      setValue(newValue);
-
-      const newTagNames = newValue.map((item) => {
-        if (item.tag && item.tag.startsWith('Add "')) {
-          // Extract the tag name from the format "Add 'tagname'"
-          return item.tag.slice(5, -1); // Remove "Add " and the trailing double quote
-        } else if (item.tag) {
-          return item.tag; // Return the tag name if it's not in the "Add" format
-        } else {
-          return ""; // Return an empty string for other cases
-        }
-      });
-
-      setTagNames(newTagNames);
-      // setTagNames( newValue.map((item) => item.tag));
-    }
-  };
-
-  // useEffect(() => {
-  //   for (const item of value) {
-  //     if (item.tag && item.tag.startsWith('Add "')) {
-  //       const tag = item.tag.slice(5, -1);
-  //       if (!loggedTags.includes(item.tag)) {
-  //         // console.log("Tag with 'Add':", tag);
-  //         setLoggedTags((prevLoggedTags) => [...prevLoggedTags, item.tag]);
-  //         getTagdata(tag);
-  //         getTagfromAPi();
-  //       }
-  //     }
-  //   }
-  // }, [value]);
-
-  // useEffect(() => {
-  //   if (tagNames.length > 0) {
-  //     console.log(`Fire filter api - ${new Date().toLocaleTimeString()}`);
-  //     // console.log("fire filter api", tagNames);
-  //   }
-  // }, [tagNames]);
-
-  // console.log("value", value.map(item => item.tag));
-  // console.log("value", value);
-  // console.log("tagdata", tagdata);
-  // console.log("options", options);
-  // console.log("value", value);
-  // console.log("selectedvalues", selectedTags);
-  // console.log("tag array", tagNames);
+  console.log("value", value);
 
   const filter = createFilterOptions();
 
@@ -175,7 +112,7 @@ const AddTag = () => {
     <>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box className={open ? "action" : "my-icon"}>
-          {/* <Box className="my-icon"> */}
+          {/* <Box onClick={handleclick}> */}
           <Box
             component="img"
             onClick={handleClick}
@@ -183,6 +120,7 @@ const AddTag = () => {
             alt="tag"
             className={classes.actionIcons}
           />
+          {/* </Box> */}
         </Box>
         <Popover
           open={open}
@@ -214,132 +152,140 @@ const AddTag = () => {
           >
             <Autocomplete
               multiple
-              value={value}
-              // value={selectedTags}
-              // onChange={(event, newValue) => {
-              //   handleAddValue(newValue);
-              // }}
+              id="fixed-tags-demo"
+              freeSolo
+              value={value && value}
               onChange={(event, newValue) => {
+                console.log("newvalue", newValue);
                 setValue([
-                  ...fixedOptions,
-                  ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
+                  // ...fixedOptions,
+                  // ...newValue.filter(
+                  //   (option) => fixedOptions.indexOf(option) === -1
+                  // ),
+                  ...newValue
                 ]);
+                // setValue(...fixedOptions, ...newValue)
+                // console.log("onchaneg value", value);
               }}
+              filterOptions={(options, params) => {
+                const filtered = filter(options, params);
         
-              // filterOptions={(options, params) => {
-              //   const filtered = filter(options, params);
-
-              //   const { inputValue } = params;
-              //   // const {id} = tagdata.some((option)=> option.id)
-              //   const isExisting = options.some(
-              //     (option) => inputValue === option.tag
-              //   );
-              //   if (inputValue !== "" && !isExisting) {
-              //     filtered.push({
-              //       inputValue,
-              //       // id,
-              //       tag: `Add "${inputValue}"`,
-              //     });
-              //   }
-
-              //   return filtered;
-              // }}
+                const { inputValue } = params;
+                // Suggest the creation of a new value
+                const isExisting = options.some((option) => inputValue === option.tag);
+                if (inputValue !== '' && !isExisting) {
+                  filtered.push({
+                    inputValue,
+                    tag: `Add "${inputValue}"`,
+                  });
+                }
+        
+                return filtered;
+              }}
               selectOnFocus
               clearOnBlur
               // handleHomeEndKeys
               disableCloseOnSelect
-              id="free-solo-with-text-demo"
               options={tagdata}
               getOptionLabel={(option) => option.tag}
-              // getOptionLabel={(option) => {
-              //   // Value selected with enter, right from the input
-              //   if (typeof option === "string") {
-              //     return option;
-              //   }
-              //   // Add "xxx" option created dynamically
-              //   if (option.inputValue) {
-              //     return option.inputValue;
-              //   }
-              //   // Regular option
-              //   return option.tag;
-              // }}
-              // renderOption={(props, option) => (
+              // renderOption={(props, option, { selected }) => (
               //   <li {...props}>
-              //     <>
-              //       <Checkbox
-              //         checked={value.some((val) => {
-              //           if (val.tag.startsWith('Add "')) {
-              //             const extractedTag = val.tag.match(/^Add "(.*?)"$/);
-              //             if (extractedTag) {
-              //               return extractedTag[1] === option.tag;
-              //             }
-              //           }
-              //           return val.tag === option.tag;
-              //         })}
-              //         onChange={() => {
-              //           // Handle checking/unchecking a regular tag here
-              //           const isChecked = value.some((val) => {
-              //             if (val.tag.startsWith('Add "')) {
-              //               const extractedTag = val.tag.match(/^Add "(.*?)"$/);
-              //               if (extractedTag) {
-              //                 return extractedTag[1] === option.tag;
-              //               }
-              //             }
-              //             return val.tag === option.tag;
-              //           });
-
-              //           if (isChecked) {
-              //             // Uncheck the tag
-              //             const newValue = value.filter((val) => {
-              //               if (val.tag.startsWith('Add "')) {
-              //                 const extractedTag =
-              //                   val.tag.match(/^Add "(.*?)"$/);
-              //                 if (extractedTag) {
-              //                   return extractedTag[1] !== option.tag;
-              //                 }
-              //               }
-              //               return val.tag !== option.tag;
-              //             });
-              //             setValue(newValue);
-              //           } else {
-              //             // Check the tag
-              //             const newValue = [
-              //               ...value,
-              //               {
-              //                 id: Math.random().toString(36).substr(2, 9),
-              //                 tag: option.tag,
-              //               },
-              //             ];
-              //             setValue(newValue);
-              //           }
-              //         }}
-              //       />
-              //       {option.tag}
-              //     </>
+              //     <Checkbox
+              //       style={{ marginRight: 8 }}
+              //       checked={selected}
+              //     />
+              //     {option.tag}
               //   </li>
               // )}
-              sx={{
-                width: {
-                  xxl: "13vw",
-                  xl: "12vw",
-                  lg: "14vw",
-                  md: "13.5vw",
-                  sm: " 13vh",
-                  xs: "15vh",
-                },
-              }}
-              renderTags={(tagValue, getTagProps) =>
-                tagValue.map((option, index) => (
-                  <Chip
-                    label={option.tag}
-                    {...getTagProps({ index })}
-                    disabled={fixedOptions.indexOf(option) !== -1}
-                  />
-                ))
-              }
-              freeSolo
+              renderOption={(props, option) => (
+                <li {...props}>
+                  {option.inputValue ? (
+                    <>
+                    <Box sx={{display:"flex", justifyContent:"center", width:"100%"}}>
+                      {/* <Checkbox
+                        checked={value.some((val) => val.tag === option.inputValue)}
+                        onChange={() => {
+                          // Handle unchecking a created tag here
+                          const newValue = value.filter((val) => val.tag !== option.inputValue);
+                          setValue(newValue);
+                        }}
+                      /> */}
+                      <AddIcon />
+                      Add "{option.inputValue}"
+                      </Box>
+                    </>
+                  ) : (
+                  <>
+                    <Checkbox
+                      checked={value.some((val) => {
+                        if (val.tag.startsWith('Add "')) {
+                          const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+                          if (extractedTag) {
+                            return extractedTag[1] === option.tag;
+                          }
+                        }
+                        return val.tag === option.tag;
+                      })}
+                      onChange={() => {
+                        // Handle checking/unchecking a regular tag here
+                        const isChecked = value.some((val) => {
+                          if (val.tag.startsWith('Add "')) {
+                            const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+                            if (extractedTag) {
+                              return extractedTag[1] === option.tag;
+                            }
+                          }
+                          return val.tag === option.tag;
+                        });
+
+                        if (isChecked) {
+                          // Uncheck the tag
+                          const newValue = value.filter((val) => {
+                            if (val.tag.startsWith('Add "')) {
+                              const extractedTag =
+                                val.tag.match(/^Add "(.*?)"$/);
+                              if (extractedTag) {
+                                return extractedTag[1] !== option.tag;
+                              }
+                            }
+                            return val.tag !== option.tag;
+                          });
+                          setValue(newValue);
+                        } else {
+                          // Check the tag
+                          const newValue = [
+                            ...value,
+                            {
+                              id: Math.random().toString(36).substr(2, 9),
+                              tag: option.tag,
+                            },
+                          ];
+                          setValue(newValue);
+                        }
+                      }}
+                    />
+                    {option.tag}
+                  </>
+                   )} 
+                </li>
+              )}
+              // renderTags={(tagValue, getTagProps) =>
+              //   tagValue.map((option, index) => (
+              //     <Chip
+              //       label={option.tag}
+              //       {...getTagProps({ index })}
+              //       // disabled={fixedOptions.indexOf(option) !== -1}
+              //     />
+              //   ))
+              // }
+              style={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} placeholder="Search Tags" size="small" />
+                <TextField
+                  {...params}
+                  // label="Fixed tag"
+                  placeholder="tags"
+                  size="small"
+                />
               )}
             />
           </Box>
@@ -478,3 +424,90 @@ const top100Films = [
   { title: "3 Idiots", year: 2009 },
   { title: "Monty Python and the Holy Grail", year: 1975 },
 ];
+
+// const tagdata=[
+//   {
+//     "id": "6ryyhb11v",
+//     "tag": "alert"
+//   },
+//   {
+//     "id": "x2zvfew3g",
+//     "tag": "pending"
+//   },
+//   {
+//     "id": "go4lcxut4",
+//     "tag": "success"
+//   },
+//   {
+//     "id": "3lzdwijwg",
+//     "tag": "failed"
+//   },
+//   {
+//     "id": "8b037z8nb",
+//     "tag": "krinal"
+//   },
+//   {
+//     "id": "mt5e30df8",
+//     "tag": "prince"
+//   },
+//   {
+//     "id": "9vim3z0ib",
+//     "tag": "ruttu"
+//   },
+//   {
+//     "id": "xdrgcmlww",
+//     "tag": "renuka"
+//   },
+//   {
+//     "id": "2m9tjoaix",
+//     "tag": "unnat"
+//   },
+//   {
+//     "id": "t9m61g1kg",
+//     "tag": "khyati"
+//   },
+//   {
+//     "id": "y28fc7usc",
+//     "tag": "tulsi"
+//   },
+//   {
+//     "id": "l8mccu0x1",
+//     "tag": "hetakshi"
+//   },
+//   {
+//     "id": "ebba5rm0t",
+//     "tag": "hello"
+//   },
+//   {
+//     "id": "27pma6a7c",
+//     "tag": "poonam"
+//   },
+//   {
+//     "id": "kdud4vluk",
+//     "tag": "bhavesh"
+//   },
+//   {
+//     "id": "l1mn8zd4n",
+//     "tag": "JAGDISH"
+//   },
+//   {
+//     "id": "3mso0opon",
+//     "tag": "chirag_kamani"
+//   },
+//   {
+//     "id": "g46oqu57v",
+//     "tag": "shyam"
+//   },
+//   {
+//     "id": "09md2l1af",
+//     "tag": "dev"
+//   },
+//   {
+//     "id": "zty6ajlil",
+//     "tag": "ajay"
+//   },
+//   {
+//     "id": "ojf3676rz",
+//     "tag": "miten"
+//   }
+// ]

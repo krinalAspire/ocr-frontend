@@ -28,11 +28,11 @@ const TagsButton = () => {
   const [loggedTags, setLoggedTags] = useState([]);
   // const [selectedTags, setSelectedTags] = useState([]);
   const [tagNames, setTagNames] = useState([]);
-  const fixedOptions = [top100Films[6]];
-  const [tesvalue, settesValue] = useState([
-    ...fixedOptions,
-    top100Films[13],
-  ]);
+  // const fixedOptions = [top100Films[6]];
+  // const [tesvalue, settesValue] = useState([
+  //   ...fixedOptions,
+  //   top100Films[13],
+  // ]);
   // const [filterapi, setfilterapi] = useState(false);
   // const [options, setOptions] = React.useState(tagdata);
 
@@ -192,6 +192,8 @@ const TagsButton = () => {
     }
   }, [value]);
 
+  // console.log("loggedvalues", loggedTags);
+
   useEffect(() => {
     if (tagNames.length > 0) {
       console.log(`Fire filter api - ${new Date().toLocaleTimeString()}`);
@@ -302,7 +304,7 @@ const TagsButton = () => {
       )}
     /> */}
 
-      <Autocomplete
+      {/* <Autocomplete
         multiple
         id="fixed-tags-demo"
         value={tesvalue}
@@ -323,11 +325,11 @@ const TagsButton = () => {
             />
           ))
         }
-        style={{ width: 500 }}
+        style={{ width: 200 }}
         renderInput={(params) => (
           <TextField {...params} label="Fixed tag" placeholder="Favorites" />
         )}
-      />
+      /> */}
 
       <Box>
         <Button onClick={handleClick} className={classes.TagButton}>
@@ -502,19 +504,22 @@ const TagsButton = () => {
 
               renderOption={(props, option) => (
                 <li {...props}>
-                  {/* {option.inputValue ? (
+                  {option.inputValue ? (
                     <>
-                      <Checkbox
+                    <Box sx={{display:"flex", justifyContent:"center", width:"100%"}}>
+                      {/* <Checkbox
                         checked={value.some((val) => val.tag === option.inputValue)}
                         onChange={() => {
                           // Handle unchecking a created tag here
                           const newValue = value.filter((val) => val.tag !== option.inputValue);
                           setValue(newValue);
                         }}
-                      />
+                      /> */}
+                      <AddIcon />
                       Add "{option.inputValue}"
+                      </Box>
                     </>
-                  ) : ( */}
+                  ) : (
                   <>
                     <Checkbox
                       checked={value.some((val) => {
@@ -566,7 +571,7 @@ const TagsButton = () => {
                     />
                     {option.tag}
                   </>
-                  {/* )} */}
+                   )} 
                 </li>
               )}
               // renderOption={(props, option) => (
@@ -1023,3 +1028,5 @@ const top100Films = [
   { title: "3 Idiots", year: 2009 },
   { title: "Monty Python and the Holy Grail", year: 1975 },
 ];
+
+

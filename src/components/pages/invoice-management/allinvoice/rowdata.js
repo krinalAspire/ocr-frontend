@@ -1,6 +1,6 @@
 export const rowdata=[
     {
-        // "id": 1,
+        "id": 1,
         "documentName": "Document 1",
         "status": "failed",
         "uploaded": "2023-07-31",
@@ -9,40 +9,40 @@ export const rowdata=[
         // "tags": "Tag1"
       },
       {
-        // "id": 2,
+        "id": 2,
         "documentName": "Document 2",
         "status": "pending",
         "uploaded": "2023-07-30",
         "validated": "Yes",
         "exported": "Yes",
-        "tags": "alert"
+        "tag": "alert"
       },
       {
-        // "id": 3,
+        "id": 3,
         "documentName": "Document 3",
         "status": "success",
         "uploaded": "2023-07-29",
         "validated": "No",
         "exported": "Yes",
-        "tags": "Pending"
+        "tag": "Pending"
       },
       {
-        // "id": 3,
+        "id": 4,
         "documentName": "Document 3",
         "status": "success",
         "uploaded": "2023-07-29",
         "validated": "No",
         "exported": "Yes",
-        "tags": "Success"
+        "tag": "Success"
       },
       {
-        // "id": 3,
+        "id": 5,
         "documentName": "Document 3",
         "status": "success",
         "uploaded": "2023-07-29",
         "validated": "No",
         "exported": "Yes",
-        "tags": "Tagdsfhjshdjsg"
+        "tag": "Tagdsfhjshdjsg"
       }
 ]
 

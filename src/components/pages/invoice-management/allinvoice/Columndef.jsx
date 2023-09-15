@@ -138,7 +138,23 @@ export const TagRow = (params) => {
   );
 };
 
-const IconRenderer = (props) => <Action />;
+
+const IconRenderer = (params) => {
+  const [id, setID]= useState(null)
+  // console.log('HOVERID',params?.data?.id);
+  const handleclick = () => {
+    // console.log(id);
+    const id= params?.data?.id
+    setID(id)
+    // return id;
+  };
+
+  return (
+    <Box onClick={handleclick}>
+      <Action id={id} handleclick={handleclick}/>
+    </Box>
+  );
+}; 
 
 export const columnData = [
   // {
@@ -191,7 +207,7 @@ export const columnData = [
   },
   {
     headerName: "Tags",
-    field: "tags",
+    field: "tag",
     minWidth: 100,
     headerComponent: responsiveHeader,
     cellRenderer: TagRow,

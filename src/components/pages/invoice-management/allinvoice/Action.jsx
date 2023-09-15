@@ -17,17 +17,18 @@ import axios from "axios";
 import TagsButton from "../invoice-tabs/TagsButton";
 import AddTag from "./AddTag";
 
-function Action() {
+function Action({id, handleclick}) {
   const [hover, sethover]=useState(false);
 
   const handleClick=()=>{
     sethover(true);
   }
+  // console.log("action", id);
 
   return (
     <>
       <Box sx={{display:"flex", alignItems:"center"}}>
-        <AddTag />
+        <AddTag id={id} handleclick={handleclick}/>
         {/* <Box className={hover ? "action" : "my-icon"}> */}
         <Box className="my-icon">
         <Box
