@@ -42,7 +42,7 @@ export const rowdata=[
         "uploaded": "2023-07-29",
         "validated": "No",
         "exported": "Yes",
-        "tag": "Tagdsfhjshdjsg"
+        "tag": "prince"
       }
 ]
 

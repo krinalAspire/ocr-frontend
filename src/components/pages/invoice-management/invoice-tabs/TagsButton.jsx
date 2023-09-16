@@ -187,6 +187,7 @@ const TagsButton = () => {
           setLoggedTags((prevLoggedTags) => [...prevLoggedTags, item.tag]);
           getTagdata(tag);
           getTagfromAPi();
+          // setAnchorEl(null)
         }
       }
     }
@@ -506,8 +507,14 @@ const TagsButton = () => {
                 <li {...props}>
                   {option.inputValue ? (
                     <>
-                    <Box sx={{display:"flex", justifyContent:"center", width:"100%"}}>
-                      {/* <Checkbox
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          width: "100%",
+                        }}
+                      >
+                        {/* <Checkbox
                         checked={value.some((val) => val.tag === option.inputValue)}
                         onChange={() => {
                           // Handle unchecking a created tag here
@@ -515,25 +522,35 @@ const TagsButton = () => {
                           setValue(newValue);
                         }}
                       /> */}
-                      <AddIcon />
-                      Add "{option.inputValue}"
+                        <AddIcon
+                          sx={{
+                            width: {
+                              xs: "10px",
+                              sm: "12px",
+                              md: "14px",
+                              lg: "16px",
+                              xl: "18px",
+                              xxl: "20px",
+                            },
+                            height: {
+                              xs: "10px",
+                              sm: "12px",
+                              md: "14px",
+                              lg: "16px",
+                              xl: "18px",
+                              xxl: "20px",
+                            },
+                            marginRight:"8px"
+                          }}
+                        />
+                        Add "{option.inputValue}"
                       </Box>
                     </>
                   ) : (
-                  <>
-                    <Checkbox
-                      checked={value.some((val) => {
-                        if (val.tag.startsWith('Add "')) {
-                          const extractedTag = val.tag.match(/^Add "(.*?)"$/);
-                          if (extractedTag) {
-                            return extractedTag[1] === option.tag;
-                          }
-                        }
-                        return val.tag === option.tag;
-                      })}
-                      onChange={() => {
-                        // Handle checking/unchecking a regular tag here
-                        const isChecked = value.some((val) => {
+                    <>
+                      <Checkbox
+                        // label={option.tag}
+                        checked={value.some((val) => {
                           if (val.tag.startsWith('Add "')) {
                             const extractedTag = val.tag.match(/^Add "(.*?)"$/);
                             if (extractedTag) {
@@ -541,37 +558,49 @@ const TagsButton = () => {
                             }
                           }
                           return val.tag === option.tag;
-                        });
-
-                        if (isChecked) {
-                          // Uncheck the tag
-                          const newValue = value.filter((val) => {
+                        })}
+                        onChange={() => {
+                          // Handle checking/unchecking a regular tag here
+                          const isChecked = value.some((val) => {
                             if (val.tag.startsWith('Add "')) {
                               const extractedTag =
                                 val.tag.match(/^Add "(.*?)"$/);
                               if (extractedTag) {
-                                return extractedTag[1] !== option.tag;
+                                return extractedTag[1] === option.tag;
                               }
                             }
-                            return val.tag !== option.tag;
+                            return val.tag === option.tag;
                           });
-                          setValue(newValue);
-                        } else {
-                          // Check the tag
-                          const newValue = [
-                            ...value,
-                            {
-                              id: Math.random().toString(36).substr(2, 9),
-                              tag: option.tag,
-                            },
-                          ];
-                          setValue(newValue);
-                        }
-                      }}
-                    />
-                    {option.tag}
-                  </>
-                   )} 
+
+                          if (isChecked) {
+                            // Uncheck the tag
+                            const newValue = value.filter((val) => {
+                              if (val.tag.startsWith('Add "')) {
+                                const extractedTag =
+                                  val.tag.match(/^Add "(.*?)"$/);
+                                if (extractedTag) {
+                                  return extractedTag[1] !== option.tag;
+                                }
+                              }
+                              return val.tag !== option.tag;
+                            });
+                            setValue(newValue);
+                          } else {
+                            // Check the tag
+                            const newValue = [
+                              ...value,
+                              {
+                                // id: Math.random().toString(36).substr(2, 9),
+                                tag: option.tag,
+                              },
+                            ];
+                            setValue(newValue);
+                          }
+                        }}
+                      />
+                      {option.tag}
+                    </>
+                  )}
                 </li>
               )}
               // renderOption={(props, option) => (
@@ -1028,5 +1057,3 @@ const top100Films = [
   { title: "3 Idiots", year: 2009 },
   { title: "Monty Python and the Holy Grail", year: 1975 },
 ];
-
-
