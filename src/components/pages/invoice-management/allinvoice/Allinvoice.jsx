@@ -12,6 +12,8 @@ import {
   List,
   ListItem,
   ListItemText,
+  Menu,
+  MenuItem,
   Popover,
   Typography,
 } from "@mui/material";
@@ -42,89 +44,263 @@ function Allinvoice() {
     }, {})
   );
 
+  // function ColumnSelection() {
+  //   const [anchorEl, setAnchorEl] = useState(null);
+
+  //   const handleClick = (event) => {
+  //     setAnchorEl(event.currentTarget);
+  //   };
+
+  //   const handleClose = () => {
+  //     console.log("handleclose of popover");
+  //     setAnchorEl(null);
+  //   };
+
+  //   const open = Boolean(anchorEl);
+  //   const id = open ? "simple-popover" : undefined;
+  //   return (
+  //     <>
+  //       <Box>
+  //         <Box className={classes.HeaderMoreVertIcon}>
+  //           <MoreVertIcon
+  //             sx={{
+  //               color: lightPalette.color134.main,
+  //             }}
+  //             onClick={handleClick}
+  //           />
+  //         </Box>
+  //         <Popover
+  //           id={id}
+  //           open={open}
+  //           anchorEl={anchorEl}
+  //           onClose={handleClose}
+  //           anchorOrigin={{
+  //             vertical: "bottom",
+  //             horizontal: "right",
+  //           }}
+  //           transformOrigin={{
+  //             vertical: "top",
+  //             horizontal: "right",
+  //           }}
+  //         >
+  //           <List
+  //             sx={{
+  //               width: {
+  //                 xxl: "10vw",
+  //                 xl: "12vw",
+  //                 lg: "11vw",
+  //                 md: "12vw",
+  //                 sm: "11.5vh",
+  //                 xs: "13vw",
+  //               },
+  //             }}
+  //           >
+  //             {columnDefs.map((column) =>
+  //               column.field !== " " ? (
+  //                 <ListItem key={column.field} disablePadding>
+  //                   <Checkbox
+  //                     checked={selectedColumns[column.field] || false}
+  //                     onChange={(e) =>
+  //                       handleCheckboxChange(column.field, e.target.checked)
+  //                     }
+  //                   />
+  //                   <ListItemText primary={column.headerName} />
+  //                 </ListItem>
+  //               ) : null
+  //             )}
+  //           </List>
+  //         </Popover>
+  //       </Box>
+  //     </>
+  //   );
+  // }
+
   function ColumnSelection() {
     const [anchorEl, setAnchorEl] = useState(null);
-
+    const initialSelectedColumns = Object.fromEntries(
+      columnDefs
+        .filter((column) => column.field !== " ")
+        .map((column) => [column.field, true]) // Set all columns to initially checked
+    );
+    const [selectedColumns, setSelectedColumns] = useState(initialSelectedColumns);
+    // const [selectedColumns, setSelectedColumns] = useState({});
+    // const columnDefs = [/* Your column definitions here */];
+  
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
-
+  
     const handleClose = () => {
       setAnchorEl(null);
     };
-
-    const open = Boolean(anchorEl);
-    const id = open ? "simple-popover" : undefined;
+  
+    const handleCheckboxChange = (columnName, isChecked) => {
+      setSelectedColumns((prevSelectedColumns) => ({
+        ...prevSelectedColumns,
+        [columnName]: isChecked,
+      }));
+      console.log("selectedColumns", selectedColumns);
+      
+      if (columnApi) {
+        columnApi.setColumnVisible(columnName, isChecked);
+        // gridApi.refreshHeader();
+        // console.log("column",columnApi.setColumnVisible(columnName, isChecked));
+        console.log(`Column '${columnName}' visibility set to ${isChecked}`);
+      }
+    };
+  
     return (
-      <>
-        <Box>
-          <Box className={classes.HeaderMoreVertIcon}>
-            <MoreVertIcon
-              sx={{
-                color: lightPalette.color134.main,
-              }}
-              onClick={handleClick}
+      <Box>
+        <MoreVertIcon onClick={handleClick} />
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {/* {columnDefs.map((column) =>
+            column.field !== " " ? (
+              <MenuItem key={column.field}>
+                <Checkbox
+                  checked={selectedColumns[column.field] || false}
+                  onChange={(e) =>
+                    handleCheckboxChange(column.field, e.target.checked)
+                  }
+                />
+                <ListItemText primary={column.headerName} />
+              </MenuItem>
+            ) : null
+          )} */}
+           {columnDefs.map((column) => (
+            column.field !== " " ? ( 
+          <MenuItem key={column.field}>
+            <Checkbox
+              checked={selectedColumns[column.field] || false}
+              onChange={(e) =>
+                handleCheckboxChange(column.field, e.target.checked)
+              }
             />
-          </Box>
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-          >
-            <List
-              sx={{
-                width: {
-                  xxl: "10vw",
-                  xl: "12vw",
-                  lg: "11vw",
-                  md: "12vw",
-                  sm: "11.5vh",
-                  xs: "13vw",
-                },
-              }}
-            >
-              {columnDefs.map((column) =>
-                column.field !== " " ? (
-                  <ListItem key={column.field} disablePadding>
-                    <Checkbox
-                      checked={selectedColumns[column.field] || false}
-                      onChange={(e) =>
-                        handleCheckboxChange(column.field, e.target.checked)
-                      }
-                    />
-                    <ListItemText primary={column.headerName} />
-                  </ListItem>
-                ) : null
-              )}
-            </List>
-          </Popover>
-        </Box>
-      </>
+            <ListItemText primary={column.headerName} />
+          </MenuItem>
+            ) : null  
+        ))}
+        </Menu>
+
+        {/* {columnDefs.map((option) => (
+          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
+            {option}
+          </MenuItem>
+        ))} */}
+      </Box>
     );
   }
+  
 
-  const handleCheckboxChange = (columnName, isChecked) => {
-    setSelectedColumns((prevSelectedColumns) => ({
-      ...prevSelectedColumns,
-      [columnName]: isChecked,
-    }));
-    console.log("selectedColumns", selectedColumns);
+  //    const ColumnSelection = () => {
+  //   const [anchorEl, setAnchorEl] = useState(null);
+  //   const [selectedColumns, setSelectedColumns] = useState({});
 
-    if (columnApi) {
-      columnApi.setColumnVisible(columnName, isChecked);
-      // console.log("column",columnApi.setColumnVisible(columnName, isChecked));
-      console.log(`Column '${columnName}' visibility set to ${isChecked}`);
-    }
-  };
+  //   const handleClick = (event) => {
+  //     setAnchorEl(event.currentTarget);
+  //   };
+
+  //   const handleClose = () => {
+  //     setAnchorEl(null);
+  //   };
+
+  //   // const handleCheckboxChange = (columnField, isChecked) => {
+  //   //   setSelectedColumns((prevSelectedColumns) => ({
+  //   //     ...prevSelectedColumns,
+  //   //     [columnField]: isChecked,
+  //   //   }));
+
+  //   //   console.log("selectedColumns", selectedColumns);
+
+  //   //   if (columnApi) {
+  //   //     columnApi.setColumnVisible(columnField, isChecked);
+  //   //     // console.log("column",columnApi.setColumnVisible(columnName, isChecked));
+  //   //     console.log(`Column '${columnField}' visibility set to ${isChecked}`);
+  //   //   }
+  //   // };
+
+  //   const open = Boolean(anchorEl);
+  //   const id = open ? 'simple-popover' : undefined;
+
+  //   useEffect(() => {
+  //     const initialSelected = {};
+  //     columnData.forEach((column) => {
+  //       // Check if the column is initially visible, and set its checkbox accordingly
+  //       initialSelected[column.field] = true; // You can adjust this condition
+  //     });
+  //     setSelectedColumns(initialSelected);
+  //   }, []);
+
+  //   // const columnData = [
+  //   //   { field: 'column1', headerName: 'Column 1' },
+  //   //   { field: 'column2', headerName: 'Column 2' },
+  //   //   { field: 'column3', headerName: 'Column 3' },
+  //   //   // Add your column data here
+  //   // ];
+
+  //   return (
+  //     <>
+  //       <Box>
+  //         <Box>
+  //           <MoreVertIcon
+  //             // sx={{
+  //             //   color: 'blue',
+  //             // }}
+  //             onClick={handleClick}
+  //           />
+  //         </Box>
+  //         <Popover
+  //           id={id}
+  //           open={open}
+  //           anchorEl={anchorEl}
+  //           onClose={handleClose}
+  //           anchorOrigin={{
+  //             vertical: 'bottom',
+  //             horizontal: 'right',
+  //           }}
+  //           transformOrigin={{
+  //             vertical: 'top',
+  //             horizontal: 'right',
+  //           }}
+  //         >
+  //           <List>
+  //             {columnData.map((column) => (
+  //               <ListItem key={column.field} disablePadding>
+  //                 <Checkbox
+  //                   checked={selectedColumns[column.field] || false}
+  //                   onChange={(e) =>
+  //                     handleCheckboxChange(column.field, e.target.checked)
+  //                   }
+  //                 />
+  //                 <ListItemText primary={column.headerName} />
+  //               </ListItem>
+  //             ))}
+  //           </List>
+  //         </Popover>
+  //       </Box>
+  //     </>
+  //   );
+  // };
+
+
+
+  // const handleCheckboxChange = (columnName, isChecked) => {
+  //   console.log("handlecheckbox called");
+  //   setSelectedColumns((prevSelectedColumns) => ({
+  //     ...prevSelectedColumns,
+  //     [columnName]: isChecked,
+  //   }));
+  //   console.log("selectedColumns", selectedColumns);
+
+  //   if (columnApi) {
+  //     columnApi.setColumnVisible(columnName, isChecked);
+  //     // console.log("column",columnApi.setColumnVisible(columnName, isChecked));
+  //     console.log(`Column '${columnName}' visibility set to ${isChecked}`);
+  //   }
+  // };
 
   function onSelectionChanged() {
     const selectedNodes = gridOptions.api.getSelectedNodes();

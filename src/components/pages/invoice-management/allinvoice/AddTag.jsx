@@ -71,7 +71,8 @@ const AddTag = ({ id, handleclick }) => {
           // setfixedOptions(tagsForSpecificDocument.map(({ tag, id }) => ({ tag, id })));
 
           if (
-            extractedData.length > 0 && !extractedData.some((tag) => tag.tag === undefined)
+            extractedData.length > 0 &&
+            !extractedData.some((tag) => tag.tag === undefined)
           ) {
             // Set the 'value' state only if 'extractedData' is not empty
             setValue(extractedData);
@@ -118,51 +119,58 @@ const AddTag = ({ id, handleclick }) => {
   };
   // const open = Boolean(anchorEl);
 
+  useEffect(() => {
+     if(tagNames.length > 0){
+      console.log(`Associate the New Tag - ${new Date().toLocaleTimeString()}`);
+     }
+  },[tagNames]);
+
   // console.log("tagdata", tagdata);
   // console.log("value", value);
+  // console.log("tagNames", tagNames);
 
-  const handleAddValue = (newValue) => {
-    if (newValue && newValue.inputValue) {
-      const inputValue = newValue.inputValue.toLowerCase();
-      if (inputValue === "add tag") {
-        // Handle the creation of a new tag here
-        console.log("Creating a new tag:", inputValue);
-        // handleOptionCreate(newValue.inputValue);
-        const newTag = {
-          inputValue: `Add "${inputValue}"`,
-          tag: inputValue,
-        };
-        // // Update the selected tags
-        // setSelectedTags([...selectedTags, newTag]);
-        // setValue([
-        //   ...value,
-        //   { id: Math.random().toString(36).substr(2, 9), tag: inputValue },
-        // ]);
-        setTagNames((prevTagNames) => [...prevTagNames, inputValue]);
-        // setTagNames([...tagNames, inputValue]);
-      } else {
-        // Set the selected option when it's not "Add tag"
-        setValue(...newValue);
-      }
-    } else {
-      // Set the selected option when newValue is not an object with inputValue
-      setValue(...newValue);
+  // const handleAddValue = (newValue) => {
+  //   if (newValue && newValue.inputValue) {
+  //     const inputValue = newValue.inputValue.toLowerCase();
+  //     if (inputValue === "add tag") {
+  //       // Handle the creation of a new tag here
+  //       console.log("Creating a new tag:", inputValue);
+  //       // handleOptionCreate(newValue.inputValue);
+  //       const newTag = {
+  //         inputValue: `Add "${inputValue}"`,
+  //         tag: inputValue,
+  //       };
+  //       // // Update the selected tags
+  //       // setSelectedTags([...selectedTags, newTag]);
+  //       // setValue([
+  //       //   ...value,
+  //       //   { id: Math.random().toString(36).substr(2, 9), tag: inputValue },
+  //       // ]);
+  //       setTagNames((prevTagNames) => [...prevTagNames, inputValue]);
+  //       // setTagNames([...tagNames, inputValue]);
+  //     } else {
+  //       // Set the selected option when it's not "Add tag"
+  //       setValue(...newValue);
+  //     }
+  //   } else {
+  //     // Set the selected option when newValue is not an object with inputValue
+  //     setValue(...newValue);
 
-      const newTagNames = newValue.map((item) => {
-        if (item.tag && item.tag.startsWith('Add "')) {
-          // Extract the tag name from the format "Add 'tagname'"
-          return item.tag.slice(5, -1); // Remove "Add " and the trailing double quote
-        } else if (item.tag) {
-          return item.tag; // Return the tag name if it's not in the "Add" format
-        } else {
-          return ""; // Return an empty string for other cases
-        }
-      });
+  //     const newTagNames = newValue.map((item) => {
+  //       if (item.tag && item.tag.startsWith('Add "')) {
+  //         // Extract the tag name from the format "Add 'tagname'"
+  //         return item.tag.slice(5, -1); // Remove "Add " and the trailing double quote
+  //       } else if (item.tag) {
+  //         return item.tag; // Return the tag name if it's not in the "Add" format
+  //       } else {
+  //         return ""; // Return an empty string for other cases
+  //       }
+  //     });
 
-      setTagNames(...newTagNames);
-      // setTagNames( newValue.map((item) => item.tag));
-    }
-  };
+  //     setTagNames(...newTagNames);
+  //     // setTagNames( newValue.map((item) => item.tag));
+  //   }
+  // };
 
   const filter = createFilterOptions();
 
@@ -217,7 +225,7 @@ const AddTag = ({ id, handleclick }) => {
               //   handleAddValue(newValue);
               // }}
               onChange={(event, newValue) => {
-                console.log("newvalue", newValue);
+                // console.log("newvalue", newValue);
                 // setValue([
                 //   // ...fixedOptions,
                 //   // ...newValue.filter(
@@ -237,6 +245,10 @@ const AddTag = ({ id, handleclick }) => {
                 setValue(sanitizedValue);
                 // setValue(...fixedOptions, ...newValue)
                 // console.log("onchaneg value", value);
+
+                // Extract tag names and update the tagNames state
+                const tagNamesArray = sanitizedValue.map((val) => val.tag);
+                setTagNames(tagNamesArray);
               }}
               filterOptions={(options, params) => {
                 const filtered = filter(options, params);
