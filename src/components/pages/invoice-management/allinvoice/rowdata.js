@@ -24,7 +24,7 @@ export const rowdata=[
         "uploaded": "2023-07-29",
         "validated": "No",
         "exported": "Yes",
-        "tag": "Pending"
+        "tag": "pending"
       },
       {
         "id": 4,
@@ -33,7 +33,7 @@ export const rowdata=[
         "uploaded": "2023-07-29",
         "validated": "No",
         "exported": "Yes",
-        "tag": "Success"
+        "tag": "success"
       },
       {
         "id": 5,

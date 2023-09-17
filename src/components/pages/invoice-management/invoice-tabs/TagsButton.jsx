@@ -11,6 +11,7 @@ import {
   ListItemText,
   ListItem,
   Chip,
+  FormControlLabel,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
@@ -540,7 +541,7 @@ const TagsButton = () => {
                               xl: "18px",
                               xxl: "20px",
                             },
-                            marginRight:"8px"
+                            marginRight: "8px",
                           }}
                         />
                         Add "{option.inputValue}"
@@ -599,6 +600,62 @@ const TagsButton = () => {
                         }}
                       />
                       {option.tag}
+
+                      {/* <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={value.some((val) => {
+                              if (val.tag.startsWith('Add "')) {
+                                const extractedTag =
+                                  val.tag.match(/^Add "(.*?)"$/);
+                                if (extractedTag) {
+                                  return extractedTag[1] === option.tag;
+                                }
+                              }
+                              return val.tag === option.tag;
+                            })}
+                            onChange={() => {
+                              // Handle checking/unchecking a regular tag here
+                              const isChecked = value.some((val) => {
+                                if (val.tag.startsWith('Add "')) {
+                                  const extractedTag =
+                                    val.tag.match(/^Add "(.*?)"$/);
+                                  if (extractedTag) {
+                                    return extractedTag[1] === option.tag;
+                                  }
+                                }
+                                return val.tag === option.tag;
+                              });
+
+                              if (isChecked) {
+                                // Uncheck the tag
+                                const newValue = value.filter((val) => {
+                                  if (val.tag.startsWith('Add "')) {
+                                    const extractedTag =
+                                      val.tag.match(/^Add "(.*?)"$/);
+                                    if (extractedTag) {
+                                      return extractedTag[1] !== option.tag;
+                                    }
+                                  }
+                                  return val.tag !== option.tag;
+                                });
+                                setValue(newValue);
+                              } else {
+                                // Check the tag
+                                const newValue = [
+                                  ...value,
+                                  {
+                                    // id: Math.random().toString(36).substr(2, 9),
+                                    tag: option.tag,
+                                  },
+                                ];
+                                setValue(newValue);
+                              }
+                            }}
+                          />
+                        }
+                        label={option.tag}
+                      /> */}
                     </>
                   )}
                 </li>

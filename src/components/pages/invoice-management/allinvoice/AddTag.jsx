@@ -19,12 +19,12 @@ import axios from "axios";
 import tag from "../../../../assets/allinvoice-assets/tag.svg";
 import { rowdata, tagOptions } from "./rowdata";
 
-const AddTag = ({id, handleclick}) => {
+const AddTag = ({ id, handleclick }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputValueAutocomplete, setInputValue] = useState("");
   const [tagdata, setTagdata] = useState([]);
   const [fixedOptions, setfixedOptions] = useState([]);
-  const [value, setValue] =  useState([]);
+  const [value, setValue] = useState([]);
   const [loggedTags, setLoggedTags] = useState([]);
   const [tagNames, setTagNames] = useState([]);
 
@@ -54,18 +54,25 @@ const AddTag = ({id, handleclick}) => {
 
         const specificDocumentId = id; // Change this to the desired document id
         // console.log("specificDocumentId",specificDocumentId );
-        const specificDocument = rowdata.find((doc) => doc.id === specificDocumentId);
+        const specificDocument = rowdata.find(
+          (doc) => doc.id === specificDocumentId
+        );
         // console.log('specificDocument', specificDocument);
-  
+
         if (specificDocument) {
           // Extract the tags associated with the specific document and set them as fixedOptions
           const tagsForSpecificDocument = [specificDocument]; // If you want it as an array
 
-          const extractedData = tagsForSpecificDocument.map(({ id, tag }) => ({ id, tag }));
-  
+          const extractedData = tagsForSpecificDocument.map(({ id, tag }) => ({
+            id,
+            tag,
+          }));
+
           // setfixedOptions(tagsForSpecificDocument.map(({ tag, id }) => ({ tag, id })));
 
-          if (extractedData.length > 0) {
+          if (
+            extractedData.length > 0 && !extractedData.some((tag) => tag.tag === undefined)
+          ) {
             // Set the 'value' state only if 'extractedData' is not empty
             setValue(extractedData);
           } else {
@@ -73,7 +80,7 @@ const AddTag = ({id, handleclick}) => {
             console.log("No valid tags found for this document.");
           }
 
-          console.log("tagsForSpecificDocument",extractedData);
+          console.log("tagsForSpecificDocument", extractedData);
           // console.log("tagsForSpecificDocument",tagsForSpecificDocument.id, tagsForSpecificDocument.tag);
         } else {
           console.log(`Document with id '${specificDocumentId}' not found.`);
@@ -90,7 +97,7 @@ const AddTag = ({id, handleclick}) => {
 
   useEffect(() => {
     // getTagfromAPi(id);
-    if(anchorEl !== null) {
+    if (anchorEl !== null) {
       getTagfromAPi(id);
     }
   }, [open]);
@@ -98,7 +105,7 @@ const AddTag = ({id, handleclick}) => {
   const handleClick = (event) => {
     // getTagfromAPi(id);
     // if(tagdata.length > 0){
-      setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget);
     // }
     // setAnchorEl(event.currentTarget);
     // handleclick();
@@ -211,29 +218,41 @@ const AddTag = ({id, handleclick}) => {
               // }}
               onChange={(event, newValue) => {
                 console.log("newvalue", newValue);
-                setValue([
-                  // ...fixedOptions,
-                  // ...newValue.filter(
-                  //   (option) => fixedOptions.indexOf(option) === -1
-                  // ),
-                  ...newValue
-                ]);
+                // setValue([
+                //   // ...fixedOptions,
+                //   // ...newValue.filter(
+                //   //   (option) => fixedOptions.indexOf(option) === -1
+                //   // ),
+                //   ...newValue,
+                // ]);
+                const sanitizedValue = newValue.map((val) => {
+                  if (val.tag.startsWith('Add "')) {
+                    const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+                    if (extractedTag) {
+                      return { tag: extractedTag[1] };
+                    }
+                  }
+                  return val;
+                });
+                setValue(sanitizedValue);
                 // setValue(...fixedOptions, ...newValue)
                 // console.log("onchaneg value", value);
               }}
               filterOptions={(options, params) => {
                 const filtered = filter(options, params);
-        
+
                 const { inputValue } = params;
                 // Suggest the creation of a new value
-                const isExisting = options.some((option) => inputValue === option.tag);
-                if (inputValue !== '' && !isExisting) {
+                const isExisting = options.some(
+                  (option) => inputValue === option.tag
+                );
+                if (inputValue !== "" && !isExisting) {
                   filtered.push({
                     inputValue,
                     tag: `Add "${inputValue}"`,
                   });
                 }
-        
+
                 return filtered;
               }}
               selectOnFocus
@@ -251,7 +270,7 @@ const AddTag = ({id, handleclick}) => {
               //     {option.tag}
               //   </li>
               // )}
-             
+
               renderOption={(props, option) => (
                 <li {...props}>
                   {option.inputValue ? (
@@ -289,7 +308,7 @@ const AddTag = ({id, handleclick}) => {
                               xl: "18px",
                               xxl: "20px",
                             },
-                            marginRight:"8px"
+                            marginRight: "8px",
                           }}
                         />
                         Add "{option.inputValue}"
