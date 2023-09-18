@@ -179,10 +179,11 @@ const AddTag = ({ id, handleclick }) => {
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box className={open ? "action" : "my-icon"}>
           {/* <Box onClick={handleclick}> */}
+          {/* <Box className="my-icon"> */}
           <Box
             component="img"
             onClick={handleClick}
-            src={tag}
+            src={tag} 
             alt="tag"
             className={classes.actionIcons}
           />

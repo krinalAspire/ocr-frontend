@@ -122,25 +122,27 @@ function Allinvoice() {
         .filter((column) => column.field !== " ")
         .map((column) => [column.field, true]) // Set all columns to initially checked
     );
-    const [selectedColumns, setSelectedColumns] = useState(initialSelectedColumns);
+    const [selectedColumns, setSelectedColumns] = useState(
+      initialSelectedColumns
+    );
     // const [selectedColumns, setSelectedColumns] = useState({});
     // const columnDefs = [/* Your column definitions here */];
-  
+
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
-  
+
     const handleClose = () => {
       setAnchorEl(null);
     };
-  
+
     const handleCheckboxChange = (columnName, isChecked) => {
       setSelectedColumns((prevSelectedColumns) => ({
         ...prevSelectedColumns,
         [columnName]: isChecked,
       }));
       console.log("selectedColumns", selectedColumns);
-      
+
       if (columnApi) {
         columnApi.setColumnVisible(columnName, isChecked);
         // gridApi.refreshHeader();
@@ -148,7 +150,7 @@ function Allinvoice() {
         console.log(`Column '${columnName}' visibility set to ${isChecked}`);
       }
     };
-  
+
     return (
       <Box>
         <MoreVertIcon onClick={handleClick} />
@@ -170,19 +172,25 @@ function Allinvoice() {
               </MenuItem>
             ) : null
           )} */}
-           {columnDefs.map((column) => (
-            column.field !== " " ? ( 
-          <MenuItem key={column.field}>
-            <Checkbox
-              checked={selectedColumns[column.field] || false}
-              onChange={(e) =>
-                handleCheckboxChange(column.field, e.target.checked)
-              }
-            />
-            <ListItemText primary={column.headerName} />
-          </MenuItem>
-            ) : null  
-        ))}
+          {columnDefs.map((column) =>
+            column.field !== " " ? (
+              <MenuItem
+                key={column.field}
+                sx={{
+                  // padding: "6px 16px", // Adjust the padding values as needed
+                  padding: "2px 16px 2px 6px", // Adjust the padding values as needed
+                }}
+              >
+                <Checkbox
+                  checked={selectedColumns[column.field] || false}
+                  onChange={(e) =>
+                    handleCheckboxChange(column.field, e.target.checked)
+                  }
+                />
+                <ListItemText primary={column.headerName} />
+              </MenuItem>
+            ) : null
+          )}
         </Menu>
 
         {/* {columnDefs.map((option) => (
@@ -193,7 +201,6 @@ function Allinvoice() {
       </Box>
     );
   }
-  
 
   //    const ColumnSelection = () => {
   //   const [anchorEl, setAnchorEl] = useState(null);
@@ -285,8 +292,6 @@ function Allinvoice() {
   //   );
   // };
 
-
-
   // const handleCheckboxChange = (columnName, isChecked) => {
   //   console.log("handlecheckbox called");
   //   setSelectedColumns((prevSelectedColumns) => ({
@@ -331,7 +336,14 @@ function Allinvoice() {
   const gridOptions = {
     rowHeight: 50,
     onSelectionChanged: onSelectionChanged,
-    // rowSelection: 'multiple',
+    rowSelection: "multiple",
+    suppressRowClickSelection: true,
+    // rowModelType: "infinite",
+    // paginationPageSize: 50, // Number of rows to load per page
+    // cacheBlockSize: 50, // Number of rows to load per chunk
+    // maxBlocksInCache: 10, // Maximum number of chunks to keep in memory
+    // domLayout: "autoHeight", // Automatically adjust the grid height
+    // infiniteInitialRowCount: 100,
   };
 
   // useEffect(() => {
@@ -395,21 +407,48 @@ function Allinvoice() {
       <Root className={classes.root}>
         <AddTag />
         {selectedRows.length > 0 && (
+          <Box
+            // className="selected-row-button-container"
+            sx={{ display: "flex", justifyContent: "flex-end" }}
+          >
             <Box
-              // className="selected-row-button-container"
-              sx={{ display: "flex", justifyContent: "flex-end" }}
+              sx={{
+                margin: "8px 15px",
+                p: 1,
+                display: "flex",
+                bgcolor: "background.paper",
+                boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.5)",
+                zIndex: 1000,
+                position: "absolute",
+              }}
             >
-              <Box sx={{ margin:"8px 15px", p:1, display:"flex", bgcolor: 'background.paper',boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.5)", zIndex:1000, position:"absolute"}}>
-                {/* <Box > */}
-                <Typography sx={{marginRight:"1vw"}}>{selectedRows.length} row selected</Typography>
-                {/* <Box component="img" src={tag} alt="tag" className={classes.actionIcons} /> */}
-                <AddTag />
-                <Box component="img" src={CheckCircle} alt="tag" className={classes.actionIcons} />
-                <Box component="img" src={upload} alt="tag" className={classes.actionIcons} />
-                <Box component="img" src={trash} alt="tag" className={classes.actionIcons} />
-              </Box>
+              {/* <Box > */}
+              <Typography sx={{ marginRight: "1vw" }}>
+                {selectedRows.length} row selected
+              </Typography>
+              {/* <Box component="img" src={tag} alt="tag" className={classes.actionIcons} /> */}
+              <AddTag />
+              <Box
+                component="img"
+                src={CheckCircle}
+                alt="tag"
+                className={classes.actionIcons}
+              />
+              <Box
+                component="img"
+                src={upload}
+                alt="tag"
+                className={classes.actionIcons}
+              />
+              <Box
+                component="img"
+                src={trash}
+                alt="tag"
+                className={classes.actionIcons}
+              />
             </Box>
-          )}
+          </Box>
+        )}
         <Box
           id="ag-grid-container"
           className="ag-theme-alpine"

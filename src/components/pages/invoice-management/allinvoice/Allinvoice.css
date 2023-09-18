@@ -37,10 +37,10 @@
   position: relative;
 }
 
-.ag-row-selected .selected{
+/* .ag-row-selected .my-icon{
   display: block;
   position: relative;
-}
+} */
 
 /* .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
   border: 0px;

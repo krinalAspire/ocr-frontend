@@ -43,6 +43,42 @@ export const rowdata=[
         "validated": "No",
         "exported": "Yes",
         "tag": "prince"
+      },
+      {
+        "id": 6,
+        "documentName": "Document 3",
+        "status": "success",
+        "uploaded": "2023-07-29",
+        "validated": "No",
+        "exported": "Yes",
+        "tag": "prince"
+      },
+      {
+        "id": 7,
+        "documentName": "Document 3",
+        "status": "success",
+        "uploaded": "2023-07-29",
+        "validated": "No",
+        "exported": "Yes",
+        "tag": "prince"
+      },
+      {
+        "id": 8,
+        "documentName": "Document 3",
+        "status": "success",
+        "uploaded": "2023-07-29",
+        "validated": "No",
+        "exported": "Yes",
+        "tag": "prince"
+      },
+      {
+        "id": 9,
+        "documentName": "Document 3",
+        "status": "success",
+        "uploaded": "2023-07-29",
+        "validated": "No",
+        "exported": "Yes",
+        "tag": "prince"
       }
 ]
 

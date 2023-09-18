@@ -50,6 +50,13 @@ function responsiveHeader(params) {
 
 const ResponsiveFontsize = (params) => {
   const value = params.value;
+  // const isSelected = params.node.isSelected(); 
+//   const iconHTML = isSelected
+//   ? '<i class="fa fa-check-circle"></i>' // Replace with your icon HTML
+//   : ''; // Leave it empty if the row is not selected
+
+// // Return the HTML content to render in the cell
+// return iconHTML;
 
   return (
     <Typography variant="body1" color={lightPalette.color134.main}>
