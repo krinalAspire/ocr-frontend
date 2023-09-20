@@ -284,7 +284,7 @@ const AddTag = ({ id, handleclick }) => {
               //   </li>
               // )}
 
-              renderOption={(props, option) => (
+              renderOption={(props, option, { selected }) => (
                 <li {...props}>
                   {option.inputValue ? (
                     <>
@@ -366,17 +366,18 @@ const AddTag = ({ id, handleclick }) => {
                               return val.tag !== option.tag;
                             });
                             setValue(newValue);
-                          } else {
-                            // Check the tag
-                            const newValue = [
-                              ...value,
-                              {
-                                // id: Math.random().toString(36).substr(2, 9),
-                                tag: option.tag,
-                              },
-                            ];
-                            setValue(newValue);
-                          }
+                          } 
+                          // else {
+                          //   // Check the tag
+                          //   const newValue = [
+                          //     ...value,
+                          //     {
+                          //       // id: Math.random().toString(36).substr(2, 9),
+                          //       tag: option.tag,
+                          //     },
+                          //   ];
+                          //   setValue(newValue);
+                          // }
                         }}
                       />
                       {option.tag}
@@ -384,6 +385,7 @@ const AddTag = ({ id, handleclick }) => {
                   )}
                 </li>
               )}
+
               // renderTags={(tagValue, getTagProps) =>
               //   tagValue.map((option, index) => (
               //     <Chip

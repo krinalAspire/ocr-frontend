@@ -9,6 +9,7 @@ import {
   Box,
   Button,
   Checkbox,
+  FormControlLabel,
   List,
   ListItem,
   ListItemText,
@@ -25,6 +26,7 @@ import CheckCircle from "../../../../assets/allinvoice-assets/check-circle.svg";
 import trash from "../../../../assets/allinvoice-assets/trash-2.svg";
 import upload from "../../../../assets/allinvoice-assets/upload.svg";
 import tag from "../../../../assets/allinvoice-assets/tag.svg";
+import axios from "axios";
 // import { lightPalette } from "../../../../theme";
 // import FourIcons from "./FourIcons";
 // import Navinvoice from "./NavInvoice";
@@ -32,6 +34,7 @@ import tag from "../../../../assets/allinvoice-assets/tag.svg";
 function Allinvoice() {
   // const [rowData, setRowData] = useState([]);
   const [rowData, setRowData] = useState(rowdata);
+  // const [rowData, setRowData] = useState([]);
   const [columnDefs, setColumnDefs] = useState(columnData);
   const [gridApi, setGridApi] = useState(null);
   const [columnApi, setColumnApi] = useState(null);
@@ -43,6 +46,17 @@ function Allinvoice() {
       return obj;
     }, {})
   );
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5000/allinvoicedata")
+  //     .then((response) => {
+  //       setRowData(response?.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   // function ColumnSelection() {
   //   const [anchorEl, setAnchorEl] = useState(null);
@@ -176,18 +190,47 @@ function Allinvoice() {
             column.field !== " " ? (
               <MenuItem
                 key={column.field}
-                sx={{
-                  // padding: "6px 16px", // Adjust the padding values as needed
-                  padding: "2px 16px 2px 6px", // Adjust the padding values as needed
-                }}
+                sx={
+                  {
+                    // display: "grid", // Use CSS Grid to align items in one line
+                    // gridTemplateColumns: "auto 1fr", // Create two columns
+                    // alignItems: "center",
+                    // padding: "6px 16px", // Adjust the padding values as needed
+                    // padding: "2px 16px 2px 6px",
+                  }
+                }
               >
-                <Checkbox
-                  checked={selectedColumns[column.field] || false}
-                  onChange={(e) =>
-                    handleCheckboxChange(column.field, e.target.checked)
+                {/* <label>
+                  <Checkbox
+                    checked={selectedColumns[column.field] || false}
+                    onChange={(e) =>
+                      handleCheckboxChange(column.field, e.target.checked)
+                    }
+                  />
+                  <ListItemText primary={column.headerName} />
+                </label>
+              </MenuItem> */}
+
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedColumns[column.field] || false}
+                      onChange={(e) =>
+                        handleCheckboxChange(column.field, e.target.checked)
+                      }
+                    />
+                  }
+                  // label={<ListItemText primary={column.headerName} />}
+                  label={
+                    <ListItemText
+                      primary={
+                        <Typography variant="body2">
+                          {column.headerName}
+                        </Typography>
+                      }
+                    />
                   }
                 />
-                <ListItemText primary={column.headerName} />
               </MenuItem>
             ) : null
           )}
@@ -345,6 +388,7 @@ function Allinvoice() {
     // domLayout: "autoHeight", // Automatically adjust the grid height
     // infiniteInitialRowCount: 100,
   };
+
 
   // useEffect(() => {
   //     const resizeListener = () => {

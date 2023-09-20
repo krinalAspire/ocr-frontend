@@ -19,6 +19,7 @@ import { classes } from "./utils";
 import axios from "axios";
 import TagSelection from "../allinvoice/TagSelection";
 import { tag } from "./options";
+import "../allinvoice/Allinvoice.css";
 
 const TagsButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -47,18 +48,24 @@ const TagsButton = () => {
   //   setInputValue(event.target.value);
   // };
 
-  const getTagfromAPi = () => {
-    axios
-      .get("http://localhost:5000/Tag")
-      .then((res) => {
-        setTagdata(res.data);
-        //  console.log(res.data)
-      })
-      .catch((err) => {
-        // toast.error("Failed: " + err.message);
-        console.log(err);
-      });
-  };
+  // const getTagfromAPi = () => {
+  //   axios
+  //     .get("http://localhost:5000/Tag")
+  //     .then((res) => {
+  //       setTagdata(res.data);
+  //       //  console.log(res.data)
+  //     })
+  //     .catch((err) => {
+  //       // toast.error("Failed: " + err.message);
+  //       console.log(err);
+  //     });
+  // };
+
+  async function getTagfromAPi() {
+    const response = await axios.get("http://localhost:5000/Tag");
+    setTagdata(response.data);
+    return response.data;
+  }
 
   useEffect(() => {
     getTagfromAPi();
@@ -116,6 +123,13 @@ const TagsButton = () => {
       id: Math.random().toString(36).substr(2, 9),
       tag: tag,
     };
+
+    // const newTag = {
+    //   id: data.id,
+    //   tag: data.tag,
+    // };
+    // setTags((prevTags) => [...prevTags, newTag]);
+    // setValue((prevTags) => [...prevTags, newTag]);
     // console.log("data", data);
     axios
       .post("http://localhost:5000/Tag", data, {
@@ -128,11 +142,15 @@ const TagsButton = () => {
         // console.log(response?.data);
         // setTagdata(response?.data);
         setInputValue("");
+        // setValue(response?.data);
         // setfilterapi(true)
         // setCreatedTags(true);
+        // return response?.data;
+        // getTagfromAPi();
       })
       .catch((err) => {
         console.log(err);
+        // setValue((prevTags) => prevTags.filter((t) => t.id !== data.id));
       });
   };
 
@@ -153,15 +171,46 @@ const TagsButton = () => {
         //   ...value,
         //   { id: Math.random().toString(36).substr(2, 9), tag: inputValue },
         // ]);
-        setTagNames((prevTagNames) => [...prevTagNames, inputValue]);
+        // setTagNames((prevTagNames) => [...prevTagNames, inputValue]);
         // setTagNames([...tagNames, inputValue]);
+
+        // if (!value.some((val) => val.tag.toLowerCase() === inputValue)) {
+        //   // Only add the new tag if it doesn't already exist
+        //   const newTag = {
+        //     inputValue: `Add "${inputValue}"`,
+        //     tag: inputValue,
+        //   };
+        //   setTagNames((prevTagNames) => [...prevTagNames, inputValue]);
+        //   setValue([...value, newTag]);
+        // }
+
+        if (!value.some((tag) => tag.tag === inputValue)) {
+          setValue([...value, newTag]);
+        }
       } else {
         // Set the selected option when it's not "Add tag"
         setValue(newValue);
+
+        // const isTagSelected = value.some((val) => val.tag === newValue.tag);
+        // if (isTagSelected) {
+        //   const updatedValue = value.filter((val) => val.tag !== newValue.tag);
+        //   setValue(updatedValue);
+        // } else {
+        //   // Set the selected option when it's not "Add tag"
+        //   setValue(newValue);
+        // }
+        // const updatedValue = value.includes(newValue)
+        //   ? value.filter((val) => val !== newValue)
+        //   : [...value, newValue];
+        // setValue(updatedValue);
       }
     } else {
       // Set the selected option when newValue is not an object with inputValue
       setValue(newValue);
+      //   const updatedValue = value.includes(newValue)
+      //   ? value.filter((val) => val !== newValue)
+      //   : [...value, newValue];
+      // setValue(updatedValue);
 
       const newTagNames = newValue.map((item) => {
         if (item.tag && item.tag.startsWith('Add "')) {
@@ -187,8 +236,63 @@ const TagsButton = () => {
           // console.log("Tag with 'Add':", tag);
           setLoggedTags((prevLoggedTags) => [...prevLoggedTags, item.tag]);
           getTagdata(tag);
-          getTagfromAPi();
+          // // handleClose()
           // setAnchorEl(null)
+          // setValue([])
+          // getTagfromAPi();
+          getTagfromAPi().then((newTags) => {
+            // Update the selected tags to ensure that the tags in the value array are selected.
+            const updatedValue = value.map((tag) => {
+              const index = newTags.findIndex((newTag) => newTag.tag === tag.tag);
+              if (index !== -1) {
+                return newTags[index];
+              } else {
+                return tag;
+              }
+            });
+            console.log("updatedvalue", updatedValue);
+            setValue(updatedValue);
+          });
+
+          // getTagfromAPi().then((newTags) => {
+          //   // Update the selected tags to ensure that the tags in the value array are selected.
+          //   const updatedValue = value.map((tag) => {
+          //     const index = newTags.findIndex((newTag) => newTag.tag === tag.tag);
+          //     if (index !== -1) {
+          //       return newTags[index];
+          //     } else {
+          //       return tag;
+          //     }
+          //   });
+        
+          //   setValue(updatedValue);
+          // });
+          // getTagfromAPi().then((newTags) => {
+          //   // Update the selected tags to ensure that the tags in the value array are selected.
+          //   const updatedValue = value.map((tag) => {
+          //     const index = newTags.findIndex((newTag) => newTag.tag === tag.tag);
+          //     if (index !== -1) {
+          //       return newTags[index];
+          //     } else {
+          //       return tag;
+          //     }
+          //   });
+        
+          //   setValue(updatedValue);
+          // });
+          // const newTags =getTagfromAPi();
+
+          // // Update the selected tags to ensure that the tags in the value array are selected.
+          // const updatedValue = value.map((tag) => {
+          //   const index = newTags.findIndex((newTag) => newTag.tag === tag.tag);
+          //   if (index !== -1) {
+          //     return newTags[index];
+          //   } else {
+          //     return tag;
+          //   }
+          // });
+        
+          // setValue(updatedValue); 
         }
       }
     }
@@ -369,6 +473,39 @@ const TagsButton = () => {
             <Autocomplete
               multiple
               value={value}
+              // ListboxProps={{ className: "myCustomList" }}
+              ListboxProps={{
+                sx: {
+                  "&::-webkit-scrollbar": {
+                    width: "0.5em",
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    background: "#D9D9D9",
+                    borderRadius: "8px",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    background: "#868686",
+                    borderRadius: "8px",
+                  },
+                },
+              }}
+              // ListboxProps={{
+              //   style: {
+              //     maxHeight: 150,
+              //     overflow: "auto",
+              //     "&::-webkit-scrollbar": {
+              //       width: "0.4em",
+              //     },
+              //     "&::-webkit-scrollbar-track": {
+              //       background: "#D9D9D9",
+              //       borderRadius: "5px",
+              //     },
+              //     "&::-webkit-scrollbar-thumb": {
+              //       background: "#868686",
+              //       borderRadius: "5px",
+              //     },
+              //   },
+              // }}
               // value={selectedTags}
               onChange={(event, newValue) => {
                 handleAddValue(newValue);
@@ -504,7 +641,7 @@ const TagsButton = () => {
               //   </li>
               // )}
 
-              renderOption={(props, option) => (
+              renderOption={(props, option, { selected }) => (
                 <li {...props}>
                   {option.inputValue ? (
                     <>
@@ -551,53 +688,55 @@ const TagsButton = () => {
                     <>
                       <Checkbox
                         // label={option.tag}
-                        checked={value.some((val) => {
-                          if (val.tag.startsWith('Add "')) {
-                            const extractedTag = val.tag.match(/^Add "(.*?)"$/);
-                            if (extractedTag) {
-                              return extractedTag[1] === option.tag;
-                            }
-                          }
-                          return val.tag === option.tag;
-                        })}
-                        onChange={() => {
-                          // Handle checking/unchecking a regular tag here
-                          const isChecked = value.some((val) => {
-                            if (val.tag.startsWith('Add "')) {
-                              const extractedTag =
-                                val.tag.match(/^Add "(.*?)"$/);
-                              if (extractedTag) {
-                                return extractedTag[1] === option.tag;
-                              }
-                            }
-                            return val.tag === option.tag;
-                          });
+                        checked={selected}
+                        // checked={value.some((val) => {
+                        //   if (val.tag.startsWith('Add "')) {
+                        //     const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+                        //     if (extractedTag) {
+                        //       return extractedTag[1] === option.tag;
+                        //     }
+                        //   }
+                        //   return val.tag === option.tag;
+                        // })}
+                        // onChange={() => {
+                        //   // Handle checking/unchecking a regular tag here
+                        //   const isChecked = value.some((val) => {
+                        //     if (val.tag.startsWith('Add "')) {
+                        //       const extractedTag =
+                        //         val.tag.match(/^Add "(.*?)"$/);
+                        //       if (extractedTag) {
+                        //         return extractedTag[1] === option.tag;
+                        //       }
+                        //     }
+                        //     return val.tag === option.tag;
+                        //   });
 
-                          if (isChecked) {
-                            // Uncheck the tag
-                            const newValue = value.filter((val) => {
-                              if (val.tag.startsWith('Add "')) {
-                                const extractedTag =
-                                  val.tag.match(/^Add "(.*?)"$/);
-                                if (extractedTag) {
-                                  return extractedTag[1] !== option.tag;
-                                }
-                              }
-                              return val.tag !== option.tag;
-                            });
-                            setValue(newValue);
-                          } else {
-                            // Check the tag
-                            const newValue = [
-                              ...value,
-                              {
-                                // id: Math.random().toString(36).substr(2, 9),
-                                tag: option.tag,
-                              },
-                            ];
-                            setValue(newValue);
-                          }
-                        }}
+                        //   if (isChecked) {
+                        //     // Uncheck the tag
+                        //     const newValue = value.filter((val) => {
+                        //       if (val.tag.startsWith('Add "')) {
+                        //         const extractedTag =
+                        //           val.tag.match(/^Add "(.*?)"$/);
+                        //         if (extractedTag) {
+                        //           return extractedTag[1] !== option.tag;
+                        //         }
+                        //       }
+                        //       return val.tag !== option.tag;
+                        //     });
+                        //     setValue(newValue);
+                        //   }
+                          //    else {
+                          //     // Check the tag
+                          //     const newValue = [
+                          //       ...value,
+                          //       {
+                          //         // id: Math.random().toString(36).substr(2, 9),
+                          //         tag: option.tag,
+                          //       },
+                          //     ];
+                          //     setValue(newValue);
+                          //   }
+                        // }}
                       />
                       {option.tag}
 
