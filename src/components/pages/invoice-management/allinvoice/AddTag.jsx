@@ -31,11 +31,62 @@ const AddTag = ({ id, handleclick }) => {
   // console.log("addtag", id);
 
   const getTagfromAPi = (id) => {
+    let document_tag=[];
+
+    axios
+    .get("http://localhost:5000/allinvoicedata")
+    .then((response) => {
+      const allinvoice_data = response.data;
+      // console.log("allinvoice_data", allinvoice_data);
+  
+      // Find the specific document by 'id' in the 'allinvoice_data' array
+      const specificDocument = allinvoice_data.find(
+        (doc) => doc.id === id
+      );
+      
+      // console.log("specificDocument",specificDocument );
+  
+      if (specificDocument) {
+        // Extract the tags associated with the specific document and set them as fixedOptions
+        const tagsForSpecificDocument = [specificDocument];
+        // console.log("tagsForSpecificDocument", tagsForSpecificDocument);
+        // setValue(tagsForSpecificDocument)
+  
+        const extractedData = tagsForSpecificDocument.map(({ id, tag }) => ({
+          id,
+          tag,
+        }));
+  
+        // console.log("extracted data", extractedData);
+  
+        // setValue(tagsForSpecificDocument)
+  
+        if (extractedData.length > 0 && !extractedData.some((tag) => tag.tag === undefined)) {
+          // Set the 'value' state only if 'extractedData' is not empty
+          // console.log("extractedsfshdfg", extractedData);
+          // setValue(extractedData);
+          document_tag=extractedData
+          console.log("document_tag", document_tag);
+        } else {
+          // Handle the case where there are no valid tags
+          console.log("No valid tags found for this document.");
+        }
+  
+        // console.log("tagsForSpecificDocument", extractedData);
+      } else {
+        console.log(`Document with id '${id}' not found.`);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+
     // console.log("inside function addtag", id);
     axios
       .get("http://localhost:5000/Tag")
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         const responseData = res.data;
         setTagdata(res.data);
         // console.log(res.data[13]);
@@ -44,48 +95,50 @@ const AddTag = ({ id, handleclick }) => {
         // setfixedOptions(tagsInDocuments);
         // // Set an initial value (if needed)
         // setValue(tagsInDocuments);
-
         // setfixedOptions([res['data'][4]])
-        // console.log("dhshf",[res['data'][4]]);
+        // console.log("dhshf",[res['data'][4], {id:"x2zvfew3g", tag:"pending"}]);
         // setfixedOptions([res['data'][4]])
         // const fixedOptions = [...];
-        // setValue([res.data[4], res.data[13]]);
+        setValue([res.data[4] , { id: "x2zvfew3g", tag: "pending"}])
+        // setValue([res.data[4]]);
+        // setValue(document_tag)
         //  console.log(res.data)
 
-        const specificDocumentId = id; // Change this to the desired document id
-        // console.log("specificDocumentId",specificDocumentId );
-        const specificDocument = rowdata.find(
-          (doc) => doc.id === specificDocumentId
-        );
-        // console.log('specificDocument', specificDocument);
 
-        if (specificDocument) {
-          // Extract the tags associated with the specific document and set them as fixedOptions
-          const tagsForSpecificDocument = [specificDocument]; // If you want it as an array
+        // const specificDocumentId = id; // Change this to the desired document id
+        // // console.log("specificDocumentId",specificDocumentId );
+        // const specificDocument = rowdata.find(
+        //   (doc) => doc.id === specificDocumentId
+        // );
+        // // console.log('specificDocument', specificDocument);
 
-          const extractedData = tagsForSpecificDocument.map(({ id, tag }) => ({
-            id,
-            tag,
-          }));
+        // if (specificDocument) {
+        //   // Extract the tags associated with the specific document and set them as fixedOptions
+        //   const tagsForSpecificDocument = [specificDocument]; // If you want it as an array
 
-          // setfixedOptions(tagsForSpecificDocument.map(({ tag, id }) => ({ tag, id })));
+        //   const extractedData = tagsForSpecificDocument.map(({ id, tag }) => ({
+        //     id,
+        //     tag,
+        //   }));
 
-          if (
-            extractedData.length > 0 &&
-            !extractedData.some((tag) => tag.tag === undefined)
-          ) {
-            // Set the 'value' state only if 'extractedData' is not empty
-            setValue(extractedData);
-          } else {
-            // Handle the case where there are no valid tags
-            console.log("No valid tags found for this document.");
-          }
+        //   // setfixedOptions(tagsForSpecificDocument.map(({ tag, id }) => ({ tag, id })));
 
-          console.log("tagsForSpecificDocument", extractedData);
-          // console.log("tagsForSpecificDocument",tagsForSpecificDocument.id, tagsForSpecificDocument.tag);
-        } else {
-          console.log(`Document with id '${specificDocumentId}' not found.`);
-        }
+        //   if (
+        //     extractedData.length > 0 &&
+        //     !extractedData.some((tag) => tag.tag === undefined)
+        //   ) {
+        //     // Set the 'value' state only if 'extractedData' is not empty
+        //     setValue(extractedData);
+        //   } else {
+        //     // Handle the case where there are no valid tags
+        //     console.log("No valid tags found for this document.");
+        //   }
+
+        //   console.log("tagsForSpecificDocument", extractedData);
+        //   // console.log("tagsForSpecificDocument",tagsForSpecificDocument.id, tagsForSpecificDocument.tag);
+        // } else {
+        //   console.log(`Document with id '${specificDocumentId}' not found.`);
+        // }
 
         // console.log("value", value);
       })
@@ -221,23 +274,24 @@ const AddTag = ({ id, handleclick }) => {
               multiple
               id="fixed-tags-demo"
               freeSolo
-              value={value && value}
+              // value={value && value}
+              value={value}
               // onChange={(event, newValue) => {
-              //   handleAddValue(newValue);
-              // }}
-              onChange={(event, newValue) => {
-                // console.log("newvalue", newValue);
-                // setValue([
-                //   // ...fixedOptions,
-                //   // ...newValue.filter(
-                //   //   (option) => fixedOptions.indexOf(option) === -1
-                //   // ),
-                //   ...newValue,
-                // ]);
-                const sanitizedValue = newValue.map((val) => {
-                  if (val.tag.startsWith('Add "')) {
-                    const extractedTag = val.tag.match(/^Add "(.*?)"$/);
-                    if (extractedTag) {
+                //   handleAddValue(newValue);
+                // }}
+                onChange={(event, newValue) => {
+                  // console.log("newvalue", newValue);
+                  // setValue([
+                    //   // ...fixedOptions,
+                    //   // ...newValue.filter(
+                      //   //   (option) => fixedOptions.indexOf(option) === -1
+                      //   // ),
+                      //   ...newValue,
+                      // ]);
+                      const sanitizedValue = newValue.map((val) => {
+                        if (val.tag.startsWith('Add "')) {
+                          const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+                          if (extractedTag) {
                       return { tag: extractedTag[1] };
                     }
                   }
@@ -246,14 +300,14 @@ const AddTag = ({ id, handleclick }) => {
                 setValue(sanitizedValue);
                 // setValue(...fixedOptions, ...newValue)
                 // console.log("onchaneg value", value);
-
+                
                 // Extract tag names and update the tagNames state
                 const tagNamesArray = sanitizedValue.map((val) => val.tag);
                 setTagNames(tagNamesArray);
               }}
               filterOptions={(options, params) => {
                 const filtered = filter(options, params);
-
+                
                 const { inputValue } = params;
                 // Suggest the creation of a new value
                 const isExisting = options.some(
@@ -274,6 +328,7 @@ const AddTag = ({ id, handleclick }) => {
               disableCloseOnSelect
               options={tagdata}
               getOptionLabel={(option) => option.tag}
+              // defaultValue={[top100Films[4], top100Films[13]]}
               // renderOption={(props, option, { selected }) => (
               //   <li {...props}>
               //     <Checkbox
@@ -284,9 +339,11 @@ const AddTag = ({ id, handleclick }) => {
               //   </li>
               // )}
 
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  {option.inputValue ? (
+              renderOption={(props, option, { selected }) => {
+                console.log(selected);
+                return(<li {...props}>
+                  {option.inputValue ?
+                  (
                     <>
                       <Box
                         sx={{
@@ -331,60 +388,61 @@ const AddTag = ({ id, handleclick }) => {
                     <>
                       <Checkbox
                         // label={option.tag}
-                        checked={value.some((val) => {
-                          if (val.tag.startsWith('Add "')) {
-                            const extractedTag = val.tag.match(/^Add "(.*?)"$/);
-                            if (extractedTag) {
-                              return extractedTag[1] === option.tag;
-                            }
-                          }
-                          return val.tag === option.tag;
-                        })}
-                        onChange={() => {
-                          // Handle checking/unchecking a regular tag here
-                          const isChecked = value.some((val) => {
-                            if (val.tag.startsWith('Add "')) {
-                              const extractedTag =
-                                val.tag.match(/^Add "(.*?)"$/);
-                              if (extractedTag) {
-                                return extractedTag[1] === option.tag;
-                              }
-                            }
-                            return val.tag === option.tag;
-                          });
+                        checked={selected}
+                        // checked={value.some((val) => {
+                        //   if (val.tag.startsWith('Add "')) {
+                        //     const extractedTag = val.tag.match(/^Add "(.*?)"$/);
+                        //     if (extractedTag) {
+                        //       return extractedTag[1] === option.tag;
+                        //     }
+                        //   }
+                        //   return val.tag === option.tag;
+                        // })}
+                        // onChange={() => {
+                        //   // Handle checking/unchecking a regular tag here
+                        //   const isChecked = value.some((val) => {
+                        //     if (val.tag.startsWith('Add "')) {
+                        //       const extractedTag =
+                        //         val.tag.match(/^Add "(.*?)"$/);
+                        //       if (extractedTag) {
+                        //         return extractedTag[1] === option.tag;
+                        //       }
+                        //     }
+                        //     return val.tag === option.tag;
+                        //   });
 
-                          if (isChecked) {
-                            // Uncheck the tag
-                            const newValue = value.filter((val) => {
-                              if (val.tag.startsWith('Add "')) {
-                                const extractedTag =
-                                  val.tag.match(/^Add "(.*?)"$/);
-                                if (extractedTag) {
-                                  return extractedTag[1] !== option.tag;
-                                }
-                              }
-                              return val.tag !== option.tag;
-                            });
-                            setValue(newValue);
-                          } 
-                          // else {
-                          //   // Check the tag
-                          //   const newValue = [
-                          //     ...value,
-                          //     {
-                          //       // id: Math.random().toString(36).substr(2, 9),
-                          //       tag: option.tag,
-                          //     },
-                          //   ];
-                          //   setValue(newValue);
-                          // }
-                        }}
+                        //   if (isChecked) {
+                        //     // Uncheck the tag
+                        //     const newValue = value.filter((val) => {
+                        //       if (val.tag.startsWith('Add "')) {
+                        //         const extractedTag =
+                        //           val.tag.match(/^Add "(.*?)"$/);
+                        //         if (extractedTag) {
+                        //           return extractedTag[1] !== option.tag;
+                        //         }
+                        //       }
+                        //       return val.tag !== option.tag;
+                        //     });
+                        //     setValue(newValue);
+                        //   } 
+                        //   // else {
+                        //   //   // Check the tag
+                        //   //   const newValue = [
+                        //   //     ...value,
+                        //   //     {
+                        //   //       // id: Math.random().toString(36).substr(2, 9),
+                        //   //       tag: option.tag,
+                        //   //     },
+                        //   //   ];
+                        //   //   setValue(newValue);
+                        //   // }
+                        // }}
                       />
                       {option.tag}
                     </>
                   )}
                 </li>
-              )}
+              )}}
 
               // renderTags={(tagValue, getTagProps) =>
               //   tagValue.map((option, index) => (

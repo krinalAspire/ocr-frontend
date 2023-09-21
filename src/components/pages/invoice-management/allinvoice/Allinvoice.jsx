@@ -33,8 +33,8 @@ import axios from "axios";
 
 function Allinvoice() {
   // const [rowData, setRowData] = useState([]);
-  const [rowData, setRowData] = useState(rowdata);
-  // const [rowData, setRowData] = useState([]);
+  // const [rowData, setRowData] = useState(rowdata);
+  const [rowData, setRowData] = useState([]);
   const [columnDefs, setColumnDefs] = useState(columnData);
   const [gridApi, setGridApi] = useState(null);
   const [columnApi, setColumnApi] = useState(null);
@@ -47,16 +47,16 @@ function Allinvoice() {
     }, {})
   );
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5000/allinvoicedata")
-  //     .then((response) => {
-  //       setRowData(response?.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/allinvoicedata")
+      .then((response) => {
+        setRowData(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   // function ColumnSelection() {
   //   const [anchorEl, setAnchorEl] = useState(null);

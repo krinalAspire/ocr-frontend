@@ -28,7 +28,7 @@ const TagsButton = () => {
   const [value, setValue] = useState([]);
   // const [newtag, setnewTag] = useState(null);
   const [loggedTags, setLoggedTags] = useState([]);
-  // const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [tagNames, setTagNames] = useState([]);
   // const fixedOptions = [top100Films[6]];
   // const [tesvalue, settesValue] = useState([
@@ -147,6 +147,9 @@ const TagsButton = () => {
         // setCreatedTags(true);
         // return response?.data;
         // getTagfromAPi();
+        // alert("created succesfully")
+        // toast.success('created successfully !!');
+        console.log("createed succesfully");
       })
       .catch((err) => {
         console.log(err);
@@ -189,7 +192,13 @@ const TagsButton = () => {
         }
       } else {
         // Set the selected option when it's not "Add tag"
-        setValue(newValue);
+        setSelectedTags(newValue);
+        // setValue(newValue);
+        // const filteredNewValue = newValue.filter((item) => {
+        //   return ('id' in item) && item.id;
+        // });
+      
+        // setSelectedTags(filteredNewValue);
 
         // const isTagSelected = value.some((val) => val.tag === newValue.tag);
         // if (isTagSelected) {
@@ -206,6 +215,14 @@ const TagsButton = () => {
       }
     } else {
       // Set the selected option when newValue is not an object with inputValue
+      // if (!newValue.inputValue) {
+        // setSelectedTags(newValue);
+      // }
+      const filteredNewValue = newValue.filter((item) => {
+        return ('id' in item) && item.id && !('inputValue' in item);
+      });
+    
+      setSelectedTags(filteredNewValue);
       setValue(newValue);
       //   const updatedValue = value.includes(newValue)
       //   ? value.filter((val) => val !== newValue)
@@ -242,16 +259,39 @@ const TagsButton = () => {
           // getTagfromAPi();
           getTagfromAPi().then((newTags) => {
             // Update the selected tags to ensure that the tags in the value array are selected.
-            const updatedValue = value.map((tag) => {
-              const index = newTags.findIndex((newTag) => newTag.tag === tag.tag);
+            const updatedValue = selectedTags.map((tag) => {
+              const index = newTags.findIndex(
+                (newTag) => newTag.tag === tag.tag
+              );
+              // const newTag = newTags.find((newTag) => newTag.tag === tag);
               if (index !== -1) {
+                // console.log(newTags[index]);
                 return newTags[index];
-              } else {
-                return tag;
-              }
+              } 
+              // else {
+              //   console.log(tag);
+              //   return tag;
+              // }
             });
-            console.log("updatedvalue", updatedValue);
-            setValue(updatedValue);
+
+            // const updatedValue = [...value];
+            // const newTag = newTags.find((newTag) => newTag.tag === tag);
+            // if (newTag) {
+            //   updatedValue.push(newTag);
+            // }
+
+            // const updatedValue = [...value];
+            // const newTag = newTags.find((newTag) => newTag.tag === tag);
+            // if (newTag) {
+            //   updatedValue.push({ id: newTag.id, tag: newTag.tag });
+            // }
+
+            // setValue(updatedValue);
+            // setValue(updatedValue.find((tag) => tag === selectedTag) || updatedValue[0]);
+            // console.log("updatedvalue", updatedValue);
+            setSelectedTags(updatedValue)
+            // setValue(updatedValue);
+            // setValue(updatedValue.find((tag) => tag === selectedTag) || updatedValue[0]);
           });
 
           // getTagfromAPi().then((newTags) => {
@@ -264,7 +304,7 @@ const TagsButton = () => {
           //       return tag;
           //     }
           //   });
-        
+
           //   setValue(updatedValue);
           // });
           // getTagfromAPi().then((newTags) => {
@@ -277,7 +317,7 @@ const TagsButton = () => {
           //       return tag;
           //     }
           //   });
-        
+
           //   setValue(updatedValue);
           // });
           // const newTags =getTagfromAPi();
@@ -291,8 +331,8 @@ const TagsButton = () => {
           //     return tag;
           //   }
           // });
-        
-          // setValue(updatedValue); 
+
+          // setValue(updatedValue);
         }
       }
     }
@@ -300,12 +340,19 @@ const TagsButton = () => {
 
   // console.log("loggedvalues", loggedTags);
 
+  // useEffect(() => {
+  //   if (tagNames.length > 0) {
+  //     console.log(`Fire filter api - ${new Date().toLocaleTimeString()}`);
+  //     // console.log("fire filter api", tagNames);
+  //   }
+  // }, [tagNames]);
+
   useEffect(() => {
-    if (tagNames.length > 0) {
+    if (selectedTags.length > 0) {
       console.log(`Fire filter api - ${new Date().toLocaleTimeString()}`);
       // console.log("fire filter api", tagNames);
     }
-  }, [tagNames]);
+  }, [selectedTags]);
 
   // useEffect(() => {
   //   for (const item of value) {
@@ -472,7 +519,8 @@ const TagsButton = () => {
           >
             <Autocomplete
               multiple
-              value={value}
+              // value={value}
+              value={selectedTags}
               // ListboxProps={{ className: "myCustomList" }}
               ListboxProps={{
                 sx: {
@@ -725,17 +773,17 @@ const TagsButton = () => {
                         //     });
                         //     setValue(newValue);
                         //   }
-                          //    else {
-                          //     // Check the tag
-                          //     const newValue = [
-                          //       ...value,
-                          //       {
-                          //         // id: Math.random().toString(36).substr(2, 9),
-                          //         tag: option.tag,
-                          //       },
-                          //     ];
-                          //     setValue(newValue);
-                          //   }
+                        //    else {
+                        //     // Check the tag
+                        //     const newValue = [
+                        //       ...value,
+                        //       {
+                        //         // id: Math.random().toString(36).substr(2, 9),
+                        //         tag: option.tag,
+                        //       },
+                        //     ];
+                        //     setValue(newValue);
+                        //   }
                         // }}
                       />
                       {option.tag}
