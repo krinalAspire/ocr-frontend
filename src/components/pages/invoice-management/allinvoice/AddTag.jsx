@@ -66,6 +66,13 @@ const AddTag = ({ id, handleclick }) => {
           // console.log("extractedsfshdfg", extractedData);
           // setValue(extractedData);
           document_tag=extractedData
+          
+          // const tagIndex = getTagIndexFromTagdata(document_tag[0], tagdata);
+          
+          // // If the tag is not found in the tagdata array, add it
+          // if (tagIndex === -1) {
+          //   tagdata.push(document_tag[0]);
+          // }
           console.log("document_tag", document_tag);
         } else {
           // Handle the case where there are no valid tags
@@ -86,7 +93,7 @@ const AddTag = ({ id, handleclick }) => {
     axios
       .get("http://localhost:5000/Tag")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         const responseData = res.data;
         setTagdata(res.data);
         // console.log(res.data[13]);
@@ -99,9 +106,9 @@ const AddTag = ({ id, handleclick }) => {
         // console.log("dhshf",[res['data'][4], {id:"x2zvfew3g", tag:"pending"}]);
         // setfixedOptions([res['data'][4]])
         // const fixedOptions = [...];
-        setValue([res.data[4] , { id: "x2zvfew3g", tag: "pending"}])
+        // setValue([res.data[4] , { id: "x2zvfew3g", tag: "pending"}])
         // setValue([res.data[4]]);
-        // setValue(document_tag)
+        setValue(document_tag)
         //  console.log(res.data)
 
 
@@ -276,6 +283,7 @@ const AddTag = ({ id, handleclick }) => {
               freeSolo
               // value={value && value}
               value={value}
+              isOptionEqualToValue={(option, value) => option.tag === value.tag}
               // onChange={(event, newValue) => {
                 //   handleAddValue(newValue);
                 // }}
@@ -340,6 +348,8 @@ const AddTag = ({ id, handleclick }) => {
               // )}
 
               renderOption={(props, option, { selected }) => {
+                //  const isTagSelected = value.findIndex((tag) => tag.tag === option.tag) !== -1;
+                // console.log(response);
                 console.log(selected);
                 return(<li {...props}>
                   {option.inputValue ?
@@ -388,6 +398,7 @@ const AddTag = ({ id, handleclick }) => {
                     <>
                       <Checkbox
                         // label={option.tag}
+                        // checked={isTagSelected}
                         checked={selected}
                         // checked={value.some((val) => {
                         //   if (val.tag.startsWith('Add "')) {
@@ -398,61 +409,12 @@ const AddTag = ({ id, handleclick }) => {
                         //   }
                         //   return val.tag === option.tag;
                         // })}
-                        // onChange={() => {
-                        //   // Handle checking/unchecking a regular tag here
-                        //   const isChecked = value.some((val) => {
-                        //     if (val.tag.startsWith('Add "')) {
-                        //       const extractedTag =
-                        //         val.tag.match(/^Add "(.*?)"$/);
-                        //       if (extractedTag) {
-                        //         return extractedTag[1] === option.tag;
-                        //       }
-                        //     }
-                        //     return val.tag === option.tag;
-                        //   });
-
-                        //   if (isChecked) {
-                        //     // Uncheck the tag
-                        //     const newValue = value.filter((val) => {
-                        //       if (val.tag.startsWith('Add "')) {
-                        //         const extractedTag =
-                        //           val.tag.match(/^Add "(.*?)"$/);
-                        //         if (extractedTag) {
-                        //           return extractedTag[1] !== option.tag;
-                        //         }
-                        //       }
-                        //       return val.tag !== option.tag;
-                        //     });
-                        //     setValue(newValue);
-                        //   } 
-                        //   // else {
-                        //   //   // Check the tag
-                        //   //   const newValue = [
-                        //   //     ...value,
-                        //   //     {
-                        //   //       // id: Math.random().toString(36).substr(2, 9),
-                        //   //       tag: option.tag,
-                        //   //     },
-                        //   //   ];
-                        //   //   setValue(newValue);
-                        //   // }
-                        // }}
                       />
                       {option.tag}
                     </>
                   )}
                 </li>
               )}}
-
-              // renderTags={(tagValue, getTagProps) =>
-              //   tagValue.map((option, index) => (
-              //     <Chip
-              //       label={option.tag}
-              //       {...getTagProps({ index })}
-              //       // disabled={fixedOptions.indexOf(option) !== -1}
-              //     />
-              //   ))
-              // }
               style={{ width: 300 }}
               renderInput={(params) => (
                 <TextField

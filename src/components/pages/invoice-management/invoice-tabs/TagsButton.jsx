@@ -259,7 +259,7 @@ const TagsButton = () => {
           // getTagfromAPi();
           getTagfromAPi().then((newTags) => {
             // Update the selected tags to ensure that the tags in the value array are selected.
-            const updatedValue = selectedTags.map((tag) => {
+            const updatedValue = value.map((tag) => {
               const index = newTags.findIndex(
                 (newTag) => newTag.tag === tag.tag
               );
@@ -268,10 +268,10 @@ const TagsButton = () => {
                 // console.log(newTags[index]);
                 return newTags[index];
               } 
-              // else {
-              //   console.log(tag);
-              //   return tag;
-              // }
+              else {
+                console.log(tag);
+                return tag;
+              }
             });
 
             // const updatedValue = [...value];
@@ -286,10 +286,10 @@ const TagsButton = () => {
             //   updatedValue.push({ id: newTag.id, tag: newTag.tag });
             // }
 
-            // setValue(updatedValue);
+            setValue(updatedValue);
             // setValue(updatedValue.find((tag) => tag === selectedTag) || updatedValue[0]);
             // console.log("updatedvalue", updatedValue);
-            setSelectedTags(updatedValue)
+            // setSelectedTags(updatedValue)
             // setValue(updatedValue);
             // setValue(updatedValue.find((tag) => tag === selectedTag) || updatedValue[0]);
           });
@@ -519,8 +519,15 @@ const TagsButton = () => {
           >
             <Autocomplete
               multiple
-              // value={value}
-              value={selectedTags}
+              value={value}
+              // value={selectedTags}
+              isOptionEqualToValue={(option, value) => {
+                if (value.inputValue) {
+                  return option.tag === value.inputValue;
+                } else {
+                  return option.tag === value.tag;
+                }
+              }}
               // ListboxProps={{ className: "myCustomList" }}
               ListboxProps={{
                 sx: {
