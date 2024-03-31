@@ -430,5 +430,15 @@
       "exported": "no",
       "tag": "khyati"
     }
+  ],
+  "stage" : [
+    {
+      "id" : "1",
+      "status": "pending"
+    },
+    {
+      "id" : "2",
+      "status": "completed"
+    }
   ]
 }

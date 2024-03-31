@@ -1,5 +1,5 @@
 .ag-theme-alpine {
-  position: relative;
+  /* position: relative; */
   /* z-index: 1; */
   --ag-foreground-color: rgba(0, 0, 0, 0.6);
   --ag-header-foreground-color: #1e1e1e;

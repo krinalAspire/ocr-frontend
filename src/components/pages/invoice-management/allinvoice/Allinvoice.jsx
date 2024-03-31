@@ -6,6 +6,7 @@ import { columnData } from "./Columndef";
 import { rowdata } from "./rowdata";
 import "./Allinvoice.css";
 import {
+  Autocomplete,
   Box,
   Button,
   Checkbox,
@@ -16,6 +17,7 @@ import {
   Menu,
   MenuItem,
   Popover,
+  TextField,
   Typography,
 } from "@mui/material";
 import { classes, Root } from "./utils";
@@ -39,6 +41,7 @@ function Allinvoice() {
   const [gridApi, setGridApi] = useState(null);
   const [columnApi, setColumnApi] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [dropDownField, setDropDownField] = useState({});
   // const [selectedColumns, setSelectedColumns] = useState({});
   const [selectedColumns, setSelectedColumns] = useState(
     columnDefs.reduce((obj, column) => {
@@ -176,16 +179,16 @@ function Allinvoice() {
           {/* {columnDefs.map((column) =>
             column.field !== " " ? (
               <MenuItem key={column.field}>
-                <Checkbox
-                  checked={selectedColumns[column.field] || false}
-                  onChange={(e) =>
-                    handleCheckboxChange(column.field, e.target.checked)
-                  }
+              <Checkbox
+              checked={selectedColumns[column.field] || false}
+              onChange={(e) =>
+                handleCheckboxChange(column.field, e.target.checked)
+              }
                 />
                 <ListItemText primary={column.headerName} />
-              </MenuItem>
-            ) : null
-          )} */}
+                </MenuItem>
+                ) : null
+              )} */}
           {columnDefs.map((column) =>
             column.field !== " " ? (
               <MenuItem
@@ -206,10 +209,10 @@ function Allinvoice() {
                     onChange={(e) =>
                       handleCheckboxChange(column.field, e.target.checked)
                     }
-                  />
-                  <ListItemText primary={column.headerName} />
-                </label>
-              </MenuItem> */}
+                    />
+                    <ListItemText primary={column.headerName} />
+                    </label>
+                  </MenuItem> */}
 
                 <FormControlLabel
                   control={
@@ -238,7 +241,7 @@ function Allinvoice() {
 
         {/* {columnDefs.map((option) => (
           <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-            {option}
+          {option}
           </MenuItem>
         ))} */}
       </Box>
@@ -369,11 +372,86 @@ function Allinvoice() {
   const onGridReady = (params) => {
     setGridApi(params.api);
     setColumnApi(params.columnApi);
+    const abc = params?.columnApi?.columnModel?.columnDefs
+      .filter((c) => c.filter === "CustomFilter")
+      .map((m) => m.field);
+    const dropdownFilter = abc.reduce((acc, key) => {
+      acc[key] = [];
+      return acc;
+    }, {});
+
+    setDropDownField(dropdownFilter);
   };
 
+  console.log("dropdown", dropDownField);
   const defaultColDef = {
     flex: 1,
     resizable: true,
+  };
+
+  const CustomFilter = (prop) => {
+    console.log("prop", prop?.colDef?.field);
+    const [tagdata, setTagdata] = useState([]);
+
+    async function getTagfromAPi() {
+      const response = await axios.get("http://localhost:5000/Tag");
+      setTagdata(response.data);
+      return response.data;
+    }
+
+    async function getStatus() {
+      const response = await axios.get("http://localhost:5000/stage");
+      setTagdata(response.data);
+      return response.data;
+    }
+
+    useEffect(() => {
+      if(prop?.colDef?.field === 'tag'){
+      getTagfromAPi();
+      } else {
+        getStatus();
+      }
+    }, [prop?.colDef?.field]);
+
+    const handleAddValue = (newValue) => {
+      console.log("newvalue", newValue);
+      // const dropdownValue = {};
+      // dropdownValue[prop.colDef.field] = newValue;
+      // setDropDownField(dropdownValue);
+      setDropDownField(prevDropdownField => ({
+        ...prevDropdownField,
+        [prop.colDef.field]: newValue
+      }));
+    };
+    return (
+      <Box sx={{ bgcolor: "background.paper" }}>
+        <Autocomplete
+          multiple
+          id="checkboxes-tags-demo"
+          options={tagdata}
+          disableCloseOnSelect
+          onChange={(event, newValue) => {
+            handleAddValue(newValue);
+          }}
+          getOptionLabel={(option) => option.tag || option.status}
+          renderOption={(props, option, { selected }) => (
+            <li {...props}>
+              <Checkbox style={{ marginRight: 8 }} checked={selected} />
+              {option.tag || option.status}
+            </li>
+          )}
+          style={{ width: 500 }}
+          renderInput={(params) => (
+            <TextField {...params} label="Checkboxes" placeholder="Favorites" />
+          )}
+          PaperComponent={({ children }) => (
+            <div onMouseDown={(event) => event.stopPropagation()}>
+              {children}
+            </div>
+          )}
+        />
+      </Box>
+    );
   };
 
   const gridOptions = {
@@ -381,6 +459,9 @@ function Allinvoice() {
     onSelectionChanged: onSelectionChanged,
     rowSelection: "multiple",
     suppressRowClickSelection: true,
+    components: {
+      CustomFilter: CustomFilter,
+    },
     // rowModelType: "infinite",
     // paginationPageSize: 50, // Number of rows to load per page
     // cacheBlockSize: 50, // Number of rows to load per chunk
@@ -388,7 +469,6 @@ function Allinvoice() {
     // domLayout: "autoHeight", // Automatically adjust the grid height
     // infiniteInitialRowCount: 100,
   };
-
 
   // useEffect(() => {
   //     const resizeListener = () => {

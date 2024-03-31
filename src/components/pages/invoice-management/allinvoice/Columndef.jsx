@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditIcon from "../../../../assets/allinvoice-assets/edit.svg";
 import ArrowUp from "../../../../assets/allinvoice-assets/arrow-up.svg";
 import AlertCircle from "../../../../assets/allinvoice-assets/alert-circle.svg";
@@ -18,6 +18,8 @@ import {
   ListItemText,
   IconButton,
   ListItemButton,
+  Autocomplete,
+  TextField,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { lightPalette } from "../../../../theme";
@@ -25,6 +27,7 @@ import Action from "./Action";
 import { classes } from "./utils";
 import AddTag from "./AddTag";
 import TagSelection from "./TagSelection";
+import axios from "axios";
 
 function responsiveHeader(params) {
   const value = params.displayName;
@@ -163,6 +166,7 @@ const IconRenderer = (params) => {
   );
 }; 
 
+
 export const columnData = [
   // {
   //   headerCheckboxSelection: true,
@@ -183,13 +187,14 @@ export const columnData = [
   {
     headerName: "Status",
     field: "status",
-    minWidth: 70,
-    headerComponent: responsiveHeader,
+    minWidth: 130,
+    // headerComponent: responsiveHeader,
     cellRenderer: StatusRow,
-    headerCheckboxSelection: (params) => {
-      const displayedColumns = params.columnApi.getAllDisplayedColumns();
-      return displayedColumns[0] === params.column;
-    },
+    filter: 'CustomFilter',
+    // headerCheckboxSelection: (params) => {
+    //   const displayedColumns = params.columnApi.getAllDisplayedColumns();
+    //   return displayedColumns[0] === params.column;
+    // },
   },
   {
     headerName: "Uploaded",
@@ -216,7 +221,8 @@ export const columnData = [
     headerName: "Tags",
     field: "tag",
     minWidth: 100,
-    headerComponent: responsiveHeader,
+    // headerComponent: responsiveHeader,
+    filter: 'CustomFilter',
     cellRenderer: TagRow,
   },
   {
